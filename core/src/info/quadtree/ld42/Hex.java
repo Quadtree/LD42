@@ -15,8 +15,8 @@ public class Hex {
     }
 
     public void render(){
-        int sx = x * HEX_SIZE;
-        int sy = y * HEX_SIZE;
+        int sx = x * HEX_SIZE * 3 / 2 + ((y % 2) * HEX_SIZE * 3 / 2 / 2);
+        int sy = y * HEX_SIZE / 2;
 
         Sprite sp = LD42.s.getSprite("hex48");
 
