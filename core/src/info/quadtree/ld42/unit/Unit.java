@@ -1,5 +1,6 @@
 package info.quadtree.ld42.unit;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.pfa.DefaultGraphPath;
 import com.badlogic.gdx.ai.pfa.GraphPath;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -62,6 +63,17 @@ public abstract class Unit {
         sp.setBounds(currentScreenPos.x, currentScreenPos.y, Hex.HEX_SIZE, Hex.HEX_SIZE);
         sp.setColor(team.getColor());
         sp.draw(LD42.s.batch);
+
+        if (isAnimating()){
+            if (Vector2.dst2(hex.getScreenX(), hex.getScreenY(), currentScreenPos.x, currentScreenPos.y) > animationSpeed) {
+                Vector2 move = new Vector2(hex.getScreenX() - currentScreenPos.x, hex.getScreenY() - currentScreenPos.y);
+                move.nor();
+                move.scl(animationSpeed * Gdx.graphics.getDeltaTime());
+                currentScreenPos.add(move);
+            } else {
+                currentScreenPos.set(hex.getScreenX(), hex.getScreenY());
+            }
+        }
     }
 
     public void moveTo(Hex hex){
