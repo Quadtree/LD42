@@ -13,7 +13,7 @@ block1
   index: -1
 bolt1
   rotate: false
-  xy: 494, 110
+  xy: 52, 76
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
@@ -160,7 +160,7 @@ hb4lvl6
   index: -1
 hex24
   rotate: false
-  xy: 376, 60
+  xy: 444, 26
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
@@ -228,44 +228,86 @@ hexborder
   orig: 32, 32
   offset: 0, 0
   index: -1
-landing_target
+hexr2ein1
   rotate: false
   xy: 274, 52
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-mine1
+hexr2ein2
   rotate: false
   xy: 274, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-scout1
+hexr2ein3
   rotate: false
   xy: 308, 52
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-selected_hex
+hexrein1
   rotate: false
   xy: 308, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-tank1
+hexrein2
   rotate: false
   xy: 342, 52
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-turret
+hexrein3
   rotate: false
   xy: 342, 18
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+landing_target
+  rotate: false
+  xy: 376, 52
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+mine1
+  rotate: false
+  xy: 376, 18
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+scout1
+  rotate: false
+  xy: 410, 52
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+selected_hex
+  rotate: false
+  xy: 410, 18
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+tank1
+  rotate: false
+  xy: 444, 52
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+turret
+  rotate: false
+  xy: 478, 52
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

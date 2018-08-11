@@ -50,23 +50,23 @@ public class Hex extends HexPos {
 
         float brightness = 1f;
 
-        Sprite sp = LD42.s.getSprite("hexborder");
-        sp.setColor(brightness * owner.color.r, brightness * owner.color.g, brightness * owner.color.b, 1f);
-        sp.setBounds(sx, sy, HEX_SIZE, HEX_SIZE);
-        sp.draw(LD42.s.batch);
+        Sprite sp5 = LD42.s.getSprite("hexborder");
+        sp5.setColor(Color.WHITE);
+        sp5.setBounds(sx, sy, HEX_SIZE, HEX_SIZE);
+        sp5.draw(LD42.s.batch);
 
         Sprite sp4 = LD42.s.getSprite("hex32");
-        sp4.setColor(brightness * owner.color.r, brightness * owner.color.g, brightness * owner.color.b, 0.5f);
+        sp4.setColor(0.5f * owner.color.r, 0.5f * owner.color.g, 0.5f * owner.color.b, 1f);
         sp4.setBounds(sx, sy, HEX_SIZE, HEX_SIZE);
         sp4.draw(LD42.s.batch);
 
-        int breakAmt = MathUtils.clamp((ttl) / (MAX_TTL / 7) + 1, 1, 6);
+        int hexReinLevel = MathUtils.clamp(ttl / 5, 0, 3);
 
-        if (breakAmt > 0) {
-            Sprite sp3 = LD42.s.getSprite("hb4lvl" + breakAmt);
-            sp3.setColor(owner.color);
-            sp3.setBounds(sx, sy, HEX_SIZE, HEX_SIZE);
-            sp3.draw(LD42.s.batch);
+        if (hexReinLevel > 0){
+            Sprite sp6 = LD42.s.getSprite("hexr2ein" + hexReinLevel);
+            sp6.setColor(Color.WHITE);
+            sp6.setBounds(sx, sy, HEX_SIZE, HEX_SIZE);
+            sp6.draw(LD42.s.batch);
         }
 
         if (isOnCurrentPath){
