@@ -19,9 +19,11 @@ public abstract class Unit {
         Block
     }
 
-    int health;
+    int health = getMaxHealth();
 
     int moves = 0;
+
+    int attacks = 0;
 
     Hex hex;
 
@@ -34,6 +36,7 @@ public abstract class Unit {
 
     public void turnStart(){
         moves = getMaxMoves();
+        if (getAttack() > 0) attacks = 1;
     }
 
     public void turn(){
@@ -142,5 +145,13 @@ public abstract class Unit {
     public Unit setCurrentDestination(Hex currentDestination) {
         this.currentDestination = currentDestination;
         return this;
+    }
+
+    public int getMaxHealth(){
+        return 1;
+    }
+
+    public int getAttack(){
+        return 0;
     }
 }

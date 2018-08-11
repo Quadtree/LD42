@@ -10,4 +10,14 @@ public class Scout extends Unit {
     public int getMaxMoves() {
         return 3;
     }
+
+    @Override
+    public int getMaxHealth() {
+        return 2;
+    }
+
+    @Override
+    public int getAttack() {
+        return 1;
+    }
 }

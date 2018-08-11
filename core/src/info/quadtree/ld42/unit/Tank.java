@@ -10,4 +10,14 @@ public class Tank extends Unit {
     public int getMaxMoves() {
         return 1;
     }
+
+    @Override
+    public int getMaxHealth() {
+        return 3;
+    }
+
+    @Override
+    public int getAttack() {
+        return 3;
+    }
 }
