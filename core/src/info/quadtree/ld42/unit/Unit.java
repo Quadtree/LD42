@@ -67,7 +67,8 @@ public abstract class Unit {
         sp.draw(LD42.s.batch);
 
         if (currentPath != null && isAtDestination()){
-            animationSpeed = 20f;
+            animationSpeed = 200f;
+            isAccelerating = false;
 
             if (currentPath.get(0).unit == null && moves > 0) {
                 moveTo(currentPath.get(0));

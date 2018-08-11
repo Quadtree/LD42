@@ -46,10 +46,14 @@ public class Hex extends HexPos {
             sp2.draw(LD42.s.batch);
         }
 
-        if (unit != null)
-            unit.render();
+
 
         //LD42.s.batch.draw(sp, sx, sy, HEX_SIZE, HEX_SIZE);
+    }
+
+    public void render2(){
+        if (unit != null)
+            unit.render();
     }
 
     public int getScreenY() {
