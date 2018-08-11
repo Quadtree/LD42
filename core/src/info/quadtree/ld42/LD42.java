@@ -127,6 +127,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		Optional<Hex> th = gs.getHexAtScreenPos(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
 
 		th.ifPresent(it -> {
+			gs.selectedUnit = null;
+
 			if (gs.selectedUnitTypeToPlace != null){
 				if (it.owner == Team.Nobody || it.owner == Team.Overminers) {
 					Unit.factory(gs.selectedUnitTypeToPlace).setTeam(Team.Overminers).moveTo(it);
