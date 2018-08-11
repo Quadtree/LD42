@@ -197,7 +197,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 			}
 
 			if (button == Input.Buttons.RIGHT) {
-				if (gs.selectedUnit != null){
+				if (gs.selectedUnit != null && !gs.selectedUnit.isAnimating()){
 					gs.selectedUnit.setCurrentDestination(it);
 					gs.selectedUnit.executeMoves();
 					gs.selectedUnit = null;
