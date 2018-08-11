@@ -3,6 +3,7 @@ package info.quadtree.ld42.unit;
 import com.badlogic.gdx.ai.pfa.DefaultGraphPath;
 import com.badlogic.gdx.ai.pfa.GraphPath;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 import info.quadtree.ld42.Hex;
 import info.quadtree.ld42.LD42;
 import info.quadtree.ld42.Team;
@@ -31,6 +32,10 @@ public abstract class Unit {
 
     Team team = Team.Contested;
 
+    Vector2 currentScreenPos;
+    boolean isAccelerating;
+    float animationSpeed;
+
     public Unit(){
     }
 
@@ -47,14 +52,14 @@ public abstract class Unit {
         if (LD42.s.gs.selectedUnit == this){
             Sprite sp = LD42.s.getSprite("selected_hex");
 
-            sp.setBounds(hex.getScreenX(), hex.getScreenY(), Hex.HEX_SIZE, Hex.HEX_SIZE);
+            sp.setBounds(currentScreenPos.x, currentScreenPos.y, Hex.HEX_SIZE, Hex.HEX_SIZE);
             sp.setColor(team.getColor());
             sp.draw(LD42.s.batch);
         }
 
         Sprite sp = LD42.s.getSprite(getMainGraphicName());
 
-        sp.setBounds(hex.getScreenX(), hex.getScreenY(), Hex.HEX_SIZE, Hex.HEX_SIZE);
+        sp.setBounds(currentScreenPos.x, currentScreenPos.y, Hex.HEX_SIZE, Hex.HEX_SIZE);
         sp.setColor(team.getColor());
         sp.draw(LD42.s.batch);
     }
@@ -179,5 +184,15 @@ public abstract class Unit {
 
     public int getCost(){
         return 0;
+    }
+
+    public void startFall(){
+        currentScreenPos = new Vector2(hex.getScreenX(), hex.getScreenY() + 900);
+        isAccelerating = true;
+        animationSpeed = 400f;
+    }
+
+    public boolean isAnimating(){
+        return Vector2.dst2(hex.getScreenX(), hex.getScreenY(), currentScreenPos.x, currentScreenPos.y) > 1;
     }
 }

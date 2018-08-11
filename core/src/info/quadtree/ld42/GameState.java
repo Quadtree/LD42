@@ -102,7 +102,9 @@ public class GameState implements IndexedGraph<Hex> {
                     if (MathUtils.random(distToSide) == 0) deleteHex(it.x, it.y);
                 });
 
-        new Mine().setTeam(Team.DigCorp).moveTo(Arrays.stream(hexes).filter(Objects::nonNull).findAny().get());
+        Unit mine = new Mine();
+        mine.setTeam(Team.DigCorp).moveTo(Arrays.stream(hexes).filter(Objects::nonNull).findAny().get());
+        mine.startFall();
 
         recomputeOwnership();
 
