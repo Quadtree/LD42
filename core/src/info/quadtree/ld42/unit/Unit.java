@@ -188,6 +188,12 @@ public abstract class Unit {
     }
 
     public void attack(Unit other){
+        if (other instanceof Mine){
+            other.setTeam(this.getTeam());
+            LD42.s.gs.recomputeOwnership();
+            return;
+        }
+
         other.health -= getAttack();
 
         if (other.health <= 0){
