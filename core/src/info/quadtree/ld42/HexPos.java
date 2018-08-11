@@ -1,8 +1,8 @@
 package info.quadtree.ld42;
 
 public class HexPos {
-    int x;
-    int y;
+    final int x;
+    final int y;
 
     public HexPos(int x, int y) {
         this.x = x;

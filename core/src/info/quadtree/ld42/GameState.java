@@ -88,7 +88,14 @@ public class GameState implements IndexedGraph<Hex> {
 
     public Hex getHex(int x, int y){
         if (x < 2 || y < 2 || x >= GRID_WIDTH - 2 || y >= GRID_HEIGHT - 2) return null;
-        return hexes[x * GRID_WIDTH + y];
+        Hex ret = hexes[x * GRID_WIDTH + y];
+
+        if (ret != null) {
+            assert (ret.x == x);
+            assert (ret.y == y);
+        }
+
+        return ret;
     }
 
     public void setHex(Hex hex){
@@ -96,6 +103,11 @@ public class GameState implements IndexedGraph<Hex> {
         int y = hex.y;
         if (x < 0 || y < 0 || x >= GRID_WIDTH || y >= GRID_HEIGHT) return;
         hexes[x * GRID_WIDTH + y] = hex;
+
+        if (hex != null) {
+            assert (hex.x == x);
+            assert (hex.y == y);
+        }
     }
 
     public void deleteHex(int x, int y){
