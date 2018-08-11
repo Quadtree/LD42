@@ -6,70 +6,77 @@ filter: Nearest,Nearest
 repeat: none
 block1
   rotate: false
-  xy: 52, 18
+  xy: 52, 28
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
+bolt1
+  rotate: false
+  xy: 2, 2
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
 hex24
   rotate: false
-  xy: 324, 26
+  xy: 324, 36
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
 hex32
   rotate: false
-  xy: 86, 18
+  xy: 86, 28
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 hex48
   rotate: false
-  xy: 2, 2
+  xy: 2, 12
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 landing_target
   rotate: false
-  xy: 120, 18
+  xy: 120, 28
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 mine1
   rotate: false
-  xy: 154, 18
+  xy: 154, 28
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 scout1
   rotate: false
-  xy: 188, 18
+  xy: 188, 28
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 selected_hex
   rotate: false
-  xy: 222, 18
+  xy: 222, 28
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 tank1
   rotate: false
-  xy: 256, 18
+  xy: 256, 28
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 turret
   rotate: false
-  xy: 290, 18
+  xy: 290, 28
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

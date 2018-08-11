@@ -121,7 +121,7 @@ public class GameState implements IndexedGraph<Hex> {
             controllerMap.put(t, new AITurnController(t));
         }
 
-        //controllerMap.put(Team.Overminers, new TurnController(Team.Overminers));
+        controllerMap.put(Team.Overminers, new TurnController(Team.Overminers));
 
         money.put(Team.Nobody, 0);
         points.put(Team.Nobody, 0);
@@ -197,6 +197,7 @@ public class GameState implements IndexedGraph<Hex> {
 
         Arrays.stream(hexes).filter(Objects::nonNull).sorted(Comparator.comparingInt(Hex::getY).reversed()).forEach(Hex::render);
         Arrays.stream(hexes).filter(Objects::nonNull).sorted(Comparator.comparingInt(Hex::getY).reversed()).forEach(Hex::render2);
+        Arrays.stream(hexes).filter(Objects::nonNull).sorted(Comparator.comparingInt(Hex::getY).reversed()).forEach(Hex::render3);
     }
 
     public Optional<Hex> getHexAtScreenPos(int x, int y){

@@ -71,6 +71,10 @@ public class Hex extends HexPos {
             unit.render();
     }
 
+    public void render3(){
+        if (unit != null) unit.render3();
+    }
+
     public int getScreenY() {
         return getY() * (HEX_SIZE / 2 - 1) - (int)fallenDistance + (wiggleY);
     }

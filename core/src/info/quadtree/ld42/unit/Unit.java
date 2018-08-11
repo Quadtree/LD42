@@ -3,6 +3,7 @@ package info.quadtree.ld42.unit;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.pfa.DefaultGraphPath;
 import com.badlogic.gdx.ai.pfa.GraphPath;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import info.quadtree.ld42.Hex;
@@ -38,6 +39,11 @@ public abstract class Unit {
     float animationSpeed;
 
     List<Hex> currentPath = null;
+
+    Unit currentAttackTarget;
+    float attackAnimationStatus = 0f;
+
+    private static final float ATTACK_ANIM_DURATION = 0.3f;
 
     public Unit(){
     }
@@ -97,23 +103,45 @@ public abstract class Unit {
         }
 
         if (isAnimating()){
-            float moveDist = animationSpeed * Gdx.graphics.getDeltaTime();
-            if (Vector2.dst2(hex.getScreenX(), hex.getScreenY(), currentScreenPos.x, currentScreenPos.y) > moveDist*moveDist) {
-                Vector2 move = new Vector2(hex.getScreenX() - currentScreenPos.x, hex.getScreenY() - currentScreenPos.y);
-                move.nor();
-                move.scl(moveDist);
-                currentScreenPos.add(move);
-            } else {
-                currentScreenPos.set(hex.getScreenX(), hex.getScreenY());
-            }
+            if (!isAtDestination()) {
+                float moveDist = animationSpeed * Gdx.graphics.getDeltaTime();
+                if (Vector2.dst2(hex.getScreenX(), hex.getScreenY(), currentScreenPos.x, currentScreenPos.y) > moveDist * moveDist) {
+                    Vector2 move = new Vector2(hex.getScreenX() - currentScreenPos.x, hex.getScreenY() - currentScreenPos.y);
+                    move.nor();
+                    move.scl(moveDist);
+                    currentScreenPos.add(move);
+                } else {
+                    currentScreenPos.set(hex.getScreenX(), hex.getScreenY());
+                }
 
-            if (isAccelerating){
-                animationSpeed += 400f * Gdx.graphics.getDeltaTime();
-            }
+                if (isAccelerating) {
+                    animationSpeed += 400f * Gdx.graphics.getDeltaTime();
+                }
 
-            if (!isAnimating() && this instanceof Mine){
-                LD42.s.gs.recomputeOwnership();
+                if (!isAnimating() && this instanceof Mine) {
+                    LD42.s.gs.recomputeOwnership();
+                }
+            } else if (currentAttackTarget != null) {
+                attackAnimationStatus += Gdx.graphics.getDeltaTime();
+
+                if (attackAnimationStatus >= ATTACK_ANIM_DURATION){
+                    finishAttack(currentAttackTarget);
+                    currentAttackTarget = null;
+                }
             }
+        }
+    }
+
+    public void render3(){
+        if (currentAttackTarget != null){
+            float pctThere = attackAnimationStatus / ATTACK_ANIM_DURATION;
+
+            Vector2 pos = currentScreenPos.cpy().scl(1 - pctThere).add(currentAttackTarget.currentScreenPos.cpy().scl(pctThere)).add(16, 16);
+
+            Sprite sp2 = LD42.s.getSprite("bolt1");
+            sp2.setBounds(pos.x - 4, pos.y - 4, 8, 8);
+            sp2.setColor(Color.WHITE);
+            sp2.draw(LD42.s.batch);
         }
     }
 
@@ -188,6 +216,11 @@ public abstract class Unit {
     }
 
     public void attack(Unit other){
+        currentAttackTarget = other;
+        attackAnimationStatus = 0f;
+    }
+
+    public void finishAttack(Unit other){
         if (other instanceof Mine){
             other.setTeam(this.getTeam());
             LD42.s.gs.recomputeOwnership();
@@ -235,7 +268,7 @@ public abstract class Unit {
     }
 
     public boolean isAnimating(){
-        return !isAtDestination() || currentPath != null;
+        return !isAtDestination() || currentPath != null || currentAttackTarget != null;
     }
 
     public boolean isAtDestination(){
