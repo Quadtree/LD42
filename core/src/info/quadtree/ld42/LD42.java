@@ -118,6 +118,13 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+
+		if (gs.selectedUnitTypeToPlace != null){
+			gs.getHexAtScreenPos(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY()).ifPresent(it -> {
+				Unit.factory(gs.selectedUnitTypeToPlace).moveTo(it);
+				gs.selectedUnitTypeToPlace = null;
+			});
+		}
 		return false;
 	}
 
