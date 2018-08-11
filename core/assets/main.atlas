@@ -160,7 +160,7 @@ hb4lvl6
   index: -1
 hex24
   rotate: false
-  xy: 444, 26
+  xy: 478, 26
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
@@ -284,6 +284,13 @@ mine1
   orig: 32, 32
   offset: 0, 0
   index: -1
+mine1_flag
+  rotate: false
+  xy: 410, 52
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 rock1
   rotate: false
   xy: 494, 102
@@ -293,28 +300,28 @@ rock1
   index: -1
 scout1
   rotate: false
-  xy: 410, 52
+  xy: 410, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 selected_hex
   rotate: false
-  xy: 410, 18
+  xy: 444, 52
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 tank1
   rotate: false
-  xy: 444, 52
+  xy: 478, 52
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 turret
   rotate: false
-  xy: 478, 52
+  xy: 444, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

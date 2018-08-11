@@ -68,8 +68,15 @@ public abstract class Unit {
 
         Sprite sp = LD42.s.getSprite(getMainGraphicName());
         sp.setBounds(currentScreenPos.x, currentScreenPos.y, Hex.HEX_SIZE, Hex.HEX_SIZE);
-        sp.setColor(team.getColor());
+        sp.setColor(Color.WHITE);
         sp.draw(LD42.s.batch);
+
+        if (getFlagGraphicName() != null){
+            Sprite sp4 = LD42.s.getSprite(getFlagGraphicName());
+            sp4.setBounds(currentScreenPos.x, currentScreenPos.y, Hex.HEX_SIZE, Hex.HEX_SIZE);
+            sp4.setColor(team.getColor());
+            sp4.draw(LD42.s.batch);
+        }
 
         if (isAccelerating && isAnimating()){
             Sprite sp2 = LD42.s.getSprite("landing_target");
@@ -160,6 +167,7 @@ public abstract class Unit {
     }
 
     public abstract String getMainGraphicName();
+    public String getFlagGraphicName(){ return null; }
 
     public static Unit factory(UnitType type){
         switch (type){

@@ -20,4 +20,9 @@ public class Mine extends Unit {
     public int getCost() {
         return 15;
     }
+
+    @Override
+    public String getFlagGraphicName() {
+        return "mine1_flag";
+    }
 }

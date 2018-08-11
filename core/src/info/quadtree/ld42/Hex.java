@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 import info.quadtree.ld42.unit.Mine;
 import info.quadtree.ld42.unit.Unit;
 
@@ -35,24 +34,9 @@ public class Hex extends HexPos {
 
     int wiggleX, wiggleY;
 
-    Vector2 rockPos[];
-
     public Hex(int x, int y, int ttl){
         super(x, y);
         this.ttl = ttl;
-
-        rockPos = new Vector2[6];
-
-        rockPos[0] = new Vector2(8,6);
-        rockPos[1] = new Vector2(21,6);
-        rockPos[2] = new Vector2(5,16);
-        rockPos[3] = new Vector2(32 - 5,16);
-        rockPos[4] = new Vector2(8,32 - 6);
-        rockPos[5] = new Vector2(21,32 - 6);
-
-        for (int i=0;i<rockPos.length;++i){
-            rockPos[i].sub(16, 16);
-        }
     }
 
     public void render(){
@@ -66,7 +50,7 @@ public class Hex extends HexPos {
 
         float brightness = 1f;
 
-        /*Sprite sp5 = LD42.s.getSprite("hexborder");
+        Sprite sp5 = LD42.s.getSprite("hexborder");
         sp5.setColor(Color.WHITE);
         sp5.setBounds(sx, sy, HEX_SIZE, HEX_SIZE);
         sp5.draw(LD42.s.batch);
@@ -82,15 +66,6 @@ public class Hex extends HexPos {
             Sprite sp6 = LD42.s.getSprite("hexr2ein" + hexReinLevel);
             sp6.setColor(Color.WHITE);
             sp6.setBounds(sx, sy, HEX_SIZE, HEX_SIZE);
-            sp6.draw(LD42.s.batch);
-        }*/
-
-        int hexReinLevel = MathUtils.clamp(ttl / 5, 0, 3);
-
-        for (int i=0;i<hexReinLevel+1;++i){
-            Sprite sp6 = LD42.s.getSprite("rock1");
-            sp6.setColor(Color.WHITE);
-            sp6.setBounds(sx + rockPos[i].x + HEX_SIZE / 2f - 8, sy + rockPos[i].y + HEX_SIZE / 2f - 8, 16, 16);
             sp6.draw(LD42.s.batch);
         }
 
