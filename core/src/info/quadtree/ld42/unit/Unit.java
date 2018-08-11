@@ -232,4 +232,8 @@ public abstract class Unit {
     public boolean isAtDestination(){
         return Vector2.dst2(hex.getScreenX(), hex.getScreenY(), currentScreenPos.x, currentScreenPos.y) <= 1;
     }
+
+    public int getMoves() {
+        return moves;
+    }
 }

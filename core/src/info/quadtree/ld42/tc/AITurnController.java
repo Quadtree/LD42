@@ -6,9 +6,7 @@ import info.quadtree.ld42.Team;
 import info.quadtree.ld42.Util;
 import info.quadtree.ld42.unit.*;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class AITurnController extends TurnController {
@@ -21,12 +19,16 @@ public class AITurnController extends TurnController {
         super.turnStart();
 
         phase = Phase.DropMinePhase;
+        cannotMove = new HashSet<>();
     }
 
     Phase phase;
 
+    Set<Unit> cannotMove;
+
     enum Phase {
         DropMinePhase,
+        AttackPhase,
         EndTurnPhase
     }
 
@@ -40,9 +42,9 @@ public class AITurnController extends TurnController {
             long curScouts = LD42.s.gs.unitStream().filter(it -> it.getTeam() == team && it instanceof Scout).count();
             long curTurrets = LD42.s.gs.unitStream().filter(it -> it.getTeam() == team && it instanceof Turret).count();
 
-            if (curTanks < curMines / 2){
+            if (false && curTanks < curMines / 2){
                 if (!spawnMilitary(Unit.UnitType.Tank)) nextPhase();
-            } else if (curScouts < curMines / 2){
+            } else if (curScouts < curMines / 1){
                 if (!spawnMilitary(Unit.UnitType.Scout)) nextPhase();
             } else if (curTurrets < curMines / 2){
                 if (!spawnTurret()) nextPhase();
@@ -50,6 +52,25 @@ public class AITurnController extends TurnController {
                 LD42.s.gs.hexStream().max(Comparator.comparingInt(this::getHexValue)).ifPresent(bestHex -> {
                     if (!team.dropUnit(bestHex, Unit.UnitType.Mine)) nextPhase();
                 });
+            }
+        }
+
+        if (phase == Phase.AttackPhase){
+            if (LD42.s.gs.unitStream().noneMatch(Unit::isAnimating)) {
+                Optional<Unit> u = LD42.s.gs.unitStream().filter(it -> it.getTeam() == team && it.getMoves() > 0 && !cannotMove.contains(it)).findAny();
+
+                if (u.isPresent()){
+                    Optional<Unit> target = LD42.s.gs.unitStream().filter(it -> it.getTeam() != team).min(Comparator.comparingInt(it -> u.get().pathTo(it.getHex()).size()));
+
+                    if (target.isPresent()){
+                        u.get().setCurrentDestination(target.get().getHex());
+                        u.get().executeMoves();
+                    } else {
+                        cannotMove.add(u.get());
+                    }
+                } else {
+                    nextPhase();
+                }
             }
         }
 
