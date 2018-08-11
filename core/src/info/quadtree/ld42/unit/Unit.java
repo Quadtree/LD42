@@ -78,6 +78,10 @@ public abstract class Unit {
             if (isAccelerating){
                 animationSpeed += 400f * Gdx.graphics.getDeltaTime();
             }
+
+            if (!isAnimating() && this instanceof Mine){
+                LD42.s.gs.recomputeOwnership();
+            }
         }
     }
 

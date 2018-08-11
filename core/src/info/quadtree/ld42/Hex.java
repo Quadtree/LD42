@@ -79,7 +79,7 @@ public class Hex extends HexPos {
         ));
 
         allNeighbors.forEach(it -> {
-            if (it.unit instanceof Mine){
+            if (it.unit instanceof Mine && !it.unit.isAnimating()){
                 if (owner == Team.Nobody){
                     owner = it.unit.getTeam();
                 } else if (it.unit.getTeam() != owner) {
