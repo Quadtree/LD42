@@ -68,7 +68,7 @@ public class GameState {
                     if (MathUtils.random(distToSide) == 0) deleteHex(it.x, it.y);
                 });
 
-        new Mine().moveTo(Arrays.stream(hexes).filter(Objects::nonNull).findAny().get());
+        new Mine().setTeam(Team.DigCorp).moveTo(Arrays.stream(hexes).filter(Objects::nonNull).findAny().get());
 
         recomputeOwnership();
     }

@@ -17,7 +17,6 @@ public class Hex extends HexPos {
     public Unit unit;
 
     public Team owner = Team.Nobody;
-    boolean multipleOwners = false;
 
     public Hex(int x, int y, int ttl){
         super(x, y);
@@ -28,7 +27,7 @@ public class Hex extends HexPos {
         int sx = getScreenX();
         int sy = getScreenY();
 
-        float brightness = MathUtils.clamp(ttl / 30f, 0f, 1f);
+        float brightness = MathUtils.clamp(ttl / 30f, 0.15f, 1f);
 
         Sprite sp = LD42.s.getSprite("hex32");
         sp.setColor(brightness * owner.color.r, brightness * owner.color.g, brightness * owner.color.b, 1f);
@@ -55,16 +54,14 @@ public class Hex extends HexPos {
 
     public void recalcOwnership(){
         owner = Team.Nobody;
-        multipleOwners = false;
 
         Arrays.stream(getNeighbors()).filter(it -> it instanceof Hex).flatMap(it -> Arrays.stream(((Hex)it).getNeighbors())).distinct().forEach(it -> {
             if (it instanceof Hex){
                 if (((Hex) it).unit instanceof Mine){
-                    if (owner == Team.Nobody && !multipleOwners){
+                    if (owner == Team.Nobody){
                         owner = ((Hex) it).unit.getTeam();
-                    } else {
-                        owner = Team.Nobody;
-                        multipleOwners = true;
+                    } else if (((Hex) it).unit.getTeam() != owner) {
+                        owner = Team.Contested;
                     }
                 }
             }
