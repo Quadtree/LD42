@@ -61,10 +61,16 @@ public abstract class Unit {
         }
 
         Sprite sp = LD42.s.getSprite(getMainGraphicName());
-
         sp.setBounds(currentScreenPos.x, currentScreenPos.y, Hex.HEX_SIZE, Hex.HEX_SIZE);
         sp.setColor(team.getColor());
         sp.draw(LD42.s.batch);
+
+        if (isAccelerating && isAnimating()){
+            Sprite sp2 = LD42.s.getSprite("landing_target");
+            sp2.setBounds(hex.getScreenX(), hex.getScreenY(), Hex.HEX_SIZE, Hex.HEX_SIZE);
+            sp2.setColor(team.getColor());
+            sp2.draw(LD42.s.batch);
+        }
 
         if (currentPath != null && isAtDestination()){
             animationSpeed = 200f;

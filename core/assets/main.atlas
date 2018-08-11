@@ -1,68 +1,75 @@
 
 main.png
-size: 128,128
+size: 512,64
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 block1
   rotate: false
-  xy: 2, 36
+  xy: 52, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 hex24
   rotate: false
-  xy: 70, 26
+  xy: 324, 26
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
 hex32
   rotate: false
-  xy: 52, 86
+  xy: 86, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 hex48
   rotate: false
-  xy: 2, 70
+  xy: 2, 2
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
+landing_target
+  rotate: false
+  xy: 120, 18
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 mine1
   rotate: false
-  xy: 2, 2
+  xy: 154, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 scout1
   rotate: false
-  xy: 86, 86
+  xy: 188, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 selected_hex
   rotate: false
-  xy: 36, 36
+  xy: 222, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 tank1
   rotate: false
-  xy: 36, 2
+  xy: 256, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 turret
   rotate: false
-  xy: 70, 52
+  xy: 290, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

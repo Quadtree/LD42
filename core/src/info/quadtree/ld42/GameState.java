@@ -114,7 +114,7 @@ public class GameState implements IndexedGraph<Hex> {
         turnOrder.add(Team.InterstellarElectric);
 
         for(Team t : turnOrder){
-            money.put(t, 20);
+            money.put(t, 0);
             points.put(t, 0);
             controllerMap.put(t, new AITurnController());
         }
