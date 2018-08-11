@@ -27,6 +27,8 @@ public class Hex extends HexPos {
     float fallSpeed = 0;
     float fallSpeedModifier = MathUtils.random(0.8f, 1.2f);
 
+    int wiggleX, wiggleY;
+
     public Hex(int x, int y, int ttl){
         super(x, y);
         this.ttl = ttl;
@@ -65,11 +67,11 @@ public class Hex extends HexPos {
     }
 
     public int getScreenY() {
-        return getY() * (HEX_SIZE / 2 - 1) - (int)fallenDistance;
+        return getY() * (HEX_SIZE / 2 - 1) - (int)fallenDistance + (ttl <= 1 ? MathUtils.random(-1, 1) : 0);
     }
 
     public int getScreenX() {
-        return getX() * (HEX_SIZE * 3 / 2 - 2) + ((getY() % 2) * (HEX_SIZE * 3 / 2 / 2 - 1));
+        return getX() * (HEX_SIZE * 3 / 2 - 2) + ((getY() % 2) * (HEX_SIZE * 3 / 2 / 2 - 1)) + (ttl <= 1 ? MathUtils.random(-1, 1) : 0);
     }
 
     public int getTtl() {
