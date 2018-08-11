@@ -158,4 +158,8 @@ public class Hex extends HexPos {
             };
         }
     }
+
+    public Stream<Hex> getNStream(){
+        return Arrays.stream(getNeighbors()).filter(it -> it instanceof Hex).map(it -> (Hex)it);
+    }
 }
