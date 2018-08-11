@@ -82,4 +82,8 @@ public abstract class Unit {
     public Hex getHex() {
         return hex;
     }
+
+    public boolean canBeSelected(){
+        return true;
+    }
 }

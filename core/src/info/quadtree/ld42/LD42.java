@@ -158,7 +158,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 					gs.recomputeOwnership();
 				}
 			} else {
-				if (it.unit != null && it.unit.getTeam() == Team.Overminers){
+				if (it.unit != null && it.unit.getTeam() == Team.Overminers && it.unit.canBeSelected()){
 					gs.selectedUnit = it.unit;
 				}
 			}

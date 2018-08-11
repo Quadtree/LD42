@@ -5,4 +5,9 @@ public class Mine extends Unit {
     public String getMainGraphicName() {
         return "mine1";
     }
+
+    @Override
+    public boolean canBeSelected() {
+        return false;
+    }
 }
