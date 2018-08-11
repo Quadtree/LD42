@@ -1,6 +1,11 @@
 package info.quadtree.ld42;
 
+import com.badlogic.gdx.ai.pfa.Connection;
+import com.badlogic.gdx.ai.pfa.DefaultConnection;
+import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
+import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Array;
 import info.quadtree.ld42.unit.Mine;
 import info.quadtree.ld42.unit.Unit;
 
@@ -11,7 +16,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-public class GameState {
+public class GameState implements IndexedGraph<Hex> {
     Hex[] hexes;
 
     public static final int GRID_WIDTH = 22;
@@ -22,6 +27,8 @@ public class GameState {
     Unit.UnitType selectedUnitTypeToPlace = null;
 
     public Unit selectedUnit = null;
+
+    IndexedAStarPathFinder<Hex> pathFinder;
 
     public GameState(){
     }
@@ -42,6 +49,8 @@ public class GameState {
     }
 
     public void generate(){
+        pathFinder = new IndexedAStarPathFinder<>(this);
+
         while(true) {
             hexes = new Hex[GRID_WIDTH * GRID_HEIGHT];
 
@@ -105,5 +114,26 @@ public class GameState {
 
     public void recomputeOwnership(){
         Arrays.stream(hexes).filter(Objects::nonNull).forEach(Hex::recalcOwnership);
+    }
+
+    @Override
+    public int getIndex(Hex node) {
+        return node.x * GRID_WIDTH + node.y;
+    }
+
+    @Override
+    public int getNodeCount() {
+        return GRID_WIDTH * GRID_HEIGHT;
+    }
+
+    @Override
+    public Array<Connection<Hex>> getConnections(Hex fromNode) {
+        Array<Connection<Hex>> ret = new Array<>();
+
+        Arrays.stream(fromNode.getNeighbors()).forEach(it ->{
+            if (it instanceof Hex) ret.add(new DefaultConnection<>(fromNode, (Hex)it));
+        });
+
+        return ret;
     }
 }
