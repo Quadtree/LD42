@@ -56,7 +56,12 @@ public class Hex extends HexPos {
             sp2.draw(LD42.s.batch);
         }
 
-
+        if (ttl <= 1){
+            if (MathUtils.randomBoolean(Gdx.graphics.getDeltaTime() * 16)){
+                //wiggleX = MathUtils.random(-1, 1);
+                wiggleY = MathUtils.random(-1, 1);
+            }
+        }
 
         //LD42.s.batch.draw(sp, sx, sy, HEX_SIZE, HEX_SIZE);
     }
@@ -67,11 +72,11 @@ public class Hex extends HexPos {
     }
 
     public int getScreenY() {
-        return getY() * (HEX_SIZE / 2 - 1) - (int)fallenDistance + (ttl <= 1 ? MathUtils.random(-1, 1) : 0);
+        return getY() * (HEX_SIZE / 2 - 1) - (int)fallenDistance + (wiggleY);
     }
 
     public int getScreenX() {
-        return getX() * (HEX_SIZE * 3 / 2 - 2) + ((getY() % 2) * (HEX_SIZE * 3 / 2 / 2 - 1)) + (ttl <= 1 ? MathUtils.random(-1, 1) : 0);
+        return getX() * (HEX_SIZE * 3 / 2 - 2) + ((getY() % 2) * (HEX_SIZE * 3 / 2 / 2 - 1)) + (wiggleX);
     }
 
     public int getTtl() {
