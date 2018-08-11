@@ -10,10 +10,7 @@ import com.badlogic.gdx.utils.Array;
 import info.quadtree.ld42.unit.Mine;
 import info.quadtree.ld42.unit.Unit;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -32,7 +29,17 @@ public class GameState implements IndexedGraph<Hex> {
 
     public IndexedAStarPathFinder<Hex> pathFinder;
 
+    List<Team> turnOrder = new ArrayList<>();
+    Team currentTurnTeam;
+
     public GameState(){
+
+    }
+
+    public void endTurn(){
+        currentTurnTeam.endTurn();
+        currentTurnTeam = turnOrder.get((turnOrder.indexOf(currentTurnTeam) + 1) % turnOrder.size());
+        currentTurnTeam.beginTurn();
     }
 
     private void growFrom(Hex it){
@@ -84,6 +91,16 @@ public class GameState implements IndexedGraph<Hex> {
         new Mine().setTeam(Team.DigCorp).moveTo(Arrays.stream(hexes).filter(Objects::nonNull).findAny().get());
 
         recomputeOwnership();
+
+        turnOrder.add(Team.Overminers);
+        turnOrder.add(Team.DigCorp);
+        turnOrder.add(Team.Underminers);
+        turnOrder.add(Team.InterstellarElectric);
+
+        Collections.shuffle(turnOrder);
+
+        currentTurnTeam = turnOrder.get(0);
+        currentTurnTeam.beginTurn();
     }
 
     public Hex getHex(int x, int y){
@@ -131,6 +148,11 @@ public class GameState implements IndexedGraph<Hex> {
     }
 
     public void render(){
+        if (currentTurnTeam.aiControlled) {
+            currentTurnTeam.takeTurn();
+            endTurn();
+        }
+
         Arrays.stream(hexes).filter(Objects::nonNull).sorted(Comparator.comparingInt(Hex::getY)).forEach(Hex::render);
     }
 

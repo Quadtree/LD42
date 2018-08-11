@@ -130,6 +130,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 		if (keycode == Input.Keys.K) gs.getHexAtScreenPos(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY()).ifPresent(it -> it.ttl = 1000);
 
+		if (keycode == Input.Keys.ENTER) gs.endTurn();
+
 		return false;
 	}
 

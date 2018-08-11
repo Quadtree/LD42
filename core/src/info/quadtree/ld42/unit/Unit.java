@@ -21,7 +21,7 @@ public abstract class Unit {
 
     int health;
 
-    int moves;
+    int moves = 0;
 
     Hex hex;
 
@@ -30,7 +30,6 @@ public abstract class Unit {
     Team team = Team.Contested;
 
     public Unit(){
-        turnStart();
     }
 
     public void turnStart(){
