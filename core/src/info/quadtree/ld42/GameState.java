@@ -7,22 +7,23 @@ import java.util.Objects;
 public class GameState {
     Hex[] hexes;
 
-    public static final int gridSize = 20;
+    public static final int GRID_WIDTH = 20;
+    public static final int GRID_HEIGHT = 40;
 
     public GameState(){
-        hexes = new Hex[gridSize * gridSize];
+        hexes = new Hex[GRID_WIDTH * GRID_HEIGHT];
     }
 
     public Hex getHex(int x, int y){
-        if (x < 0 || y < 0 || x >= gridSize || y >= gridSize) return null;
-        return hexes[x * gridSize + y];
+        if (x < 0 || y < 0 || x >= GRID_WIDTH || y >= GRID_HEIGHT) return null;
+        return hexes[x * GRID_WIDTH + y];
     }
 
     public void setHex(Hex hex){
         int x = hex.x;
         int y = hex.y;
-        if (x < 0 || y < 0 || x >= gridSize || y >= gridSize) return;
-        hexes[x * gridSize + y] = hex;
+        if (x < 0 || y < 0 || x >= GRID_WIDTH || y >= GRID_HEIGHT) return;
+        hexes[x * GRID_WIDTH + y] = hex;
     }
 
     public void render(){
