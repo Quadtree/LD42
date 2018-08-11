@@ -70,10 +70,13 @@ public abstract class Unit {
             animationSpeed = 200f;
             isAccelerating = false;
 
+            boolean didSomething = false;
+
             if (currentPath.get(0).unit == null && moves > 0) {
                 moveTo(currentPath.get(0));
                 currentPath.remove(0);
                 --moves;
+                didSomething = true;
             } else if (currentPath.get(0).unit != null && currentPath.get(0).unit.getTeam() != this.getTeam()) {
                 if (attacks > 0) {
                     attack(currentPath.get(0).unit);
@@ -82,7 +85,7 @@ public abstract class Unit {
                 }
             }
 
-            if (currentPath.size() == 0) currentPath = null;
+            if (currentPath.size() == 0 || !didSomething) currentPath = null;
         }
 
         if (isAnimating()){
