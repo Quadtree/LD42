@@ -1,5 +1,6 @@
 package info.quadtree.ld42;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import info.quadtree.ld42.unit.Mine;
@@ -24,12 +25,21 @@ public class Hex extends HexPos {
 
     public Team owner = Team.Nobody;
 
+    float fallenDistance = 0;
+    float fallSpeed = 0;
+    float fallSpeedModifier = MathUtils.random(0.8f, 1.2f);
+
     public Hex(int x, int y, int ttl){
         super(x, y);
         this.ttl = ttl;
     }
 
     public void render(){
+        if (ttl <= 0){
+            fallSpeed += 100f * Gdx.graphics.getDeltaTime();
+            fallenDistance += fallSpeed * fallSpeedModifier * Gdx.graphics.getDeltaTime();
+        }
+
         int sx = getScreenX();
         int sy = getScreenY();
 

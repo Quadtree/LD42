@@ -32,6 +32,8 @@ public class GameState implements IndexedGraph<Hex> {
     List<Team> turnOrder = new ArrayList<>();
     Team currentTurnTeam;
 
+    float waitForFallTime = 0f;
+
     public Map<Team, Integer> money = new EnumMap<>(Team.class);
     public Map<Team, Integer> points = new EnumMap<>(Team.class);
 
@@ -44,7 +46,11 @@ public class GameState implements IndexedGraph<Hex> {
     public void endTurn(){
         if (currentTurnTeam == turnOrder.get(3)){
             hexStream().forEach(it -> it.ttl--);
-
+            long falling = hexStream().filter(it -> it.ttl <= 0).count();
+            if (falling > 0){
+                waitForFallTime = 2f;
+                return;
+            }
             hexStream().filter(it -> it.ttl <= 0).collect(Collectors.toList()).forEach(it -> deleteHex(it.x, it.y));
 
             System.err.println("Turn num " + (++turnNum));
