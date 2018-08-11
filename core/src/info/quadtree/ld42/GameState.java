@@ -7,7 +7,7 @@ import java.util.Objects;
 public class GameState {
     Hex[] hexes;
 
-    int gridSize = 20;
+    public static final int gridSize = 20;
 
     public GameState(){
         hexes = new Hex[gridSize * gridSize];

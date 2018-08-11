@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.MathUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,11 +39,13 @@ public class LD42 extends ApplicationAdapter {
 
 		gs = new GameState();
 
-		for (int x=5;x<9;++x){
+		gs.setHex(new Hex(MathUtils.random(0, GameState.gridSize - 1), MathUtils.random(0, GameState.gridSize - 1), 1));
+
+		/*for (int x=5;x<9;++x){
 			for (int y=5;y<15;++y){
 				gs.setHex(new Hex(x,y,20));
 			}
-		}
+		}*/
 	}
 
 	@Override
