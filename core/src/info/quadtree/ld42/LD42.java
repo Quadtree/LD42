@@ -40,11 +40,9 @@ public class LD42 extends ApplicationAdapter {
 
 		gs = new GameState();
 
-		Hex hx = new Hex(MathUtils.random(0, GameState.GRID_WIDTH - 1), MathUtils.random(0, GameState.GRID_HEIGHT - 1), 1);
-		gs.setHex(hx);
-		Arrays.stream(hx.getNeighbors()).forEach(it -> {
-			gs.setHex(new Hex(it.x, it.y, 20));
-		});
+		gs.generate();
+
+
 
 		/*for (int x=5;x<9;++x){
 			for (int y=5;y<15;++y){
