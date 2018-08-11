@@ -5,4 +5,9 @@ public class Tank extends Unit {
     public String getMainGraphicName() {
         return "tank1";
     }
+
+    @Override
+    public int getMaxMoves() {
+        return 1;
+    }
 }

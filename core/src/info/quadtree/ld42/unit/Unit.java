@@ -21,11 +21,21 @@ public abstract class Unit {
 
     int health;
 
+    int moves;
+
     Hex hex;
+
+    Hex currentDestination;
 
     Team team = Team.Contested;
 
+    public Unit(){
+        turnStart();
+    }
 
+    public void turnStart(){
+        moves = getMaxMoves();
+    }
 
     public void turn(){
 
@@ -99,11 +109,35 @@ public abstract class Unit {
         List<Hex> ret = new ArrayList<>();
 
         //System.err.println("START");
-        for (int i=0;i<hexPath.getCount();++i){
+        for (int i=1;i<hexPath.getCount();++i){
             //hexPath.get(i).isOnCurrentPath = true;
             ret.add(hexPath.get(i));
         }
 
         return ret;
+    }
+
+    public void executeMoves(){
+        if (currentDestination != null && currentDestination != hex){
+            List<Hex> hexes = pathTo(currentDestination);
+            while (hexes.size() > 0 && moves > 0){
+                moveTo(hexes.get(0));
+                hexes.remove(0);
+                --moves;
+            }
+        }
+    }
+
+    public int getMaxMoves(){
+        return 0;
+    }
+
+    public Hex getCurrentDestination() {
+        return currentDestination;
+    }
+
+    public Unit setCurrentDestination(Hex currentDestination) {
+        this.currentDestination = currentDestination;
+        return this;
     }
 }

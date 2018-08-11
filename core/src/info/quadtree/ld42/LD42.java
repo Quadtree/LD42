@@ -149,17 +149,26 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		Optional<Hex> th = gs.getHexAtScreenPos(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
 
 		th.ifPresent(it -> {
-			gs.selectedUnit = null;
+			if (button == Input.Buttons.LEFT) {
+				gs.selectedUnit = null;
 
-			if (gs.selectedUnitTypeToPlace != null){
-				if (it.owner == Team.Nobody || it.owner == Team.Overminers) {
-					Unit.factory(gs.selectedUnitTypeToPlace).setTeam(Team.Overminers).moveTo(it);
-					gs.selectedUnitTypeToPlace = null;
-					gs.recomputeOwnership();
+				if (gs.selectedUnitTypeToPlace != null) {
+					if (it.owner == Team.Nobody || it.owner == Team.Overminers) {
+						Unit.factory(gs.selectedUnitTypeToPlace).setTeam(Team.Overminers).moveTo(it);
+						gs.selectedUnitTypeToPlace = null;
+						gs.recomputeOwnership();
+					}
+				} else {
+					if (it.unit != null && it.unit.getTeam() == Team.Overminers && it.unit.canBeSelected()) {
+						gs.selectedUnit = it.unit;
+					}
 				}
-			} else {
-				if (it.unit != null && it.unit.getTeam() == Team.Overminers && it.unit.canBeSelected()){
-					gs.selectedUnit = it.unit;
+			}
+
+			if (button == Input.Buttons.RIGHT) {
+				if (gs.selectedUnit != null){
+					gs.selectedUnit.setCurrentDestination(it);
+					gs.selectedUnit.executeMoves();
 				}
 			}
 		});
