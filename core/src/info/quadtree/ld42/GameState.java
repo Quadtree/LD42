@@ -48,22 +48,9 @@ public class GameState implements IndexedGraph<Hex> {
     }
 
     public void endTurn(){
-        if (currentTurnTeam == turnOrder.get(3)){
-            hexStream().forEach(it -> it.ttl--);
-            long falling = hexStream().filter(it -> it.ttl <= 0).count();
-            if (falling > 0){
-                waitForFallTime = 2f;
-                return;
-            }
-            hexStream().filter(it -> it.ttl <= 0).collect(Collectors.toList()).forEach(it -> deleteHex(it.x, it.y));
-
-            System.err.println("Turn num " + (++turnNum));
-            recomputeOwnership();
-        }
-
         currentTurnTeam.endTurn();
         currentTurnTeam = turnOrder.get((turnOrder.indexOf(currentTurnTeam) + 1) % turnOrder.size());
-        currentTurnTeam.beginTurn();
+        beginTurn();
     }
 
     private void growFrom(Hex it){
