@@ -6,9 +6,16 @@ filter: Nearest,Nearest
 repeat: none
 hex24
   rotate: false
-  xy: 52, 26
+  xy: 86, 26
   size: 24, 24
   orig: 24, 24
+  offset: 0, 0
+  index: -1
+hex32
+  rotate: false
+  xy: 52, 18
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 hex48

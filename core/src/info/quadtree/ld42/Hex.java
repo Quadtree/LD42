@@ -3,7 +3,7 @@ package info.quadtree.ld42;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Hex {
-    final int HEX_SIZE = 24;
+    final int HEX_SIZE = 32;
 
     int x, y;
     int ttl;
@@ -15,12 +15,20 @@ public class Hex {
     }
 
     public void render(){
-        int sx = x * (HEX_SIZE * 3 / 2 - 2) + ((y % 2) * (HEX_SIZE * 3 / 2 / 2 - 1));
-        int sy = y * (HEX_SIZE / 2 - 1);
+        int sx = getScreenX();
+        int sy = getScreenY();
 
-        Sprite sp = LD42.s.getSprite("hex24");
+        Sprite sp = LD42.s.getSprite("hex32");
 
         LD42.s.batch.draw(sp, sx, sy, HEX_SIZE, HEX_SIZE);
+    }
+
+    private int getScreenY() {
+        return y * (HEX_SIZE / 2 - 1);
+    }
+
+    private int getScreenX() {
+        return x * (HEX_SIZE * 3 / 2 - 2) + ((y % 2) * (HEX_SIZE * 3 / 2 / 2 - 1));
     }
 
     public int getX() {
