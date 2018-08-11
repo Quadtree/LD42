@@ -37,6 +37,8 @@ public abstract class Unit {
     boolean isAccelerating;
     float animationSpeed;
 
+    List<Hex> currentPath = null;
+
     public Unit(){
     }
 
@@ -63,6 +65,24 @@ public abstract class Unit {
         sp.setBounds(currentScreenPos.x, currentScreenPos.y, Hex.HEX_SIZE, Hex.HEX_SIZE);
         sp.setColor(team.getColor());
         sp.draw(LD42.s.batch);
+
+        if (currentPath != null){
+            if (!isAnimating()) {
+                animationSpeed = 20f;
+
+                if (currentPath.get(0).unit == null && moves > 0) {
+                    moveTo(currentPath.get(0));
+                    currentPath.remove(0);
+                    --moves;
+                } else if (currentPath.get(0).unit != null && currentPath.get(0).unit.getTeam() != this.getTeam()) {
+                    if (attacks > 0) {
+                        attack(currentPath.get(0).unit);
+                        --attacks;
+                        currentDestination = null;
+                    }
+                }
+            }
+        }
 
         if (isAnimating()){
             float moveDist = animationSpeed * Gdx.graphics.getDeltaTime();
@@ -151,25 +171,7 @@ public abstract class Unit {
 
     public void executeMoves(){
         if (currentDestination != null && currentDestination != hex){
-            List<Hex> hexes = pathTo(currentDestination);
-            while (hexes.size() > 0){
-                boolean didSomething = false;
-                if (hexes.get(0).unit == null && moves > 0) {
-                    moveTo(hexes.get(0));
-                    hexes.remove(0);
-                    --moves;
-                    didSomething = true;
-                } else if (hexes.get(0).unit != null && hexes.get(0).unit.getTeam() != this.getTeam()) {
-                    if (attacks > 0) {
-                        attack(hexes.get(0).unit);
-                        --attacks;
-                        currentDestination = null;
-                    }
-                    break;
-                }
-
-                if (!didSomething) break;
-            }
+            currentPath = pathTo(currentDestination);
         }
     }
 
@@ -214,6 +216,10 @@ public abstract class Unit {
     }
 
     public boolean isAnimating(){
-        return Vector2.dst2(hex.getScreenX(), hex.getScreenY(), currentScreenPos.x, currentScreenPos.y) > 1;
+        return !isAtDestination() || currentPath != null;
+    }
+
+    public boolean isAtDestination(){
+        return Vector2.dst2(hex.getScreenX(), hex.getScreenY(), currentScreenPos.x, currentScreenPos.y) <= 1;
     }
 }
