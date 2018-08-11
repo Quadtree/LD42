@@ -232,5 +232,9 @@ public class GameState implements IndexedGraph<Hex> {
         return Arrays.stream(hexes).filter(Objects::nonNull);
     }
 
+    public Stream<Unit> unitStream(){
+        return hexStream().map(it -> it.unit).filter(Objects::nonNull);
+    }
+
     public Heuristic<Hex> defaultHeuristic = (node, endNode) -> Math.abs(node.x - endNode.x) + Math.abs(node.y - endNode.y);
 }

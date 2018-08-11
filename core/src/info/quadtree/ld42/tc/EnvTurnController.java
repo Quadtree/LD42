@@ -2,11 +2,16 @@ package info.quadtree.ld42.tc;
 
 import com.badlogic.gdx.Gdx;
 import info.quadtree.ld42.LD42;
+import info.quadtree.ld42.Team;
 
 import java.util.stream.Collectors;
 
 public class EnvTurnController extends TurnController {
     float waitForFallTime = 0f;
+
+    public EnvTurnController(Team team) {
+        super(team);
+    }
 
     @Override
     public void turnStart() {
