@@ -222,6 +222,7 @@ public abstract class Unit {
     }
 
     public void startFall(){
+        assert (hex != null);
         currentScreenPos = new Vector2(hex.getScreenX(), hex.getScreenY() + 900);
         isAccelerating = true;
         animationSpeed = 1200f;

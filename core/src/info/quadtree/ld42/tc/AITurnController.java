@@ -62,11 +62,11 @@ public class AITurnController extends TurnController {
                 if (u.isPresent()){
                     Optional<Unit> target = LD42.s.gs.unitStream().filter(it -> it.getTeam() != team).min(Comparator.comparingInt(it -> u.get().pathTo(it.getHex()).size()));
 
+                    cannotMove.add(u.get());
+
                     if (target.isPresent()){
                         u.get().setCurrentDestination(target.get().getHex());
                         u.get().executeMoves();
-                    } else {
-                        cannotMove.add(u.get());
                     }
                 } else {
                     nextPhase();

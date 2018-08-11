@@ -62,6 +62,10 @@ public enum Team {
     }
 
     public boolean dropUnit(Hex it, Unit.UnitType type){
+        assert (it != null);
+
+        if (it.unit != null) return false;
+
         if (it.owner == Team.Nobody || it.owner == this) {
             Unit u = Unit.factory(type);
             if (LD42.s.gs.money.get(this) >= u.getCost()) {
