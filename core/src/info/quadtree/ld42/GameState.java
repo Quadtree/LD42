@@ -174,7 +174,7 @@ public class GameState implements IndexedGraph<Hex> {
             endTurn();
         }
 
-        Arrays.stream(hexes).filter(Objects::nonNull).sorted(Comparator.comparingInt(Hex::getY)).forEach(Hex::render);
+        Arrays.stream(hexes).filter(Objects::nonNull).sorted(Comparator.comparingInt(Hex::getY).reversed()).forEach(Hex::render);
     }
 
     public Optional<Hex> getHexAtScreenPos(int x, int y){

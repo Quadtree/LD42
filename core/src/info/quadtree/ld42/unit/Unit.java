@@ -65,13 +65,18 @@ public abstract class Unit {
         sp.draw(LD42.s.batch);
 
         if (isAnimating()){
-            if (Vector2.dst2(hex.getScreenX(), hex.getScreenY(), currentScreenPos.x, currentScreenPos.y) > animationSpeed) {
+            float moveDist = animationSpeed * Gdx.graphics.getDeltaTime();
+            if (Vector2.dst2(hex.getScreenX(), hex.getScreenY(), currentScreenPos.x, currentScreenPos.y) > moveDist*moveDist) {
                 Vector2 move = new Vector2(hex.getScreenX() - currentScreenPos.x, hex.getScreenY() - currentScreenPos.y);
                 move.nor();
-                move.scl(animationSpeed * Gdx.graphics.getDeltaTime());
+                move.scl(moveDist);
                 currentScreenPos.add(move);
             } else {
                 currentScreenPos.set(hex.getScreenX(), hex.getScreenY());
+            }
+
+            if (isAccelerating){
+                animationSpeed += 400f * Gdx.graphics.getDeltaTime();
             }
         }
     }
@@ -201,7 +206,7 @@ public abstract class Unit {
     public void startFall(){
         currentScreenPos = new Vector2(hex.getScreenX(), hex.getScreenY() + 900);
         isAccelerating = true;
-        animationSpeed = 400f;
+        animationSpeed = 1200f;
     }
 
     public boolean isAnimating(){
