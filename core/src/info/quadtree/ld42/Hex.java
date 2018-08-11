@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 public class Hex extends HexPos {
     public static final int HEX_SIZE = 32;
 
-    int ttl;
+    public int ttl;
 
     public Unit unit;
 

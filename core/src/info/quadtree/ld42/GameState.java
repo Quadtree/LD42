@@ -41,7 +41,9 @@ public class GameState implements IndexedGraph<Hex> {
     public Map<Team, Integer> points = new EnumMap<>(Team.class);
     public Map<Team, TurnController> controllerMap = new EnumMap<>(Team.class);
 
-    int turnNum = 0;
+    public int turnNum = 0;
+
+    boolean endTurnInProgress = false;
 
     public GameState(){
 
@@ -49,8 +51,7 @@ public class GameState implements IndexedGraph<Hex> {
 
     public void endTurn(){
         currentTurnTeam.endTurn();
-        currentTurnTeam = turnOrder.get((turnOrder.indexOf(currentTurnTeam) + 1) % turnOrder.size());
-        beginTurn();
+        endTurnInProgress = true;
     }
 
     private void growFrom(Hex it){
@@ -117,6 +118,8 @@ public class GameState implements IndexedGraph<Hex> {
         }
 
         controllerMap.put(Team.Overminers, new TurnController());
+        money.put(Team.Nobody, 0);
+        points.put(Team.Nobody, 0);
         controllerMap.put(Team.Nobody, new EnvTurnController());
 
         Collections.shuffle(turnOrder);
@@ -177,7 +180,15 @@ public class GameState implements IndexedGraph<Hex> {
     }
 
     public void render(){
-        controllerMap.get(currentTurnTeam).render();
+        if (!endTurnInProgress) {
+            controllerMap.get(currentTurnTeam).render();
+        } else {
+            if (hexStream().noneMatch(it -> it.unit != null && it.unit.isAnimating())) {
+                currentTurnTeam = turnOrder.get((turnOrder.indexOf(currentTurnTeam) + 1) % turnOrder.size());
+                beginTurn();
+                endTurnInProgress = false;
+            }
+        }
 
         Arrays.stream(hexes).filter(Objects::nonNull).sorted(Comparator.comparingInt(Hex::getY).reversed()).forEach(Hex::render);
         Arrays.stream(hexes).filter(Objects::nonNull).sorted(Comparator.comparingInt(Hex::getY).reversed()).forEach(Hex::render2);
