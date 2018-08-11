@@ -1,9 +1,14 @@
 package info.quadtree.ld42.unit;
 
+import com.badlogic.gdx.ai.pfa.DefaultGraphPath;
+import com.badlogic.gdx.ai.pfa.GraphPath;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import info.quadtree.ld42.Hex;
 import info.quadtree.ld42.LD42;
 import info.quadtree.ld42.Team;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Unit {
     public enum UnitType {
@@ -85,5 +90,20 @@ public abstract class Unit {
 
     public boolean canBeSelected(){
         return true;
+    }
+
+    public List<Hex> pathTo(Hex destHex){
+        GraphPath<Hex> hexPath = new DefaultGraphPath<>();
+        LD42.s.gs.pathFinder.searchNodePath(this.getHex(), destHex, LD42.s.gs.defaultHeuristic, hexPath);
+
+        List<Hex> ret = new ArrayList<>();
+
+        //System.err.println("START");
+        for (int i=0;i<hexPath.getCount();++i){
+            //hexPath.get(i).isOnCurrentPath = true;
+            ret.add(hexPath.get(i));
+        }
+
+        return ret;
     }
 }

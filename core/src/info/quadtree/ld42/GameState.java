@@ -30,7 +30,7 @@ public class GameState implements IndexedGraph<Hex> {
 
     public Unit selectedUnit = null;
 
-    IndexedAStarPathFinder<Hex> pathFinder;
+    public IndexedAStarPathFinder<Hex> pathFinder;
 
     public GameState(){
     }
