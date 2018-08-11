@@ -126,11 +126,32 @@ public abstract class Unit {
     public void executeMoves(){
         if (currentDestination != null && currentDestination != hex){
             List<Hex> hexes = pathTo(currentDestination);
-            while (hexes.size() > 0 && moves > 0){
-                moveTo(hexes.get(0));
-                hexes.remove(0);
-                --moves;
+            while (hexes.size() > 0){
+                boolean didSomething = false;
+                if (hexes.get(0).unit == null && moves > 0) {
+                    moveTo(hexes.get(0));
+                    hexes.remove(0);
+                    --moves;
+                    didSomething = true;
+                } else if (hexes.get(0).unit != null && hexes.get(0).unit.getTeam() != this.getTeam()) {
+                    if (attacks > 0) {
+                        attack(hexes.get(0).unit);
+                        --attacks;
+                        currentDestination = null;
+                    }
+                    break;
+                }
+
+                if (!didSomething) break;
             }
+        }
+    }
+
+    public void attack(Unit other){
+        other.health -= getAttack();
+
+        if (other.health <= 0){
+            other.hex.unit = null;
         }
     }
 
