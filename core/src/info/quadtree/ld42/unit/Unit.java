@@ -49,10 +49,10 @@ public abstract class Unit {
     public static Unit factory(UnitType type){
         switch (type){
             case Mine: return new Mine();
-            case Tank: return new Mine();
-            case Scout: return new Mine();
-            case Turret: return new Mine();
-            case Block: return new Mine();
+            case Tank: return new Tank();
+            case Scout: return new Scout();
+            case Turret: return new Turret();
+            case Block: return new Block();
         }
 
         return null;
