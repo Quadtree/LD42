@@ -196,7 +196,11 @@ public abstract class Unit {
 
     public List<Hex> pathTo(Hex destHex){
         GraphPath<Hex> hexPath = new DefaultGraphPath<>();
+        LD42.s.gs.ignoreCollisionOnDuringPathing = destHex;
+        LD42.s.gs.currentPathingTeam = getTeam();
         LD42.s.gs.pathFinder.searchNodePath(this.getHex(), destHex, LD42.s.gs.defaultHeuristic, hexPath);
+        LD42.s.gs.ignoreCollisionOnDuringPathing = null;
+        LD42.s.gs.currentPathingTeam = null;
 
         List<Hex> ret = new ArrayList<>();
 

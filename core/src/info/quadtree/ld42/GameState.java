@@ -47,6 +47,9 @@ public class GameState implements IndexedGraph<Hex> {
 
     public Team winner;
 
+    public Hex ignoreCollisionOnDuringPathing;
+    public Team currentPathingTeam;
+
     public GameState(){
 
     }
@@ -225,8 +228,18 @@ public class GameState implements IndexedGraph<Hex> {
     public Array<Connection<Hex>> getConnections(Hex fromNode) {
         Array<Connection<Hex>> ret = new Array<>();
 
-        Arrays.stream(fromNode.getNeighbors()).forEach(it ->{
-            if (it instanceof Hex) ret.add(new DefaultConnection<>(fromNode, (Hex)it));
+        assert (ignoreCollisionOnDuringPathing != null);
+
+        Arrays.stream(fromNode.getNeighbors()).forEach(it -> {
+            if (it instanceof Hex){
+                if (((Hex) it).unit == null || ((it.x == ignoreCollisionOnDuringPathing.x && it.y == ignoreCollisionOnDuringPathing.y) && ((Hex) it).unit.getTeam() != currentPathingTeam)) {
+                    Set<Team> sourceZoc = fromNode.getZonesOfControl();
+                    sourceZoc.retainAll(((Hex) it).getZonesOfControl());
+                    sourceZoc.remove(currentPathingTeam);
+
+                    if (sourceZoc.size() == 0) ret.add(new DefaultConnection<>(fromNode, (Hex) it));
+                }
+            }
         });
 
         return ret;

@@ -163,14 +163,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 		if (gs.selectedUnit != null) {
 			gs.getHexAtScreenPos(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY()).ifPresent(destHex -> {
-				GraphPath<Hex> hexPath = new DefaultGraphPath<>();
-				gs.pathFinder.searchNodePath(gs.selectedUnit.getHex(), destHex, gs.defaultHeuristic, hexPath);
-
-				//System.err.println("START");
-				for (int i=0;i<hexPath.getCount();++i){
-					hexPath.get(i).isOnCurrentPath = true;
-					//System.err.println(hexPath.get(i).getX() + "," + hexPath.get(i).getY());
-				}
+				gs.selectedUnit.pathTo(destHex).forEach(it -> it.isOnCurrentPath = true);
 			});
 		}
 

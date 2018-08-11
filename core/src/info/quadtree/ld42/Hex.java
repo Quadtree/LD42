@@ -173,4 +173,8 @@ public class Hex extends HexPos {
     public Stream<Hex> getNStream(){
         return Arrays.stream(getNeighbors()).filter(it -> it instanceof Hex).map(it -> (Hex)it);
     }
+
+    public Set<Team> getZonesOfControl(){
+        return getNStream().filter(it -> it.unit != null && it.unit.getAttack() > 0).map(it -> it.unit.getTeam()).collect(Collectors.toSet());
+    }
 }
