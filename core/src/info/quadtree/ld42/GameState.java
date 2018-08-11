@@ -32,6 +32,9 @@ public class GameState implements IndexedGraph<Hex> {
     List<Team> turnOrder = new ArrayList<>();
     Team currentTurnTeam;
 
+    public Map<Team, Integer> money = new EnumMap<>(Team.class);
+    public Map<Team, Integer> points = new EnumMap<>(Team.class);
+
     int turnNum = 0;
 
     public GameState(){
@@ -45,6 +48,7 @@ public class GameState implements IndexedGraph<Hex> {
             hexStream().filter(it -> it.ttl <= 0).collect(Collectors.toList()).forEach(it -> deleteHex(it.x, it.y));
 
             System.err.println("Turn num " + (++turnNum));
+            recomputeOwnership();
         }
 
         currentTurnTeam.endTurn();
@@ -106,6 +110,11 @@ public class GameState implements IndexedGraph<Hex> {
         turnOrder.add(Team.DigCorp);
         turnOrder.add(Team.Underminers);
         turnOrder.add(Team.InterstellarElectric);
+
+        for(Team t : turnOrder){
+            money.put(t, 20);
+            points.put(t, 0);
+        }
 
         Collections.shuffle(turnOrder);
 

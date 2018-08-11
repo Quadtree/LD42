@@ -3,12 +3,16 @@ package info.quadtree.ld42;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.ai.pfa.DefaultGraphPath;
 import com.badlogic.gdx.ai.pfa.GraphPath;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import info.quadtree.ld42.unit.Unit;
 
 import java.util.Arrays;
@@ -33,6 +37,12 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 		return assetMap.get(name);
 	}
+
+	Label.LabelStyle defaultLabelStyle;
+
+	Stage uiStage;
+
+	Label infoLabel;
 	
 	@Override
 	public void create () {
@@ -49,6 +59,13 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		mp.addProcessor(this);
 
 		Gdx.input.setInputProcessor(mp);
+
+		defaultLabelStyle = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
+
+		uiStage = new Stage();
+		infoLabel = new Label("TEST", defaultLabelStyle);
+		infoLabel.setPosition(20, Gdx.graphics.getHeight() - 40);
+		uiStage.addActor(infoLabel);
 
 		/*for (int x=5;x<9;++x){
 			for (int y=5;y<15;++y){
@@ -112,6 +129,11 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		batch.begin();
 		gs.render();
 		batch.end();
+
+		infoLabel.setText("Money: $" + gs.money.get(Team.Overminers) + "   Ore: " + gs.points.get(Team.Overminers) + "   Turn: " + gs.turnNum);
+
+		uiStage.act();
+		uiStage.draw();
 	}
 	
 	@Override
