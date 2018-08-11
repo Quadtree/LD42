@@ -6,7 +6,7 @@ import info.quadtree.ld42.unit.Unit;
 import java.util.Objects;
 
 public enum Team {
-    Nobody("Nobody", Color.CYAN, false),
+    Nobody("Nobody", Color.WHITE, false),
     Contested("Contested", Color.ORANGE, false),
     Overminers("Overminers Inc.", Color.YELLOW, false),
     DigCorp("DigCorp Inc.", Color.RED, true),
