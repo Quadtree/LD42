@@ -33,7 +33,7 @@ public class Hex extends HexPos {
         int sx = getScreenX();
         int sy = getScreenY();
 
-        float brightness = MathUtils.clamp(ttl / 30f, 0.15f, 1f);
+        float brightness = MathUtils.clamp(ttl / 60f, 0.15f, 1f);
 
         Sprite sp = LD42.s.getSprite("hex32");
         sp.setColor(brightness * owner.color.r, brightness * owner.color.g, brightness * owner.color.b, 1f);

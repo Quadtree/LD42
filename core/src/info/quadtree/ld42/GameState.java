@@ -62,7 +62,7 @@ public class GameState implements IndexedGraph<Hex> {
                 setHex(nx);
                 if (MathUtils.random(6) == 0) growFrom(it);
             } else {
-                ((Hex) neighbor).ttl++;
+                ((Hex) neighbor).ttl += 2;
             }
         }
     }
