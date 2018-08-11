@@ -99,8 +99,9 @@ public abstract class Unit {
                     didSomething = true;
                 } else if (currentPath.get(0).unit != null && currentPath.get(0).unit.getTeam() != this.getTeam()) {
                     if (attacks > 0) {
-                        attack(currentPath.get(0).unit);
-                        --attacks;
+                        if (attack(currentPath.get(0).unit)) {
+                            --attacks;
+                        }
                         currentDestination = null;
                     }
                 }
@@ -219,9 +220,11 @@ public abstract class Unit {
         GraphPath<Hex> hexPath = new DefaultGraphPath<>();
         LD42.s.gs.ignoreCollisionOnDuringPathing = destHex;
         LD42.s.gs.currentPathingTeam = getTeam();
+        LD42.s.gs.pathingThingCombatPower = getAttack();
         LD42.s.gs.pathFinder.searchNodePath(this.getHex(), destHex, LD42.s.gs.defaultHeuristic, hexPath);
         LD42.s.gs.ignoreCollisionOnDuringPathing = null;
         LD42.s.gs.currentPathingTeam = null;
+        LD42.s.gs.pathingThingCombatPower = -1;
 
         List<Hex> ret = new ArrayList<>();
 
@@ -240,9 +243,13 @@ public abstract class Unit {
         }
     }
 
-    public void attack(Unit other){
-        currentAttackTarget = other;
-        attackAnimationStatus = 0f;
+    public boolean attack(Unit other){
+        if (this.getAttack() > other.getAttack()) {
+            currentAttackTarget = other;
+            attackAnimationStatus = 0f;
+            return true;
+        }
+        return false;
     }
 
     public void finishAttack(Unit other){
@@ -252,12 +259,8 @@ public abstract class Unit {
             return;
         }
 
-        other.health -= getAttack();
-
-        if (other.health <= 0){
-            other.hex.unit = null;
-            LD42.s.gs.recomputeOwnership();
-        }
+        other.hex.unit = null;
+        LD42.s.gs.recomputeOwnership();
     }
 
     public int getMaxMoves(){
