@@ -1,6 +1,8 @@
 package info.quadtree.ld42;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.ai.pfa.DefaultGraphPath;
+import com.badlogic.gdx.ai.pfa.GraphPath;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -85,6 +87,24 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public void render () {
+		gs.hexStream().forEach(it -> {
+			it.isOnCurrentPath = false;
+			it.isOnFuturePath = false;
+		});
+
+		if (gs.selectedUnit != null) {
+			gs.getHexAtScreenPos(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY()).ifPresent(destHex -> {
+				GraphPath<Hex> hexPath = new DefaultGraphPath<>();
+				gs.pathFinder.searchNodePath(gs.selectedUnit.getHex(), destHex, gs.defaultHeuristic, hexPath);
+
+				for (int i=0;i<hexPath.getCount();++i){
+					hexPath.get(i).isOnCurrentPath = true;
+				}
+			});
+		}
+
+
+
 		Gdx.gl.glClearColor(0.7f, 0.7f, 0.9f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();

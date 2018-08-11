@@ -2,6 +2,7 @@ package info.quadtree.ld42;
 
 import com.badlogic.gdx.ai.pfa.Connection;
 import com.badlogic.gdx.ai.pfa.DefaultConnection;
+import com.badlogic.gdx.ai.pfa.Heuristic;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
 import com.badlogic.gdx.math.MathUtils;
@@ -15,6 +16,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class GameState implements IndexedGraph<Hex> {
     Hex[] hexes;
@@ -85,7 +87,7 @@ public class GameState implements IndexedGraph<Hex> {
     }
 
     public Hex getHex(int x, int y){
-        if (x < 0 || y < 0 || x >= GRID_WIDTH || y >= GRID_HEIGHT) return null;
+        if (x < 2 || y < 2 || x >= GRID_WIDTH - 2 || y >= GRID_HEIGHT - 2) return null;
         return hexes[x * GRID_WIDTH + y];
     }
 
@@ -136,4 +138,10 @@ public class GameState implements IndexedGraph<Hex> {
 
         return ret;
     }
+
+    public Stream<Hex> hexStream(){
+        return Arrays.stream(hexes).filter(Objects::nonNull);
+    }
+
+    public Heuristic<Hex> defaultHeuristic = (node, endNode) -> Math.abs(node.x - endNode.x) + Math.abs(node.y - endNode.y);
 }

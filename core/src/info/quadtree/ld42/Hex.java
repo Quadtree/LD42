@@ -19,6 +19,9 @@ public class Hex extends HexPos {
 
     public Unit unit;
 
+    public boolean isOnCurrentPath;
+    public boolean isOnFuturePath;
+
     public Team owner = Team.Nobody;
 
     public Hex(int x, int y, int ttl){
@@ -36,6 +39,12 @@ public class Hex extends HexPos {
         sp.setColor(brightness * owner.color.r, brightness * owner.color.g, brightness * owner.color.b, 1f);
         sp.setBounds(sx, sy, HEX_SIZE, HEX_SIZE);
         sp.draw(LD42.s.batch);
+
+        if (isOnCurrentPath){
+            Sprite sp2 = LD42.s.getSprite("selected_hex");
+            sp2.setBounds(this.getScreenX(), this.getScreenY(), Hex.HEX_SIZE, Hex.HEX_SIZE);
+            sp2.draw(LD42.s.batch);
+        }
 
         if (unit != null)
             unit.render();

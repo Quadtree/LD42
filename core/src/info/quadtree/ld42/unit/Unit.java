@@ -74,4 +74,12 @@ public abstract class Unit {
         this.team = team;
         return this;
     }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public Hex getHex() {
+        return hex;
+    }
 }
