@@ -12,6 +12,7 @@ import info.quadtree.ld42.unit.Unit;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class LD42 extends ApplicationAdapter implements InputProcessor {
 	public SpriteBatch batch;
@@ -123,15 +124,21 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
-		if (gs.selectedUnitTypeToPlace != null){
-			gs.getHexAtScreenPos(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY()).ifPresent(it -> {
+		Optional<Hex> th = gs.getHexAtScreenPos(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
+
+		th.ifPresent(it -> {
+			if (gs.selectedUnitTypeToPlace != null){
 				if (it.owner == Team.Nobody || it.owner == Team.Overminers) {
 					Unit.factory(gs.selectedUnitTypeToPlace).setTeam(Team.Overminers).moveTo(it);
 					gs.selectedUnitTypeToPlace = null;
 					gs.recomputeOwnership();
 				}
-			});
-		}
+			} else {
+				if (it.unit != null && it.unit.getTeam() == Team.Overminers){
+					gs.selectedUnit = it.unit;
+				}
+			}
+		});
 		return false;
 	}
 
