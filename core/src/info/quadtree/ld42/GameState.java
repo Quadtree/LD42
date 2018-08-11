@@ -14,7 +14,9 @@ public class GameState {
         return hexes[x * gridSize + y];
     }
 
-    public void setHex(int x, int y, Hex hex){
+    public void setHex(Hex hex){
+        int x = hex.x;
+        int y = hex.y;
         if (x < 0 || y < 0 || x >= gridSize || y >= gridSize) return;
         hexes[x * gridSize + y] = hex;
     }

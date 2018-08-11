@@ -37,6 +37,12 @@ public class LD42 extends ApplicationAdapter {
 		img = new Texture("badlogic.jpg");
 
 		gs = new GameState();
+
+		for (int x=5;x<7;++x){
+			for (int y=5;y<7;++y){
+				gs.setHex(new Hex(x,y,20));
+			}
+		}
 	}
 
 	@Override
