@@ -91,8 +91,9 @@ public class GameState implements IndexedGraph<Hex> {
         Hex ret = hexes[x * GRID_WIDTH + y];
 
         if (ret != null) {
-            assert (ret.x == x);
-            assert (ret.y == y);
+            if (ret.x != x || ret.y != y){
+                System.err.println("!!!! MISMATCH " + ret.x + " != " + x + " || " + ret.y + " != " + y);
+            }
         }
 
         return ret;
