@@ -2,6 +2,7 @@ package info.quadtree.ld42;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
@@ -15,6 +16,8 @@ import java.util.stream.Stream;
 
 public class Hex extends HexPos {
     public static final int HEX_SIZE = 32;
+
+    public static final int MAX_TTL = 30;
 
     public int ttl;
 
@@ -45,12 +48,26 @@ public class Hex extends HexPos {
         int sx = getScreenX();
         int sy = getScreenY();
 
-        float brightness = MathUtils.clamp(ttl / 60f, 0.15f, 1f);
+        float brightness = 1f;
 
-        Sprite sp = LD42.s.getSprite("hex32");
+        Sprite sp = LD42.s.getSprite("hexborder");
         sp.setColor(brightness * owner.color.r, brightness * owner.color.g, brightness * owner.color.b, 1f);
         sp.setBounds(sx, sy, HEX_SIZE, HEX_SIZE);
         sp.draw(LD42.s.batch);
+
+        Sprite sp4 = LD42.s.getSprite("hex32");
+        sp4.setColor(brightness * owner.color.r, brightness * owner.color.g, brightness * owner.color.b, 0.5f);
+        sp4.setBounds(sx, sy, HEX_SIZE, HEX_SIZE);
+        sp4.draw(LD42.s.batch);
+
+        int breakAmt = MathUtils.clamp((ttl) / (MAX_TTL / 7) + 1, 1, 6);
+
+        if (breakAmt > 0) {
+            Sprite sp3 = LD42.s.getSprite("hb4lvl" + breakAmt);
+            sp3.setColor(owner.color);
+            sp3.setBounds(sx, sy, HEX_SIZE, HEX_SIZE);
+            sp3.draw(LD42.s.batch);
+        }
 
         if (isOnCurrentPath){
             Sprite sp2 = LD42.s.getSprite("selected_hex");

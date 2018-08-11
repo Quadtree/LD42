@@ -1,82 +1,271 @@
 
 main.png
-size: 512,64
+size: 512,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 block1
   rotate: false
-  xy: 52, 28
+  xy: 2, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 bolt1
   rotate: false
-  xy: 2, 2
+  xy: 494, 110
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
   index: -1
+hb2lvl1
+  rotate: false
+  xy: 52, 86
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+hb2lvl2
+  rotate: false
+  xy: 2, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+hb2lvl3
+  rotate: false
+  xy: 86, 86
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+hb2lvl4
+  rotate: false
+  xy: 120, 86
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+hb2lvl5
+  rotate: false
+  xy: 154, 86
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+hb2lvl6
+  rotate: false
+  xy: 188, 86
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+hb2lvl7
+  rotate: false
+  xy: 222, 86
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+hb2lvl8
+  rotate: false
+  xy: 256, 86
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+hb3lvl1
+  rotate: false
+  xy: 290, 86
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+hb3lvl2
+  rotate: false
+  xy: 324, 86
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+hb3lvl3
+  rotate: false
+  xy: 358, 86
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+hb3lvl4
+  rotate: false
+  xy: 392, 86
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+hb3lvl5
+  rotate: false
+  xy: 426, 86
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+hb3lvl6
+  rotate: false
+  xy: 460, 86
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+hb4lvl1
+  rotate: false
+  xy: 36, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+hb4lvl2
+  rotate: false
+  xy: 36, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+hb4lvl3
+  rotate: false
+  xy: 70, 52
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+hb4lvl4
+  rotate: false
+  xy: 70, 18
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+hb4lvl5
+  rotate: false
+  xy: 104, 52
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+hb4lvl6
+  rotate: false
+  xy: 104, 18
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 hex24
   rotate: false
-  xy: 324, 36
+  xy: 376, 60
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
 hex32
   rotate: false
-  xy: 86, 28
+  xy: 138, 52
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 hex48
   rotate: false
-  xy: 2, 12
+  xy: 2, 70
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
+hex_break1
+  rotate: false
+  xy: 138, 18
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+hex_break2
+  rotate: false
+  xy: 172, 52
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+hex_break3
+  rotate: false
+  xy: 172, 18
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+hex_break4
+  rotate: false
+  xy: 206, 52
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+hex_break5
+  rotate: false
+  xy: 206, 18
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+hex_break6
+  rotate: false
+  xy: 240, 52
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+hexborder
+  rotate: false
+  xy: 240, 18
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 landing_target
   rotate: false
-  xy: 120, 28
+  xy: 274, 52
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 mine1
   rotate: false
-  xy: 154, 28
+  xy: 274, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 scout1
   rotate: false
-  xy: 188, 28
+  xy: 308, 52
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 selected_hex
   rotate: false
-  xy: 222, 28
+  xy: 308, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 tank1
   rotate: false
-  xy: 256, 28
+  xy: 342, 52
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 turret
   rotate: false
-  xy: 290, 28
+  xy: 342, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
