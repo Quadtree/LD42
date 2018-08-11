@@ -22,7 +22,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 	public static LD42 s;
 
-	GameState gs;
+	public GameState gs;
 
 	Map<String, Sprite> assetMap = new HashMap<>();
 

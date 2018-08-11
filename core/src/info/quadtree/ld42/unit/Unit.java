@@ -27,6 +27,14 @@ public abstract class Unit {
     }
 
     public void render(){
+        if (LD42.s.gs.selectedUnit == this){
+            Sprite sp = LD42.s.getSprite("selected_hex");
+
+            sp.setBounds(hex.getScreenX(), hex.getScreenY(), Hex.HEX_SIZE, Hex.HEX_SIZE);
+            sp.setColor(team.getColor());
+            sp.draw(LD42.s.batch);
+        }
+
         Sprite sp = LD42.s.getSprite(getMainGraphicName());
 
         sp.setBounds(hex.getScreenX(), hex.getScreenY(), Hex.HEX_SIZE, Hex.HEX_SIZE);
