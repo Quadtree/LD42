@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,7 +40,11 @@ public class LD42 extends ApplicationAdapter {
 
 		gs = new GameState();
 
-		gs.setHex(new Hex(MathUtils.random(0, GameState.gridSize - 1), MathUtils.random(0, GameState.gridSize - 1), 1));
+		Hex hx = new Hex(MathUtils.random(0, GameState.gridSize - 1), MathUtils.random(0, GameState.gridSize - 1), 1);
+		gs.setHex(hx);
+		Arrays.stream(hx.getNeighbors()).forEach(it -> {
+			gs.setHex(new Hex(it.x, it.y, 20));
+		});
 
 		/*for (int x=5;x<9;++x){
 			for (int y=5;y<15;++y){
@@ -47,7 +52,7 @@ public class LD42 extends ApplicationAdapter {
 			}
 		}*/
 
-		gs.setHex(new Hex(5,5, 50));
+		/*gs.setHex(new Hex(5,5, 50));
 
 		gs.setHex(new Hex(5,4, 20));
 		gs.setHex(new Hex(6,4, 20));
@@ -63,7 +68,17 @@ public class LD42 extends ApplicationAdapter {
 		gs.setHex(new Hex(5,10, 20));
 		gs.setHex(new Hex(4,13, 20));
 		gs.setHex(new Hex(5,13, 20));
-		gs.setHex(new Hex(5,14, 20));
+		gs.setHex(new Hex(5,14, 20));*/
+
+		/*gs.setHex(new Hex(5,5, 50));
+		Arrays.stream(gs.getHex(5,5).getNeighbors()).forEach(it -> {
+			gs.setHex(new Hex(it.x, it.y, 20));
+		});
+
+		gs.setHex(new Hex(5,12, 10));
+		Arrays.stream(gs.getHex(5,12).getNeighbors()).forEach(it -> {
+			gs.setHex(new Hex(it.x, it.y, 20));
+		});*/
 	}
 
 	@Override

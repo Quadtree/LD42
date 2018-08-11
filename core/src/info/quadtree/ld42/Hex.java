@@ -3,6 +3,7 @@ package info.quadtree.ld42;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 
+import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
 public class Hex extends HexPos {
@@ -46,6 +47,50 @@ public class Hex extends HexPos {
      * @return
      */
     public HexPos[] getNeighbors(){
-        return null;
+
+        /*
+        // ODD Y (5,5)
+        gs.setHex(new Hex(5,4, 20));
+        gs.setHex(new Hex(6,4, 20));
+        gs.setHex(new Hex(5,3, 20));
+        gs.setHex(new Hex(5,6, 20));
+        gs.setHex(new Hex(6,6, 20));
+        gs.setHex(new Hex(5,7, 20));
+
+        // EVEN Y (5,12)
+        gs.setHex(new Hex(4,11, 20));
+        gs.setHex(new Hex(5,11, 20));
+        gs.setHex(new Hex(5,10, 20));
+        gs.setHex(new Hex(4,13, 20));
+        gs.setHex(new Hex(5,13, 20));
+        gs.setHex(new Hex(5,14, 20));*/
+
+        BiFunction<Integer, Integer, HexPos> getAtPos = (x,y) -> {
+            HexPos hp = LD42.s.gs.getHex(x,y);
+
+            if (hp == null) hp = new HexPos(x,y);
+
+            return hp;
+        };
+
+        if (y % 2 == 0){
+            return new HexPos[]{
+                    getAtPos.apply(x - 1, y - 1),
+                    getAtPos.apply(x, y - 1),
+                    getAtPos.apply(x, y - 2),
+                    getAtPos.apply(x - 1, y + 1),
+                    getAtPos.apply(x, y + 1),
+                    getAtPos.apply(x, y + 2),
+            };
+        } else {
+            return new HexPos[]{
+                    getAtPos.apply(x, y - 1),
+                    getAtPos.apply(x+1, y - 1),
+                    getAtPos.apply(x, y - 2),
+                    getAtPos.apply(x, y + 1),
+                    getAtPos.apply(x + 1, y + 1),
+                    getAtPos.apply(x, y + 2),
+            };
+        }
     }
 }
