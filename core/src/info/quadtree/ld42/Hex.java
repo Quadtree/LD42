@@ -6,9 +6,7 @@ import com.badlogic.gdx.math.MathUtils;
 import info.quadtree.ld42.unit.Mine;
 import info.quadtree.ld42.unit.Unit;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -81,16 +79,7 @@ public class Hex extends HexPos {
     public void recalcOwnership(){
         owner = Team.Nobody;
 
-        Set<Hex> allNeighbors = new HashSet<>();
-
-        allNeighbors.addAll(Arrays.stream(getNeighbors()).filter(it -> it instanceof Hex).map(it -> (Hex)it).collect(Collectors.toList()));
-
-        allNeighbors.addAll(allNeighbors.stream()
-                .flatMap(it -> Arrays.stream(((Hex)it).getNeighbors()))
-                .filter(it -> it instanceof Hex)
-                .map(it -> (Hex)it)
-                .collect(Collectors.toList()
-        ));
+        List<Hex> allNeighbors = getExistingTwoLevelNeighbors();
 
         allNeighbors.forEach(it -> {
             if (it.unit instanceof Mine && !it.unit.isAnimating()){
@@ -101,6 +90,21 @@ public class Hex extends HexPos {
                 }
             }
         });
+    }
+
+    public List<Hex> getExistingTwoLevelNeighbors(){
+        Set<Hex> allNeighbors = new HashSet<>();
+
+        allNeighbors.addAll(Arrays.stream(getNeighbors()).filter(it -> it instanceof Hex).map(it -> (Hex)it).collect(Collectors.toList()));
+
+        allNeighbors.addAll(allNeighbors.stream()
+                .flatMap(it -> Arrays.stream(((Hex)it).getNeighbors()))
+                .filter(it -> it instanceof Hex)
+                .map(it -> (Hex)it)
+                .collect(Collectors.toList()
+                ));
+
+        return new ArrayList<>(allNeighbors);
     }
 
     /**

@@ -60,4 +60,19 @@ public enum Team {
                 .filter(it -> it.getTeam() == this)
                 .forEach(Unit::executeMoves);
     }
+
+    public boolean dropUnit(Hex it, Unit.UnitType type){
+        if (it.owner == Team.Nobody || it.owner == this) {
+            Unit u = Unit.factory(type);
+            if (LD42.s.gs.money.get(this) >= u.getCost()) {
+                LD42.s.gs.money.put(this, LD42.s.gs.money.get(this) - u.getCost());
+                u.setTeam(this).moveTo(it);
+                u.startFall();
+                LD42.s.gs.recomputeOwnership();
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

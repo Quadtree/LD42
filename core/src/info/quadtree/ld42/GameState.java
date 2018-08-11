@@ -116,20 +116,20 @@ public class GameState implements IndexedGraph<Hex> {
         for(Team t : turnOrder){
             money.put(t, 0);
             points.put(t, 0);
-            controllerMap.put(t, new AITurnController());
+            controllerMap.put(t, new AITurnController(t));
         }
 
-        controllerMap.put(Team.Overminers, new TurnController());
+        controllerMap.put(Team.Overminers, new TurnController(Team.Overminers));
         money.put(Team.Nobody, 0);
         points.put(Team.Nobody, 0);
-        controllerMap.put(Team.Nobody, new EnvTurnController());
+        controllerMap.put(Team.Nobody, new EnvTurnController(Team.Nobody));
 
         Collections.shuffle(turnOrder);
 
         turnOrder.add(Team.Nobody);
 
         currentTurnTeam = turnOrder.get(0);
-        currentTurnTeam.beginTurn();
+        beginTurn();
     }
 
     public void beginTurn(){

@@ -220,13 +220,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 				gs.selectedUnit = null;
 
 				if (gs.selectedUnitTypeToPlace != null) {
-					if (it.owner == Team.Nobody || it.owner == Team.Overminers) {
-						Unit u = Unit.factory(gs.selectedUnitTypeToPlace);
-						gs.money.put(Team.Overminers, gs.money.get(Team.Overminers) - u.getCost());
-						u.setTeam(Team.Overminers).moveTo(it);
-						u.startFall();
+					if (Team.Overminers.dropUnit(it, gs.selectedUnitTypeToPlace)) {
 						gs.selectedUnitTypeToPlace = null;
-						gs.recomputeOwnership();
 					}
 				} else {
 					if (it.unit != null && it.unit.getTeam() == Team.Overminers && it.unit.canBeSelected()) {
