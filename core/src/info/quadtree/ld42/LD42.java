@@ -19,6 +19,8 @@ public class LD42 extends ApplicationAdapter {
 
 	public static LD42 s;
 
+	GameState gs;
+
 	Map<String, Sprite> assetMap = new HashMap<>();
 
 	public Sprite getSprite(String name){
@@ -33,6 +35,8 @@ public class LD42 extends ApplicationAdapter {
 		atlas = new TextureAtlas(Gdx.files.internal("main.atlas"));
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
+
+		gs = new GameState();
 	}
 
 	@Override
@@ -40,7 +44,7 @@ public class LD42 extends ApplicationAdapter {
 		Gdx.gl.glClearColor(0.7f, 0.7f, 0.9f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		batch.draw(img, 0, 0);
+		gs.render();
 		batch.end();
 	}
 	
