@@ -32,11 +32,21 @@ public class GameState implements IndexedGraph<Hex> {
     List<Team> turnOrder = new ArrayList<>();
     Team currentTurnTeam;
 
+    int turnNum = 0;
+
     public GameState(){
 
     }
 
     public void endTurn(){
+        if (currentTurnTeam == turnOrder.get(3)){
+            hexStream().forEach(it -> it.ttl--);
+
+            hexStream().filter(it -> it.ttl <= 0).collect(Collectors.toList()).forEach(it -> deleteHex(it.x, it.y));
+
+            System.err.println("Turn num " + (++turnNum));
+        }
+
         currentTurnTeam.endTurn();
         currentTurnTeam = turnOrder.get((turnOrder.indexOf(currentTurnTeam) + 1) % turnOrder.size());
         currentTurnTeam.beginTurn();
