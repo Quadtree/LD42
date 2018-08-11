@@ -88,7 +88,10 @@ public class GameState implements IndexedGraph<Hex> {
 
     public Hex getHex(int x, int y){
         if (x < 2 || y < 2 || x >= GRID_WIDTH - 2 || y >= GRID_HEIGHT - 2) return null;
-        Hex ret = hexes[x * GRID_WIDTH + y];
+
+        int idx = x * GRID_HEIGHT + y;
+
+        Hex ret = hexes[idx];
 
         if (ret != null) {
             if (ret.x != x || ret.y != y){
@@ -103,7 +106,7 @@ public class GameState implements IndexedGraph<Hex> {
         int x = hex.x;
         int y = hex.y;
         if (x < 0 || y < 0 || x >= GRID_WIDTH || y >= GRID_HEIGHT) return;
-        hexes[x * GRID_WIDTH + y] = hex;
+        hexes[x * GRID_HEIGHT + y] = hex;
 
         if (hex != null) {
             assert (hex.x == x);
@@ -111,9 +114,20 @@ public class GameState implements IndexedGraph<Hex> {
         }
     }
 
+    public void checkHexInvariants(){
+        for (int i=0;i<hexes.length;++i){
+            if (hexes[i] != null){
+                int expectedI = hexes[i].x * GRID_HEIGHT + hexes[i].y;
+                if (i != expectedI){
+                    System.err.println("MISMATCH " + i + " != " + expectedI);
+                }
+            }
+        }
+    }
+
     public void deleteHex(int x, int y){
         if (x < 0 || y < 0 || x >= GRID_WIDTH || y >= GRID_HEIGHT) return;
-        hexes[x * GRID_WIDTH + y] = null;
+        hexes[x * GRID_HEIGHT + y] = null;
     }
 
     public void render(){
