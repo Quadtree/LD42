@@ -36,7 +36,7 @@ public class Hex extends HexPos {
 
     public void render(){
         if (ttl <= 0){
-            fallSpeed += 100f * Gdx.graphics.getDeltaTime();
+            fallSpeed += 1200f * Gdx.graphics.getDeltaTime();
             fallenDistance += fallSpeed * fallSpeedModifier * Gdx.graphics.getDeltaTime();
         }
 
@@ -67,7 +67,7 @@ public class Hex extends HexPos {
     }
 
     public int getScreenY() {
-        return getY() * (HEX_SIZE / 2 - 1);
+        return getY() * (HEX_SIZE / 2 - 1) - (int)fallenDistance;
     }
 
     public int getScreenX() {

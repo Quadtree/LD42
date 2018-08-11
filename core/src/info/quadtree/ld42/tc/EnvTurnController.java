@@ -15,12 +15,8 @@ public class EnvTurnController extends TurnController {
         LD42.s.gs.hexStream().forEach(it -> it.ttl--);
         long falling = LD42.s.gs.hexStream().filter(it -> it.ttl <= 0).count();
         if (falling > 0){
-            waitForFallTime = 2f;
+            waitForFallTime = 1.25f;
         }
-        LD42.s.gs.hexStream().filter(it -> it.ttl <= 0).collect(Collectors.toList()).forEach(it -> LD42.s.gs.deleteHex(it.getX(), it.getY()));
-
-        System.err.println("Turn num " + (++LD42.s.gs.turnNum));
-        LD42.s.gs.recomputeOwnership();
     }
 
     @Override
@@ -30,6 +26,9 @@ public class EnvTurnController extends TurnController {
         waitForFallTime -= Gdx.graphics.getDeltaTime();
 
         if (waitForFallTime <= 0){
+            System.err.println("Turn num " + (++LD42.s.gs.turnNum));
+            LD42.s.gs.hexStream().filter(it -> it.ttl <= 0).collect(Collectors.toList()).forEach(it -> LD42.s.gs.deleteHex(it.getX(), it.getY()));
+            LD42.s.gs.recomputeOwnership();
             LD42.s.gs.endTurn();
         }
     }

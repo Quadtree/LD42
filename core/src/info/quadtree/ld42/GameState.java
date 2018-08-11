@@ -92,6 +92,8 @@ public class GameState implements IndexedGraph<Hex> {
             if (hexCount >= 300) break;
         }
 
+        hexStream().forEach(it -> it.ttl += MathUtils.random(1));
+
         Arrays.stream(hexes)
                 .filter(Objects::nonNull).filter(it -> it.x <= 2 || it.y <= 2 || it.x >= GRID_WIDTH - 3 || it.y >= GRID_HEIGHT - 3)
                 .collect(Collectors.toList())
