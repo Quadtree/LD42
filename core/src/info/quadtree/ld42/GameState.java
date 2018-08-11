@@ -64,7 +64,7 @@ public class GameState implements IndexedGraph<Hex> {
                 setHex(nx);
                 if (MathUtils.random(6) == 0) growFrom(it);
             } else {
-                ((Hex) neighbor).ttl += 2;
+                ((Hex) neighbor).ttl += 1;
             }
         }
     }
@@ -119,7 +119,7 @@ public class GameState implements IndexedGraph<Hex> {
             controllerMap.put(t, new AITurnController(t));
         }
 
-        //controllerMap.put(Team.Overminers, new TurnController(Team.Overminers));
+        controllerMap.put(Team.Overminers, new TurnController(Team.Overminers));
 
         money.put(Team.Nobody, 0);
         points.put(Team.Nobody, 0);

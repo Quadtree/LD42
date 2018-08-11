@@ -20,15 +20,18 @@ public class AITurnController extends TurnController {
 
         phase = Phase.DropMinePhase;
         cannotMove = new HashSet<>();
+        cannotAttack = new HashSet<>();
     }
 
     Phase phase;
 
     Set<Unit> cannotMove;
+    Set<Unit> cannotAttack;
 
     enum Phase {
         DropMinePhase,
         AttackPhase,
+        TurretPhase,
         EndTurnPhase
     }
 
@@ -42,9 +45,9 @@ public class AITurnController extends TurnController {
             long curScouts = LD42.s.gs.unitStream().filter(it -> it.getTeam() == team && it instanceof Scout).count();
             long curTurrets = LD42.s.gs.unitStream().filter(it -> it.getTeam() == team && it instanceof Turret).count();
 
-            if (false && curTanks < curMines / 2){
+            if (curTanks < curMines / 2){
                 if (!spawnMilitary(Unit.UnitType.Tank)) nextPhase();
-            } else if (curScouts < curMines / 1){
+            } else if (curScouts < curMines / 2){
                 if (!spawnMilitary(Unit.UnitType.Scout)) nextPhase();
             } else if (curTurrets < curMines / 2){
                 if (!spawnTurret()) nextPhase();
@@ -67,6 +70,24 @@ public class AITurnController extends TurnController {
                     if (target.isPresent()){
                         u.get().setCurrentDestination(target.get().getHex());
                         u.get().executeMoves();
+                    }
+                } else {
+                    nextPhase();
+                }
+            }
+        }
+
+        if (phase == Phase.TurretPhase){
+            if (LD42.s.gs.unitStream().noneMatch(Unit::isAnimating)) {
+                Optional<Unit> u = LD42.s.gs.unitStream().filter(it -> it.getTeam() == team && it.getAttacks() > 0 && !cannotAttack.contains(it)).findAny();
+
+                if (u.isPresent()){
+                    cannotAttack.add(u.get());
+
+                    Optional<Hex> target = u.get().getHex().getNStream().filter(it -> it.unit != null && it.unit.getTeam() != team).findAny();
+
+                    if (target.isPresent()){
+                        u.get().moveTo(target.get());
                     }
                 } else {
                     nextPhase();

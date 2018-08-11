@@ -239,4 +239,8 @@ public abstract class Unit {
     public int getMoves() {
         return moves;
     }
+
+    public int getAttacks() {
+        return attacks;
+    }
 }
