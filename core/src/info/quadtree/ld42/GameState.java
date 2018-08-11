@@ -69,6 +69,8 @@ public class GameState {
                 });
 
         new Mine().moveTo(Arrays.stream(hexes).filter(Objects::nonNull).findAny().get());
+
+        recomputeOwnership();
     }
 
     public Hex getHex(int x, int y){
@@ -97,5 +99,9 @@ public class GameState {
                 (Math.pow((it.getScreenX() + Hex.HEX_SIZE / 2.0) - x, 2) +
                 Math.pow((it.getScreenY() + Hex.HEX_SIZE / 2.0) - y, 2)) < 16*16
         ).findAny();
+    }
+
+    public void recomputeOwnership(){
+        Arrays.stream(hexes).filter(Objects::nonNull).forEach(Hex::recalcOwnership);
     }
 }

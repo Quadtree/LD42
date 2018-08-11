@@ -3,6 +3,7 @@ package info.quadtree.ld42;
 import com.badlogic.gdx.graphics.Color;
 
 public enum Team {
+    Nobody("Nobody", Color.CYAN),
     Contested("Contested", Color.ORANGE),
     Overminers("Overminers Inc.", Color.YELLOW),
     DigCorp("DigCorp Inc.", Color.RED),

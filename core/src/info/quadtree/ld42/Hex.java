@@ -2,8 +2,10 @@ package info.quadtree.ld42;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
+import info.quadtree.ld42.unit.Mine;
 import info.quadtree.ld42.unit.Unit;
 
+import java.util.Arrays;
 import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
@@ -13,6 +15,9 @@ public class Hex extends HexPos {
     int ttl;
 
     public Unit unit;
+
+    public Team owner = Team.Nobody;
+    boolean multipleOwners = false;
 
     public Hex(int x, int y, int ttl){
         super(x, y);
@@ -26,7 +31,7 @@ public class Hex extends HexPos {
         float brightness = MathUtils.clamp(ttl / 30f, 0f, 1f);
 
         Sprite sp = LD42.s.getSprite("hex32");
-        sp.setColor(brightness, brightness, brightness, 1f);
+        sp.setColor(brightness * owner.color.r, brightness * owner.color.g, brightness * owner.color.b, 1f);
         sp.setBounds(sx, sy, HEX_SIZE, HEX_SIZE);
         sp.draw(LD42.s.batch);
 
@@ -46,6 +51,24 @@ public class Hex extends HexPos {
 
     public int getTtl() {
         return ttl;
+    }
+
+    public void recalcOwnership(){
+        owner = Team.Nobody;
+        multipleOwners = false;
+
+        Arrays.stream(getNeighbors()).filter(it -> it instanceof Hex).flatMap(it -> Arrays.stream(((Hex)it).getNeighbors())).distinct().forEach(it -> {
+            if (it instanceof Hex){
+                if (((Hex) it).unit instanceof Mine){
+                    if (owner == Team.Nobody && !multipleOwners){
+                        owner = ((Hex) it).unit.getTeam();
+                    } else {
+                        owner = Team.Nobody;
+                        multipleOwners = true;
+                    }
+                }
+            }
+        });
     }
 
     /**
