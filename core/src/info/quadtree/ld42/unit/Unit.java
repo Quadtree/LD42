@@ -140,6 +140,19 @@ public abstract class Unit {
     }
 
     public void render3(){
+        //  && !(this instanceof Mine)
+        /*int barWidth = getMaxHealth() * 4;
+
+        int barX = (int)currentScreenPos.x + Hex.HEX_SIZE / 2 - barWidth / 2;
+        int barY = (int)currentScreenPos.y + Hex.HEX_SIZE - 4;
+
+        for (int i=0;i<getMaxHealth();++i){
+            Sprite sp5 = LD42.s.getSprite("resourcebar");
+            sp5.setBounds(barX + i*4, barY, 3, 3);
+            sp5.setColor(Color.PURPLE);
+            sp5.draw(LD42.s.batch);
+        }*/
+
         if (currentAttackTarget != null){
             float pctThere = attackAnimationStatus / ATTACK_ANIM_DURATION;
 
@@ -294,4 +307,6 @@ public abstract class Unit {
     public int getAttacks() {
         return attacks;
     }
+
+
 }

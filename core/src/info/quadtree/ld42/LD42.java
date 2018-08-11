@@ -75,7 +75,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 		uiStage = new Stage();
 		infoLabel = new Label("TEST", defaultLabelStyle);
-		infoLabel.setPosition(20, Gdx.graphics.getHeight() - 40);
+		infoLabel.setPosition(10, 10);
 		uiStage.addActor(infoLabel);
 
 		Table scoreTable = new Table();
@@ -94,7 +94,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		}
 
 		uiStage.addActor(scoreTable);
-		scoreTable.setBounds(20, 20, 250, 250);
+		scoreTable.setBounds(20, 20, 150, 120);
 
 		winLabel = new Label("", defaultLabelStyle);
 		winLabel.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f, Align.center);
@@ -179,7 +179,14 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		gs.render();
 		batch.end();
 
-		infoLabel.setText("Money: $" + gs.money.get(Team.Overminers) + "   Ore: " + gs.points.get(Team.Overminers) + "   Team: " + gs.currentTurnTeam.getName() + "   Turn: " + gs.turnNum);
+		infoLabel.setText("$" + gs.money.get(Team.Overminers));
+
+		Optional<Hex> th = gs.getHexAtScreenPos(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
+		th.ifPresent(it -> {
+			if (it.unit != null) {
+				infoLabel.setText(infoLabel.getText() + " HP: " + it.unit.getHealth() + "/" + it.unit.getMaxHealth() + " Moves: " + it.unit.getMoves() + "/" + it.unit.getMaxMoves() + " Attacks: " + it.unit.getAttacks());
+			}
+		});
 
 		uiStage.act();
 		uiStage.draw();
