@@ -1,6 +1,6 @@
 
 main.png
-size: 512,128
+size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -118,56 +118,56 @@ hb3lvl6
   index: -1
 hb4lvl1
   rotate: false
-  xy: 36, 36
+  xy: 494, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 hb4lvl2
   rotate: false
-  xy: 36, 2
+  xy: 528, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 hb4lvl3
   rotate: false
-  xy: 70, 52
+  xy: 562, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 hb4lvl4
   rotate: false
-  xy: 70, 18
+  xy: 596, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 hb4lvl5
   rotate: false
-  xy: 104, 52
+  xy: 630, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 hb4lvl6
   rotate: false
-  xy: 104, 18
+  xy: 664, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 hex24
   rotate: false
-  xy: 478, 26
+  xy: 274, 26
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
 hex32
   rotate: false
-  xy: 138, 52
+  xy: 698, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -181,147 +181,168 @@ hex48
   index: -1
 hex_break1
   rotate: false
-  xy: 138, 18
+  xy: 732, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 hex_break2
   rotate: false
-  xy: 172, 52
+  xy: 766, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 hex_break3
   rotate: false
-  xy: 172, 18
+  xy: 800, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 hex_break4
   rotate: false
-  xy: 206, 52
+  xy: 834, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 hex_break5
   rotate: false
-  xy: 206, 18
+  xy: 868, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 hex_break6
   rotate: false
-  xy: 240, 52
+  xy: 902, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 hexborder
   rotate: false
-  xy: 240, 18
+  xy: 936, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 hexr2ein1
   rotate: false
-  xy: 274, 52
+  xy: 970, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 hexr2ein2
   rotate: false
-  xy: 274, 18
+  xy: 36, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 hexr2ein3
   rotate: false
-  xy: 308, 52
+  xy: 36, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 hexrein1
   rotate: false
-  xy: 308, 18
+  xy: 70, 52
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 hexrein2
   rotate: false
-  xy: 342, 52
+  xy: 70, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 hexrein3
   rotate: false
-  xy: 342, 18
+  xy: 104, 52
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 landing_target
   rotate: false
-  xy: 376, 52
+  xy: 104, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 mine1
   rotate: false
-  xy: 376, 18
+  xy: 138, 52
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 mine1_flag
   rotate: false
-  xy: 410, 52
+  xy: 138, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 rock1
   rotate: false
-  xy: 494, 102
+  xy: 1004, 102
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 scout1
   rotate: false
-  xy: 410, 18
+  xy: 172, 52
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+scout1_flag
+  rotate: false
+  xy: 172, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 selected_hex
   rotate: false
-  xy: 444, 52
+  xy: 206, 52
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 tank1
   rotate: false
-  xy: 478, 52
+  xy: 206, 18
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+tank1_flag
+  rotate: false
+  xy: 240, 52
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 turret
   rotate: false
-  xy: 444, 18
+  xy: 240, 18
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+turret_flag
+  rotate: false
+  xy: 274, 52
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

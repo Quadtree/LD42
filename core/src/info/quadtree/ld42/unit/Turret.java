@@ -20,4 +20,9 @@ public class Turret extends Unit {
     public int getCost() {
         return 10;
     }
+
+    @Override
+    public String getFlagGraphicName() {
+        return "turret_flag";
+    }
 }
