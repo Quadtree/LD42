@@ -8,12 +8,12 @@ public class Turret extends Unit {
 
     @Override
     public int getMaxHealth() {
-        return 4;
+        return 3;
     }
 
     @Override
     public int getAttack() {
-        return 3;
+        return 2;
     }
 
     @Override

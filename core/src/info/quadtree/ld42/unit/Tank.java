@@ -13,7 +13,7 @@ public class Tank extends Unit {
 
     @Override
     public int getMaxHealth() {
-        return 3;
+        return 5;
     }
 
     @Override
