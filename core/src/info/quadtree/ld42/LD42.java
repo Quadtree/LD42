@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Align;
 import info.quadtree.ld42.unit.Unit;
 
 import java.util.Arrays;
@@ -44,6 +45,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 	Stage uiStage;
 
 	Label infoLabel;
+
+	Label winLabel;
 
 	Label[] teamLabels;
 	Label[] teamScoreLabels;
@@ -88,6 +91,10 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 		uiStage.addActor(scoreTable);
 		scoreTable.setBounds(20, 20, 250, 250);
+
+		winLabel = new Label("", defaultLabelStyle);
+		winLabel.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f, Align.center);
+		uiStage.addActor(winLabel);
 
 		/*for (int x=5;x<9;++x){
 			for (int y=5;y<15;++y){
@@ -143,6 +150,10 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 			teamScoreLabels[i].setColor(col);
 		}
 
+		if (gs.winner != null){
+			winLabel.setText(gs.winner.getName() + " has won! Press R to restart.");
+		}
+
 		gs.hexStream().forEach(it -> {
 			it.isOnCurrentPath = false;
 			it.isOnFuturePath = false;
@@ -188,6 +199,11 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		if (keycode == Input.Keys.NUM_3) gs.selectedUnitTypeToPlace = Unit.UnitType.Scout;
 		if (keycode == Input.Keys.NUM_4) gs.selectedUnitTypeToPlace = Unit.UnitType.Turret;
 		if (keycode == Input.Keys.NUM_5) gs.selectedUnitTypeToPlace = Unit.UnitType.Block;
+
+		if (keycode == Input.Keys.R){
+			gs = new GameState();
+			gs.generate();
+		}
 
 		if (gs.selectedUnitTypeToPlace != null && Unit.factory(gs.selectedUnitTypeToPlace).getCost() > gs.money.get(Team.Overminers)){
 			gs.selectedUnitTypeToPlace = null;

@@ -45,6 +45,8 @@ public class GameState implements IndexedGraph<Hex> {
 
     boolean endTurnInProgress = false;
 
+    public Team winner;
+
     public GameState(){
 
     }
@@ -119,7 +121,7 @@ public class GameState implements IndexedGraph<Hex> {
             controllerMap.put(t, new AITurnController(t));
         }
 
-        controllerMap.put(Team.Overminers, new TurnController(Team.Overminers));
+        //controllerMap.put(Team.Overminers, new TurnController(Team.Overminers));
 
         money.put(Team.Nobody, 0);
         points.put(Team.Nobody, 0);
