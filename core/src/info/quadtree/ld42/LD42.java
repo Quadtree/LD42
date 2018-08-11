@@ -39,7 +39,7 @@ public class LD42 extends ApplicationAdapter {
 		gs = new GameState();
 
 		for (int x=5;x<9;++x){
-			for (int y=5;y<9;++y){
+			for (int y=5;y<15;++y){
 				gs.setHex(new Hex(x,y,20));
 			}
 		}

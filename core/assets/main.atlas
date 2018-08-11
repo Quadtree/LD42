@@ -1,9 +1,16 @@
 
 main.png
-size: 64,64
+size: 128,64
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+hex24
+  rotate: false
+  xy: 52, 26
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
 hex48
   rotate: false
   xy: 2, 2
