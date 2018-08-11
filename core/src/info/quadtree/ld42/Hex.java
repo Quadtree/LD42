@@ -1,6 +1,8 @@
 package info.quadtree.ld42;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import info.quadtree.ld42.unit.Mine;
@@ -73,6 +75,13 @@ public class Hex extends HexPos {
 
     public void render3(){
         if (unit != null) unit.render3();
+
+        if (Gdx.input.isKeyPressed(Input.Keys.ALT_LEFT) || Gdx.input.isKeyPressed(Input.Keys.ALT_RIGHT)){
+            GlyphLayout gl = new GlyphLayout();
+            gl.setText(LD42.s.defaultFont, "" + ttl);
+
+            LD42.s.defaultFont.draw(LD42.s.batch, gl, getScreenX() + HEX_SIZE / 2 - gl.width / 2, getScreenY() + HEX_SIZE / 2 + gl.height / 2);
+        }
     }
 
     public int getScreenY() {

@@ -50,6 +50,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 	Label[] teamLabels;
 	Label[] teamScoreLabels;
+
+	public BitmapFont defaultFont;
 	
 	@Override
 	public void create () {
@@ -57,6 +59,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		atlas = new TextureAtlas(Gdx.files.internal("main.atlas"));
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
+
+		defaultFont = new BitmapFont();
 
 		gs = new GameState();
 
