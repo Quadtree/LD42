@@ -1,6 +1,7 @@
 package info.quadtree.ld42;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
 
 public class Hex {
     final int HEX_SIZE = 32;
@@ -18,9 +19,14 @@ public class Hex {
         int sx = getScreenX();
         int sy = getScreenY();
 
-        Sprite sp = LD42.s.getSprite("hex32");
+        float brightness = MathUtils.clamp(ttl / 30f, 0f, 1f);
 
-        LD42.s.batch.draw(sp, sx, sy, HEX_SIZE, HEX_SIZE);
+        Sprite sp = LD42.s.getSprite("hex32");
+        sp.setColor(brightness, brightness, brightness, 1f);
+        sp.setBounds(sx, sy, HEX_SIZE, HEX_SIZE);
+        sp.draw(LD42.s.batch);
+
+        //LD42.s.batch.draw(sp, sx, sy, HEX_SIZE, HEX_SIZE);
     }
 
     private int getScreenY() {
