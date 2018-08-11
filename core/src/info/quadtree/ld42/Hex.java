@@ -6,7 +6,10 @@ import info.quadtree.ld42.unit.Mine;
 import info.quadtree.ld42.unit.Unit;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.BiFunction;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Hex extends HexPos {
@@ -55,14 +58,23 @@ public class Hex extends HexPos {
     public void recalcOwnership(){
         owner = Team.Nobody;
 
-        Arrays.stream(getNeighbors()).filter(it -> it instanceof Hex).flatMap(it -> Arrays.stream(((Hex)it).getNeighbors())).distinct().forEach(it -> {
-            if (it instanceof Hex){
-                if (((Hex) it).unit instanceof Mine){
-                    if (owner == Team.Nobody){
-                        owner = ((Hex) it).unit.getTeam();
-                    } else if (((Hex) it).unit.getTeam() != owner) {
-                        owner = Team.Contested;
-                    }
+        Set<Hex> allNeighbors = new HashSet<>();
+
+        allNeighbors.addAll(Arrays.stream(getNeighbors()).filter(it -> it instanceof Hex).map(it -> (Hex)it).collect(Collectors.toList()));
+
+        allNeighbors.addAll(allNeighbors.stream()
+                .flatMap(it -> Arrays.stream(((Hex)it).getNeighbors()))
+                .filter(it -> it instanceof Hex)
+                .map(it -> (Hex)it)
+                .collect(Collectors.toList()
+        ));
+
+        allNeighbors.forEach(it -> {
+            if (it.unit instanceof Mine){
+                if (owner == Team.Nobody){
+                    owner = it.unit.getTeam();
+                } else if (it.unit.getTeam() != owner) {
+                    owner = Team.Contested;
                 }
             }
         });
