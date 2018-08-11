@@ -152,6 +152,7 @@ public abstract class Unit {
 
         if (other.health <= 0){
             other.hex.unit = null;
+            LD42.s.gs.recomputeOwnership();
         }
     }
 
