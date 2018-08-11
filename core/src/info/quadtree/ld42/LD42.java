@@ -135,6 +135,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		});*/
 	}
 
+	int moves;
+
 	@Override
 	public void render () {
 		for (int i=0;i<4;++i){
@@ -166,8 +168,16 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		});
 
 		if (gs.selectedUnit != null) {
+			moves = gs.selectedUnit.getMoves();
+			if (gs.selectedUnit.getMaxMoves() == 0) moves = gs.selectedUnit.getAttacks();
 			gs.getHexAtScreenPos(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY()).ifPresent(destHex -> {
-				gs.selectedUnit.pathTo(destHex).forEach(it -> it.isOnCurrentPath = true);
+				gs.selectedUnit.pathTo(destHex).forEach(it -> {
+					if (moves-- > 0) {
+						it.isOnCurrentPath = true;
+					} else {
+						it.isOnFuturePath = true;
+					}
+				});
 			});
 		}
 

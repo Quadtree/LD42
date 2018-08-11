@@ -66,6 +66,11 @@ public abstract class Unit {
             sp.draw(LD42.s.batch);
         }
 
+        Sprite sp6 = LD42.s.getSprite("shadow1");
+        sp6.setBounds(currentScreenPos.x, currentScreenPos.y, Hex.HEX_SIZE, Hex.HEX_SIZE);
+        sp6.setColor(Color.WHITE);
+        sp6.draw(LD42.s.batch);
+
         Sprite sp = LD42.s.getSprite(getMainGraphicName());
         sp.setBounds(currentScreenPos.x, currentScreenPos.y, Hex.HEX_SIZE, Hex.HEX_SIZE);
         sp.setColor(Color.WHITE);

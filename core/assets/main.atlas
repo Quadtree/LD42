@@ -160,7 +160,7 @@ hb4lvl6
   index: -1
 hex24
   rotate: false
-  xy: 274, 31
+  xy: 308, 65
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
@@ -326,30 +326,37 @@ selected_hex
   orig: 32, 32
   offset: 0, 0
   index: -1
-tank1
+shadow1
   rotate: false
   xy: 206, 23
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-tank1_flag
+tank1
   rotate: false
   xy: 240, 57
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-turret
+tank1_flag
   rotate: false
   xy: 240, 23
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-turret_flag
+turret
   rotate: false
   xy: 274, 57
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+turret_flag
+  rotate: false
+  xy: 274, 23
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

@@ -72,6 +72,14 @@ public class Hex extends HexPos {
         if (isOnCurrentPath){
             Sprite sp2 = LD42.s.getSprite("selected_hex");
             sp2.setBounds(this.getScreenX(), this.getScreenY(), Hex.HEX_SIZE, Hex.HEX_SIZE);
+            sp2.setColor(Color.GREEN);
+            sp2.draw(LD42.s.batch);
+        }
+
+        if (isOnFuturePath){
+            Sprite sp2 = LD42.s.getSprite("selected_hex");
+            sp2.setBounds(this.getScreenX(), this.getScreenY(), Hex.HEX_SIZE, Hex.HEX_SIZE);
+            sp2.setColor(Color.RED);
             sp2.draw(LD42.s.batch);
         }
 
