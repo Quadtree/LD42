@@ -98,9 +98,10 @@ public abstract class Unit {
                     --moves;
                     didSomething = true;
                 } else if (currentPath.get(0).unit != null && currentPath.get(0).unit.getTeam() != this.getTeam()) {
-                    if (attacks > 0) {
+                    if (attacks > 0 && (moves > 0 || getMaxMoves() == 0)) {
                         if (attack(currentPath.get(0).unit)) {
                             --attacks;
+                            --moves;
                         }
                         currentDestination = null;
                     }
