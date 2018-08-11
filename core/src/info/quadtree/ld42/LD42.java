@@ -46,6 +46,24 @@ public class LD42 extends ApplicationAdapter {
 				gs.setHex(new Hex(x,y,20));
 			}
 		}*/
+
+		gs.setHex(new Hex(5,5, 50));
+
+		gs.setHex(new Hex(5,4, 20));
+		gs.setHex(new Hex(6,4, 20));
+		gs.setHex(new Hex(5,3, 20));
+		gs.setHex(new Hex(5,6, 20));
+		gs.setHex(new Hex(6,6, 20));
+		gs.setHex(new Hex(5,7, 20));
+
+		gs.setHex(new Hex(5,12, 10));
+
+		gs.setHex(new Hex(4,11, 20));
+		gs.setHex(new Hex(5,11, 20));
+		gs.setHex(new Hex(5,10, 20));
+		gs.setHex(new Hex(4,13, 20));
+		gs.setHex(new Hex(5,13, 20));
+		gs.setHex(new Hex(5,14, 20));
 	}
 
 	@Override

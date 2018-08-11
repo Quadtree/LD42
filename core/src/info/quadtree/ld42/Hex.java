@@ -3,15 +3,15 @@ package info.quadtree.ld42;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 
-public class Hex {
+import java.util.stream.Stream;
+
+public class Hex extends HexPos {
     final int HEX_SIZE = 32;
 
-    int x, y;
     int ttl;
 
     public Hex(int x, int y, int ttl){
-        this.x = x;
-        this.y = y;
+        super(x, y);
         this.ttl = ttl;
     }
 
@@ -30,22 +30,22 @@ public class Hex {
     }
 
     private int getScreenY() {
-        return y * (HEX_SIZE / 2 - 1);
+        return getY() * (HEX_SIZE / 2 - 1);
     }
 
     private int getScreenX() {
-        return x * (HEX_SIZE * 3 / 2 - 2) + ((y % 2) * (HEX_SIZE * 3 / 2 / 2 - 1));
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
+        return getX() * (HEX_SIZE * 3 / 2 - 2) + ((getY() % 2) * (HEX_SIZE * 3 / 2 / 2 - 1));
     }
 
     public int getTtl() {
         return ttl;
+    }
+
+    /**
+     * Gets all neighbors of a hex, starting with the one to the upper right
+     * @return
+     */
+    public HexPos[] getNeighbors(){
+        return null;
     }
 }
