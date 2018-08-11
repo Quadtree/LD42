@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import info.quadtree.ld42.unit.Unit;
 
 import java.util.Arrays;
@@ -43,6 +44,9 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 	Stage uiStage;
 
 	Label infoLabel;
+
+	Label[] teamLabels;
+	Label[] teamScoreLabels;
 	
 	@Override
 	public void create () {
@@ -66,6 +70,24 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		infoLabel = new Label("TEST", defaultLabelStyle);
 		infoLabel.setPosition(20, Gdx.graphics.getHeight() - 40);
 		uiStage.addActor(infoLabel);
+
+		Table scoreTable = new Table();
+		teamLabels = new Label[gs.turnOrder.size()];
+		teamScoreLabels = new Label[gs.turnOrder.size()];
+
+		for (int i=0;i<4;++i){
+			Label teamLabel = new Label("", defaultLabelStyle);
+			Label teamScoreLabel = new Label("", defaultLabelStyle);
+			teamLabels[i] = teamLabel;
+			teamScoreLabels[i] = teamScoreLabel;
+
+			scoreTable.add(teamLabel);
+			scoreTable.add(teamScoreLabel).padLeft(20);
+			scoreTable.row();
+		}
+
+		uiStage.addActor(scoreTable);
+		scoreTable.setBounds(20, 20, 250, 250);
 
 		/*for (int x=5;x<9;++x){
 			for (int y=5;y<15;++y){
@@ -104,6 +126,23 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public void render () {
+		for (int i=0;i<4;++i){
+			String name = gs.turnOrder.get(i).getName();
+			Label tl = teamLabels[i];
+			tl.setText(name);
+
+			teamScoreLabels[i].setText("" + gs.points.get(gs.turnOrder.get(i)));
+
+			Color col = gs.turnOrder.get(i).getColor().cpy();
+
+			if (gs.currentTurnTeam != gs.turnOrder.get(i)){
+				col.a = 0.5f;
+			}
+
+			teamLabels[i].setColor(col);
+			teamScoreLabels[i].setColor(col);
+		}
+
 		gs.hexStream().forEach(it -> {
 			it.isOnCurrentPath = false;
 			it.isOnFuturePath = false;

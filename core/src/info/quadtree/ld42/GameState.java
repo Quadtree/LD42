@@ -32,7 +32,7 @@ public class GameState implements IndexedGraph<Hex> {
 
     public IndexedAStarPathFinder<Hex> pathFinder;
 
-    List<Team> turnOrder = new ArrayList<>();
+    public List<Team> turnOrder = new ArrayList<>();
     Team currentTurnTeam;
 
     float waitForFallTime = 0f;
