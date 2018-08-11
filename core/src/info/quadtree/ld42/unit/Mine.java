@@ -10,4 +10,9 @@ public class Mine extends Unit {
     public boolean canBeSelected() {
         return false;
     }
+
+    @Override
+    public int getMaxHealth() {
+        return 2;
+    }
 }

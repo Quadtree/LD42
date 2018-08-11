@@ -171,6 +171,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 				if (gs.selectedUnit != null){
 					gs.selectedUnit.setCurrentDestination(it);
 					gs.selectedUnit.executeMoves();
+					gs.selectedUnit = null;
 				}
 			}
 		});
