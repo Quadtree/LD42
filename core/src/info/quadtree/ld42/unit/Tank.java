@@ -20,4 +20,9 @@ public class Tank extends Unit {
     public int getAttack() {
         return 3;
     }
+
+    @Override
+    public int getCost() {
+        return 30;
+    }
 }

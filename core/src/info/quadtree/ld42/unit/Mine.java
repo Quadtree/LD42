@@ -15,4 +15,9 @@ public class Mine extends Unit {
     public int getMaxHealth() {
         return 2;
     }
+
+    @Override
+    public int getCost() {
+        return 15;
+    }
 }

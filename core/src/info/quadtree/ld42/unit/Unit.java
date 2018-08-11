@@ -176,4 +176,8 @@ public abstract class Unit {
     public int getAttack(){
         return 0;
     }
+
+    public int getCost(){
+        return 0;
+    }
 }

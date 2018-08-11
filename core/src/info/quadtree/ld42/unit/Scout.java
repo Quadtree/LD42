@@ -20,4 +20,9 @@ public class Scout extends Unit {
     public int getAttack() {
         return 1;
     }
+
+    @Override
+    public int getCost() {
+        return 25;
+    }
 }

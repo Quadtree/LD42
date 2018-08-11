@@ -150,6 +150,10 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		if (keycode == Input.Keys.NUM_4) gs.selectedUnitTypeToPlace = Unit.UnitType.Turret;
 		if (keycode == Input.Keys.NUM_5) gs.selectedUnitTypeToPlace = Unit.UnitType.Block;
 
+		if (gs.selectedUnitTypeToPlace != null && Unit.factory(gs.selectedUnitTypeToPlace).getCost() > gs.money.get(Team.Overminers)){
+			gs.selectedUnitTypeToPlace = null;
+		}
+
 		if (keycode == Input.Keys.K) gs.getHexAtScreenPos(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY()).ifPresent(it -> it.ttl = 1000);
 
 		if (keycode == Input.Keys.ENTER) gs.endTurn();
@@ -178,7 +182,9 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 				if (gs.selectedUnitTypeToPlace != null) {
 					if (it.owner == Team.Nobody || it.owner == Team.Overminers) {
-						Unit.factory(gs.selectedUnitTypeToPlace).setTeam(Team.Overminers).moveTo(it);
+						Unit u = Unit.factory(gs.selectedUnitTypeToPlace);
+						gs.money.put(Team.Overminers, gs.money.get(Team.Overminers) - u.getCost());
+						u.setTeam(Team.Overminers).moveTo(it);
 						gs.selectedUnitTypeToPlace = null;
 						gs.recomputeOwnership();
 					}

@@ -5,4 +5,14 @@ public class Block extends Unit {
     public String getMainGraphicName() {
         return "block1";
     }
+
+    @Override
+    public int getHealth() {
+        return 3;
+    }
+
+    @Override
+    public int getCost() {
+        return 4;
+    }
 }
