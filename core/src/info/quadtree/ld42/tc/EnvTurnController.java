@@ -19,6 +19,14 @@ public class EnvTurnController extends TurnController {
     public void turnStart() {
         super.turnStart();
 
+        LD42.s.gs.turnOrder.forEach(it2 -> {
+            LD42.s.gs.points.put(it2, LD42.s.gs.points.get(it2) +
+                    (int)LD42.s.gs.hexStream()
+                            .filter(it -> it.owner == it2)
+                            .count());
+        });
+
+
         LD42.s.gs.hexStream().forEach(it -> it.ttl--);
         long falling = LD42.s.gs.hexStream().filter(it -> it.ttl <= 0).count();
         if (falling > 0){

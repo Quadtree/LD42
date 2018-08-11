@@ -191,12 +191,12 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 		infoLabel.setText("$" + gs.money.get(Team.Overminers));
 
-		Optional<Hex> th = gs.getHexAtScreenPos(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
+		/*Optional<Hex> th = gs.getHexAtScreenPos(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
 		th.ifPresent(it -> {
 			if (it.unit != null) {
 				infoLabel.setText(infoLabel.getText() + " HP: " + it.unit.getHealth() + "/" + it.unit.getMaxHealth() + " Moves: " + it.unit.getMoves() + "/" + it.unit.getMaxMoves() + " Attacks: " + it.unit.getAttacks());
 			}
-		});
+		});*/
 
 		uiStage.act();
 		uiStage.draw();

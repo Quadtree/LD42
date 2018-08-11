@@ -39,10 +39,7 @@ public enum Team {
                 .filter(it -> it.getTeam() == this)
                 .forEach(Unit::turnStart);
 
-        LD42.s.gs.points.put(this, LD42.s.gs.points.get(this) +
-                (int)LD42.s.gs.hexStream()
-                    .filter(it -> it.owner == this)
-                    .count());
+
 
         LD42.s.gs.money.put(this, LD42.s.gs.money.get(this) + 20);
     }
