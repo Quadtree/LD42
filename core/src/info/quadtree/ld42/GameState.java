@@ -31,7 +31,7 @@ public class GameState {
                 final int fi = i;
                 Arrays.stream(hexes).filter(Objects::nonNull).forEach(it -> {
                     if (MathUtils.random(3) != 0) it.ttl++;
-                    if (MathUtils.random(2) == 0 || hexCount < 100) {
+                    if (MathUtils.random(2) == 0 || hexCount < 200) {
                         HexPos neighbor = it.getNeighbors()[MathUtils.random(5)];
                         if (!(neighbor instanceof Hex)) {
                             setHex(new Hex(neighbor.x, neighbor.y, 1));
@@ -41,9 +41,10 @@ public class GameState {
             }
 
             long badHexCount = Arrays.stream(hexes).filter(Objects::nonNull).filter(it -> it.x == 0 || it.y == 0 || it.x == GRID_WIDTH - 1 || it.y == GRID_HEIGHT - 1).count();
-            System.out.println("BHC="+badHexCount);
+            long hexCount = Arrays.stream(hexes).filter(Objects::nonNull).count();
+            System.out.println("BHC="+badHexCount + " HC=" + hexCount);
 
-            if (badHexCount == 0) break;
+            if (badHexCount == 0 && hexCount >= 300) break;
         }
     }
 
