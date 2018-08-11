@@ -97,10 +97,10 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 				GraphPath<Hex> hexPath = new DefaultGraphPath<>();
 				gs.pathFinder.searchNodePath(gs.selectedUnit.getHex(), destHex, gs.defaultHeuristic, hexPath);
 
-				System.err.println("START");
+				//System.err.println("START");
 				for (int i=0;i<hexPath.getCount();++i){
 					hexPath.get(i).isOnCurrentPath = true;
-					System.err.println(hexPath.get(i).getX() + "," + hexPath.get(i).getY());
+					//System.err.println(hexPath.get(i).getX() + "," + hexPath.get(i).getY());
 				}
 			});
 		}

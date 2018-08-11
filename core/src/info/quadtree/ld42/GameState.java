@@ -87,7 +87,7 @@ public class GameState implements IndexedGraph<Hex> {
     }
 
     public Hex getHex(int x, int y){
-        if (x < 2 || y < 2 || x >= GRID_WIDTH - 2 || y >= GRID_HEIGHT - 2) return null;
+        if (x < 0 || y < 0 || x >= GRID_WIDTH || y >= GRID_HEIGHT) return null;
 
         int idx = x * GRID_HEIGHT + y;
 
@@ -147,7 +147,7 @@ public class GameState implements IndexedGraph<Hex> {
 
     @Override
     public int getIndex(Hex node) {
-        return node.x * GRID_WIDTH + node.y;
+        return node.x * GRID_HEIGHT + node.y;
     }
 
     @Override
