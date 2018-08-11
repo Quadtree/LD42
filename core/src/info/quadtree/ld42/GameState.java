@@ -21,6 +21,8 @@ public class GameState {
 
     Unit.UnitType selectedUnitTypeToPlace = null;
 
+    public Unit selectedUnit = null;
+
     public GameState(){
     }
 
