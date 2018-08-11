@@ -101,6 +101,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 	public boolean keyDown(int keycode) {
 		if (keycode == Input.Keys.NUM_1) gs.selectedUnitTypeToPlace = Unit.UnitType.Mine;
 
+		if (keycode == Input.Keys.K) gs.getHexAtScreenPos(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY()).ifPresent(it -> it.ttl = 1000);
+
 		return false;
 	}
 

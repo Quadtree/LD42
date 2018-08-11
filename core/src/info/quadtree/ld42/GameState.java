@@ -7,6 +7,7 @@ import info.quadtree.ld42.unit.Unit;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -89,5 +90,12 @@ public class GameState {
 
     public void render(){
         Arrays.stream(hexes).filter(Objects::nonNull).sorted(Comparator.comparingInt(Hex::getY)).forEach(Hex::render);
+    }
+
+    public Optional<Hex> getHexAtScreenPos(int x, int y){
+        return Arrays.stream(hexes).filter(Objects::nonNull).filter(it ->
+                (Math.pow((it.getScreenX() + Hex.HEX_SIZE / 2.0) - x, 2) +
+                Math.pow((it.getScreenY() + Hex.HEX_SIZE / 2.0) - y, 2)) < 16*16
+        ).findAny();
     }
 }
