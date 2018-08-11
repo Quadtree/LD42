@@ -284,6 +284,13 @@ mine1
   orig: 32, 32
   offset: 0, 0
   index: -1
+rock1
+  rotate: false
+  xy: 494, 102
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
 scout1
   rotate: false
   xy: 410, 52
