@@ -1,19 +1,19 @@
 package info.quadtree.ld42;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
+import info.quadtree.ld42.unit.Unit;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LD42 extends ApplicationAdapter {
+public class LD42 extends ApplicationAdapter implements InputProcessor {
 	public SpriteBatch batch;
 	Texture img;
 
@@ -42,7 +42,10 @@ public class LD42 extends ApplicationAdapter {
 
 		gs.generate();
 
+		InputMultiplexer mp = new InputMultiplexer();
+		mp.addProcessor(this);
 
+		Gdx.input.setInputProcessor(mp);
 
 		/*for (int x=5;x<9;++x){
 			for (int y=5;y<15;++y){
@@ -92,5 +95,47 @@ public class LD42 extends ApplicationAdapter {
 	public void dispose () {
 		batch.dispose();
 		img.dispose();
+	}
+
+	@Override
+	public boolean keyDown(int keycode) {
+		if (keycode == Input.Keys.NUM_1) gs.selectedUnitTypeToPlace = Unit.UnitType.Mine;
+
+		return false;
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+		return false;
+	}
+
+	@Override
+	public boolean keyTyped(char character) {
+		return false;
+	}
+
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		return false;
+	}
+
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		return false;
+	}
+
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		return false;
+	}
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		return false;
+	}
+
+	@Override
+	public boolean scrolled(int amount) {
+		return false;
 	}
 }

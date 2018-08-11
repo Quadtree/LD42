@@ -2,6 +2,7 @@ package info.quadtree.ld42;
 
 import com.badlogic.gdx.math.MathUtils;
 import info.quadtree.ld42.unit.Mine;
+import info.quadtree.ld42.unit.Unit;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -17,10 +18,9 @@ public class GameState {
 
     public static final int CENTER_VARIANCE = 8;
 
+    Unit.UnitType selectedUnitTypeToPlace = null;
+
     public GameState(){
-
-
-
     }
 
     private void growFrom(Hex it){

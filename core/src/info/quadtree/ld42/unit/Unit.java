@@ -5,6 +5,14 @@ import info.quadtree.ld42.Hex;
 import info.quadtree.ld42.LD42;
 
 public abstract class Unit {
+    public enum UnitType {
+        Mine,
+        Tank,
+        Scout,
+        Turret,
+        Block
+    }
+
     int health;
 
     Hex hex;
@@ -31,4 +39,16 @@ public abstract class Unit {
     }
 
     public abstract String getMainGraphicName();
+
+    public static Unit factory(UnitType type){
+        switch (type){
+            case Mine: return new Mine();
+            case Tank: return new Mine();
+            case Scout: return new Mine();
+            case Turret: return new Mine();
+            case Block: return new Mine();
+        }
+
+        return null;
+    }
 }
