@@ -2,14 +2,17 @@ package info.quadtree.ld42;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
+import info.quadtree.ld42.unit.Unit;
 
 import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
 public class Hex extends HexPos {
-    final int HEX_SIZE = 32;
+    public static final int HEX_SIZE = 32;
 
     int ttl;
+
+    public Unit unit;
 
     public Hex(int x, int y, int ttl){
         super(x, y);
@@ -27,14 +30,17 @@ public class Hex extends HexPos {
         sp.setBounds(sx, sy, HEX_SIZE, HEX_SIZE);
         sp.draw(LD42.s.batch);
 
+        if (unit != null)
+            unit.render();
+
         //LD42.s.batch.draw(sp, sx, sy, HEX_SIZE, HEX_SIZE);
     }
 
-    private int getScreenY() {
+    public int getScreenY() {
         return getY() * (HEX_SIZE / 2 - 1);
     }
 
-    private int getScreenX() {
+    public int getScreenX() {
         return getX() * (HEX_SIZE * 3 / 2 - 2) + ((getY() % 2) * (HEX_SIZE * 3 / 2 / 2 - 1));
     }
 

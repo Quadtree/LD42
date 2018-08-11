@@ -1,6 +1,7 @@
 package info.quadtree.ld42;
 
 import com.badlogic.gdx.math.MathUtils;
+import info.quadtree.ld42.unit.Mine;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -65,6 +66,8 @@ public class GameState {
                     int distToSide = Math.min(Math.min(Math.min(it.x, it.y), GRID_WIDTH - 1 - it.x), GRID_HEIGHT - 1 - it.y);
                     if (MathUtils.random(distToSide) == 0) deleteHex(it.x, it.y);
                 });
+
+        new Mine().moveTo(Arrays.stream(hexes).filter(Objects::nonNull).findAny().get());
     }
 
     public Hex getHex(int x, int y){
