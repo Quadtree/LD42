@@ -25,4 +25,9 @@ public class Tank extends Unit {
     public int getCost() {
         return 30;
     }
+
+    @Override
+    public String getFlagGraphicName() {
+        return "tank1_flag";
+    }
 }

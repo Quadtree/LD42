@@ -25,4 +25,9 @@ public class Scout extends Unit {
     public int getCost() {
         return 25;
     }
+
+    @Override
+    public String getFlagGraphicName() {
+        return "scout1_flag";
+    }
 }
