@@ -130,7 +130,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		gs.render();
 		batch.end();
 
-		infoLabel.setText("Money: $" + gs.money.get(Team.Overminers) + "   Ore: " + gs.points.get(Team.Overminers) + "   Turn: " + gs.turnNum);
+		infoLabel.setText("Money: $" + gs.money.get(Team.Overminers) + "   Ore: " + gs.points.get(Team.Overminers) + "   Team: " + gs.currentTurnTeam.getName() + "   Turn: " + gs.turnNum);
 
 		uiStage.act();
 		uiStage.draw();

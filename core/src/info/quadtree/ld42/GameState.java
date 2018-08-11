@@ -7,6 +7,9 @@ import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
+import info.quadtree.ld42.tc.AITurnController;
+import info.quadtree.ld42.tc.EnvTurnController;
+import info.quadtree.ld42.tc.TurnController;
 import info.quadtree.ld42.unit.Mine;
 import info.quadtree.ld42.unit.Unit;
 
@@ -36,6 +39,7 @@ public class GameState implements IndexedGraph<Hex> {
 
     public Map<Team, Integer> money = new EnumMap<>(Team.class);
     public Map<Team, Integer> points = new EnumMap<>(Team.class);
+    public Map<Team, TurnController> controllerMap = new EnumMap<>(Team.class);
 
     int turnNum = 0;
 
@@ -122,12 +126,23 @@ public class GameState implements IndexedGraph<Hex> {
         for(Team t : turnOrder){
             money.put(t, 20);
             points.put(t, 0);
+            controllerMap.put(t, new AITurnController());
         }
+
+        controllerMap.put(Team.Overminers, new TurnController());
+        controllerMap.put(Team.Nobody, new EnvTurnController());
 
         Collections.shuffle(turnOrder);
 
+        turnOrder.add(Team.Nobody);
+
         currentTurnTeam = turnOrder.get(0);
         currentTurnTeam.beginTurn();
+    }
+
+    public void beginTurn(){
+        currentTurnTeam.beginTurn();
+        controllerMap.get(currentTurnTeam).turnStart();
     }
 
     public Hex getHex(int x, int y){
@@ -175,10 +190,7 @@ public class GameState implements IndexedGraph<Hex> {
     }
 
     public void render(){
-        if (currentTurnTeam.aiControlled) {
-            currentTurnTeam.takeTurn();
-            endTurn();
-        }
+        controllerMap.get(currentTurnTeam).render();
 
         Arrays.stream(hexes).filter(Objects::nonNull).sorted(Comparator.comparingInt(Hex::getY).reversed()).forEach(Hex::render);
         Arrays.stream(hexes).filter(Objects::nonNull).sorted(Comparator.comparingInt(Hex::getY).reversed()).forEach(Hex::render2);
