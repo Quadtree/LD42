@@ -80,6 +80,8 @@ public abstract class Unit {
                     currentDestination = null;
                 }
             }
+
+            if (currentPath.size() == 0) currentPath = null;
         }
 
         if (isAnimating()){
