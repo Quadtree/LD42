@@ -60,6 +60,10 @@ public abstract class Unit {
     public void moveTo(Hex hex){
         if (this.hex != null) this.hex.unit = null;
 
+        if (hex != null){
+            if (hex.unit != null) return;
+        }
+
         this.hex = hex;
 
         if (this.hex != null) {
