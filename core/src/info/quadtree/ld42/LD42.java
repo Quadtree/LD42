@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LD42 extends ApplicationAdapter {
-	SpriteBatch batch;
+	public SpriteBatch batch;
 	Texture img;
 
 	TextureAtlas atlas;
@@ -38,8 +38,8 @@ public class LD42 extends ApplicationAdapter {
 
 		gs = new GameState();
 
-		for (int x=5;x<7;++x){
-			for (int y=5;y<7;++y){
+		for (int x=5;x<9;++x){
+			for (int y=5;y<9;++y){
 				gs.setHex(new Hex(x,y,20));
 			}
 		}

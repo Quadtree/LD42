@@ -1,5 +1,9 @@
 package info.quadtree.ld42;
 
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Objects;
+
 public class GameState {
     Hex[] hexes;
 
@@ -22,6 +26,6 @@ public class GameState {
     }
 
     public void render(){
-
+        Arrays.stream(hexes).filter(Objects::nonNull).sorted(Comparator.comparingInt(Hex::getY)).forEach(Hex::render);
     }
 }
