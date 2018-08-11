@@ -66,20 +66,18 @@ public abstract class Unit {
         sp.setColor(team.getColor());
         sp.draw(LD42.s.batch);
 
-        if (currentPath != null){
-            if (!isAnimating()) {
-                animationSpeed = 20f;
+        if (currentPath != null && isAtDestination()){
+            animationSpeed = 20f;
 
-                if (currentPath.get(0).unit == null && moves > 0) {
-                    moveTo(currentPath.get(0));
-                    currentPath.remove(0);
-                    --moves;
-                } else if (currentPath.get(0).unit != null && currentPath.get(0).unit.getTeam() != this.getTeam()) {
-                    if (attacks > 0) {
-                        attack(currentPath.get(0).unit);
-                        --attacks;
-                        currentDestination = null;
-                    }
+            if (currentPath.get(0).unit == null && moves > 0) {
+                moveTo(currentPath.get(0));
+                currentPath.remove(0);
+                --moves;
+            } else if (currentPath.get(0).unit != null && currentPath.get(0).unit.getTeam() != this.getTeam()) {
+                if (attacks > 0) {
+                    attack(currentPath.get(0).unit);
+                    --attacks;
+                    currentDestination = null;
                 }
             }
         }
