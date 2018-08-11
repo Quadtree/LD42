@@ -3,6 +3,7 @@ package info.quadtree.ld42.unit;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import info.quadtree.ld42.Hex;
 import info.quadtree.ld42.LD42;
+import info.quadtree.ld42.Team;
 
 public abstract class Unit {
     public enum UnitType {
@@ -17,6 +18,10 @@ public abstract class Unit {
 
     Hex hex;
 
+    Team team = Team.Contested;
+
+
+
     public void turn(){
 
     }
@@ -25,6 +30,7 @@ public abstract class Unit {
         Sprite sp = LD42.s.getSprite(getMainGraphicName());
 
         sp.setBounds(hex.getScreenX(), hex.getScreenY(), Hex.HEX_SIZE, Hex.HEX_SIZE);
+        sp.setColor(team.getColor());
         sp.draw(LD42.s.batch);
     }
 
@@ -50,5 +56,14 @@ public abstract class Unit {
         }
 
         return null;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public Unit setTeam(Team team) {
+        this.team = team;
+        return this;
     }
 }

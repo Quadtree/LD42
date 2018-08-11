@@ -121,7 +121,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 		if (gs.selectedUnitTypeToPlace != null){
 			gs.getHexAtScreenPos(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY()).ifPresent(it -> {
-				Unit.factory(gs.selectedUnitTypeToPlace).moveTo(it);
+				Unit.factory(gs.selectedUnitTypeToPlace).setTeam(Team.Overminers).moveTo(it);
 				gs.selectedUnitTypeToPlace = null;
 			});
 		}
