@@ -152,6 +152,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 		if (gs.winner != null){
 			winLabel.setText(gs.winner.getName() + " has won! Press R to restart.");
+		} else {
+			winLabel.setText("");
 		}
 
 		gs.hexStream().forEach(it -> {

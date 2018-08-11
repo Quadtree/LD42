@@ -41,6 +41,7 @@ public class EnvTurnController extends TurnController {
                 LD42.s.gs.points.entrySet().stream().filter(it -> it.getKey() != Team.Nobody).max(Comparator.comparingInt(Map.Entry::getValue)).ifPresent(it -> {
                     LD42.s.gs.winner = it.getKey();
                 });
+                return;
             }
 
             LD42.s.gs.recomputeOwnership();
