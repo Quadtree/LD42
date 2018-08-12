@@ -238,6 +238,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 					reShowTitleScreen = false;
 					resetInProgress = true;
 					nextDifficultyLevel = it;
+					if (!mainMusic.isPlaying()) mainMusic.play();
 					return true;
 				}
 
@@ -286,7 +287,6 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 		mainMusic.setLooping(true);
 		mainMusic.setVolume(0.3f);
-		mainMusic.play();
 	}
 
 	int moves;
@@ -476,6 +476,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
+		if (!mainMusic.isPlaying()) mainMusic.play();
+
 		if (resetInProgress) return false;
 
 		if (keycode == Input.Keys.R){
@@ -532,6 +534,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		if (!mainMusic.isPlaying()) mainMusic.play();
+
 		if (resetInProgress) return false;
 
 		if (!isPlayersTurn()) return false;
@@ -587,6 +591,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
+		//if (!mainMusic.isPlaying()) mainMusic.play();
 		return false;
 	}
 
