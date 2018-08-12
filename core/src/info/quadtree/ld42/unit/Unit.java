@@ -348,5 +348,9 @@ public abstract class Unit {
         return attacks;
     }
 
+    public String getName(){
+        return this.getClass().getSimpleName();
+    }
+
 
 }

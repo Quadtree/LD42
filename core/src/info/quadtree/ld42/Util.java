@@ -22,12 +22,12 @@ public class Util {
 
     static Window.WindowStyle windowStyle;
 
-    public static void showTutorialText(String text){
+    public static void showTutorialText(String key, String text){
         if (LD42.s.titleScreenUp) return;
 
         Preferences prefs = Gdx.app.getPreferences("ld42.xml");
 
-        if (prefs.contains(text)){
+        if (prefs.contains(key)){
             return;
         }
 
@@ -35,7 +35,8 @@ public class Util {
             windowStyle = new Window.WindowStyle(LD42.s.defaultFont, Color.WHITE, new NinePatchDrawable(LD42.s.dialogNinePatch));
         }
 
-        prefs.putBoolean(text, true);
+        prefs.putBoolean(key, true);
+        prefs.flush();
 
         Dialog dialog = new Dialog("", windowStyle);
         Label ll = new Label(text, LD42.s.defaultLabelStyle);
@@ -54,5 +55,9 @@ public class Util {
             }
             return false;
         });
+    }
+
+    public static void showTutorialText(String text){
+        showTutorialText(text, text);
     }
 }
