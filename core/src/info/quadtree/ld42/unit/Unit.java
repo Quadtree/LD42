@@ -92,6 +92,8 @@ public abstract class Unit {
                 assert currentScreenPos != null;
                 LD42.s.gs.particleStage.addActor(new Particle(currentScreenPos.cpy().add(Hex.HEX_SIZE / 2f, Hex.HEX_SIZE / 2f - 12), 100, 3, 0.2f, 8, 75f, 0.6f, Color.GRAY));
             }
+
+            LD42.s.plop.play();
         }
 
         if (isAccelerating && isAnimating()){
@@ -261,6 +263,8 @@ public abstract class Unit {
     }
 
     public boolean attack(Unit other){
+        LD42.s.shoot.play();
+
         if (this.getAttack() > other.getAttack()) {
             currentAttackTarget = other;
             attackAnimationStatus = 0f;
@@ -278,8 +282,12 @@ public abstract class Unit {
                 LD42.s.gs.particleStage.addActor(new Particle(other.currentScreenPos.cpy().add(Hex.HEX_SIZE / 2f, Hex.HEX_SIZE / 2f), 100, 3, 0.4f, 8, 75f, 0.6f, getTeam().getColor()));
             }
 
+            LD42.s.capture.play();
+
             return;
         }
+
+        LD42.s.explosion.play();
 
         other.hex.unit = null;
         LD42.s.gs.recomputeOwnership();

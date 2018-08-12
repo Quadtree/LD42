@@ -3,6 +3,7 @@ package info.quadtree.ld42;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.ai.pfa.DefaultGraphPath;
 import com.badlogic.gdx.ai.pfa.GraphPath;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -52,6 +53,11 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 	Label[] teamScoreLabels;
 
 	public BitmapFont defaultFont;
+
+	public Sound shoot;
+	public Sound capture;
+	public Sound explosion;
+	public Sound plop;
 	
 	@Override
 	public void create () {
@@ -99,6 +105,11 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		winLabel = new Label("", defaultLabelStyle);
 		winLabel.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f, Align.center);
 		uiStage.addActor(winLabel);
+
+		shoot = Gdx.audio.newSound(Gdx.files.internal("Laser_Shoot62.wav"));
+		capture = Gdx.audio.newSound(Gdx.files.internal("Powerup8.wav"));
+		explosion = Gdx.audio.newSound(Gdx.files.internal("Explosion322.wav"));
+		plop = Gdx.audio.newSound(Gdx.files.internal("Hit_Hurt130.wav"));
 
 		/*for (int x=5;x<9;++x){
 			for (int y=5;y<15;++y){
