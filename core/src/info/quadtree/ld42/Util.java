@@ -11,8 +11,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Align;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Queue;
 
 public class Util {
     public static <T> Optional<T> choice(List<T> options){
@@ -24,10 +26,25 @@ public class Util {
 
     static Dialog tutorialWindow = null;
 
+    static List<Dialog> tutorialQueue = new ArrayList<>();
+
     public static void closeTutorial(){
         if (tutorialWindow != null){
             tutorialWindow.remove();
             tutorialWindow = null;
+        }
+
+        showNextTutorial();
+    }
+
+    public static void showNextTutorial(){
+        if (tutorialQueue.size() > 0 && tutorialWindow == null){
+            Dialog dialog = tutorialQueue.get(0);
+            tutorialQueue.remove(0);
+
+            LD42.s.uiStage.addActor(dialog);
+            dialog.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f, Align.center);
+            tutorialWindow = dialog;
         }
     }
 
@@ -48,21 +65,19 @@ public class Util {
         ll.setWrap(true);
         dialog.getContentTable().add(ll).width(500).pad(20).fill();
         dialog.pack();
-        LD42.s.uiStage.addActor(dialog);
-        dialog.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f, Align.center);
-
-        closeTutorial();
-        tutorialWindow = dialog;
 
         dialog.addListener((evt) -> {
             if (evt instanceof InputEvent){
                 if (((InputEvent) evt).getType() == InputEvent.Type.keyDown || ((InputEvent) evt).getType() == InputEvent.Type.touchDown){
-                    dialog.remove();
+                    closeTutorial();
                     return true;
                 }
             }
             return false;
         });
+
+        tutorialQueue.add(dialog);
+        showNextTutorial();
     }
 
     public static void showTutorialText(String text){
