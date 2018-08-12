@@ -18,7 +18,7 @@ public class Turret extends Unit {
 
     @Override
     public int getCost() {
-        return 4;
+        return 5;
     }
 
     @Override
