@@ -98,6 +98,18 @@ public class GameState implements IndexedGraph<Hex> {
             if (hexCount >= 300) break;
         }
 
+        while(true){
+            int topTTL = hexStream().mapToInt(Hex::getTtl).max().getAsInt();
+
+            long numAtTop = hexStream().filter(it -> it.getTtl() == topTTL).count();
+
+            if (numAtTop > 50){
+                break;
+            }
+
+            hexStream().filter(it -> it.getTtl() == topTTL).forEach(it -> it.ttl--);
+        }
+
         hexStream().forEach(it -> it.ttl += MathUtils.random(1));
 
         Arrays.stream(hexes)
