@@ -81,55 +81,7 @@ public class GameState implements IndexedGraph<Hex> {
 
     public void generate(){
         particleStage = new Stage();
-        backgroundCloudStage = new Stage();
-
-        for (int i=0;i<20;++i){
-            backgroundCloudStage.addActor(new BackgroundCloud());
-        }
-
-        pathFinder = new IndexedAStarPathFinder<>(this);
-
-        while(true) {
-            hexes = new Hex[GRID_WIDTH * GRID_HEIGHT];
-
-            int seeds = MathUtils.random(2, 5);
-
-            for (int i=0;i<seeds;++i) setHex(new Hex(MathUtils.random(GRID_WIDTH / 2 - CENTER_VARIANCE, GRID_WIDTH / 2 + CENTER_VARIANCE*2), MathUtils.random(GRID_HEIGHT / 2 - CENTER_VARIANCE, GRID_HEIGHT / 2 + CENTER_VARIANCE*2), 1));
-
-
-            for (int i = 0; i < 30; ++i) {
-                final int fi = i;
-                Arrays.stream(hexes).filter(Objects::nonNull).forEach(this::growFrom);
-            }
-
-            long badHexCount = Arrays.stream(hexes).filter(Objects::nonNull).filter(it -> it.x == 0 || it.y == 0 || it.x == GRID_WIDTH - 1 || it.y == GRID_HEIGHT - 1).count();
-            long hexCount = Arrays.stream(hexes).filter(Objects::nonNull).count();
-            System.out.println("BHC="+badHexCount + " HC=" + hexCount);
-
-            if (hexCount >= 300) break;
-        }
-
-        while(true){
-            int topTTL = hexStream().mapToInt(Hex::getTtl).max().getAsInt();
-
-            long numAtTop = hexStream().filter(it -> it.getTtl() == topTTL).count();
-
-            if (numAtTop > 50){
-                break;
-            }
-
-            hexStream().filter(it -> it.getTtl() == topTTL).forEach(it -> it.ttl--);
-        }
-
-        hexStream().forEach(it -> it.ttl += MathUtils.random(1));
-
-        Arrays.stream(hexes)
-                .filter(Objects::nonNull).filter(it -> it.x <= 2 || it.y <= 2 || it.x >= GRID_WIDTH - 3 || it.y >= GRID_HEIGHT - 3)
-                .collect(Collectors.toList())
-                .forEach(it -> {
-                    int distToSide = Math.min(Math.min(Math.min(it.x, it.y), GRID_WIDTH - 1 - it.x), GRID_HEIGHT - 1 - it.y);
-                    if (MathUtils.random(distToSide) == 0) deleteHex(it.x, it.y);
-                });
+        generateCloudsAndTerrain(300);
 
         /*Unit mine = new Mine();
         mine.setTeam(Team.DigCorp).moveTo(Arrays.stream(hexes).filter(Objects::nonNull).findAny().get());
@@ -160,6 +112,65 @@ public class GameState implements IndexedGraph<Hex> {
 
         currentTurnTeam = turnOrder.get(0);
         beginTurn();
+    }
+
+    public void generateCloudsAndTerrain(int minHex) {
+        long startTime = System.currentTimeMillis();
+
+        backgroundCloudStage = new Stage();
+
+        for (int i=0;i<20;++i){
+            backgroundCloudStage.addActor(new BackgroundCloud());
+        }
+
+        pathFinder = new IndexedAStarPathFinder<>(this);
+
+        while(true) {
+            hexes = new Hex[GRID_WIDTH * GRID_HEIGHT];
+
+            int seeds = MathUtils.random(2, 5);
+
+            for (int i=0;i<seeds;++i) setHex(new Hex(MathUtils.random(GRID_WIDTH / 2 - CENTER_VARIANCE, GRID_WIDTH / 2 + CENTER_VARIANCE*2), MathUtils.random(GRID_HEIGHT / 2 - CENTER_VARIANCE, GRID_HEIGHT / 2 + CENTER_VARIANCE*2), 1));
+
+
+            for (int i = 0; i < 30; ++i) {
+                final int fi = i;
+                Arrays.stream(hexes).filter(Objects::nonNull).forEach(this::growFrom);
+            }
+
+            long badHexCount = Arrays.stream(hexes).filter(Objects::nonNull).filter(it -> it.x == 0 || it.y == 0 || it.x == GRID_WIDTH - 1 || it.y == GRID_HEIGHT - 1).count();
+            long hexCount = Arrays.stream(hexes).filter(Objects::nonNull).count();
+            System.out.println("BHC="+badHexCount + " HC=" + hexCount);
+
+            if (hexCount >= minHex) break;
+        }
+
+        if (Arrays.stream(hexes).filter(Objects::nonNull).count() >= 50) {
+            while (true) {
+                int topTTL = hexStream().mapToInt(Hex::getTtl).max().getAsInt();
+
+                long numAtTop = hexStream().filter(it -> it.getTtl() == topTTL).count();
+
+                if (numAtTop > 50) {
+                    break;
+                }
+
+                hexStream().filter(it -> it.getTtl() == topTTL).forEach(it -> it.ttl--);
+            }
+        }
+
+        hexStream().forEach(it -> it.ttl += MathUtils.random(1));
+
+        Arrays.stream(hexes)
+                .filter(Objects::nonNull).filter(it -> it.x <= 2 || it.y <= 2 || it.x >= GRID_WIDTH - 3 || it.y >= GRID_HEIGHT - 3)
+                .collect(Collectors.toList())
+                .forEach(it -> {
+                    int distToSide = Math.min(Math.min(Math.min(it.x, it.y), GRID_WIDTH - 1 - it.x), GRID_HEIGHT - 1 - it.y);
+                    if (MathUtils.random(distToSide) == 0) deleteHex(it.x, it.y);
+                });
+
+        long endTime = System.currentTimeMillis();
+        System.out.println("Generation in " + (endTime - startTime) + "ms");
     }
 
     public void beginTurn(){
@@ -212,13 +223,15 @@ public class GameState implements IndexedGraph<Hex> {
     }
 
     public void render(){
-        if (!endTurnInProgress) {
-            controllerMap.get(currentTurnTeam).render();
-        } else {
-            if (hexStream().noneMatch(it -> it.unit != null && it.unit.isAnimating())) {
-                currentTurnTeam = turnOrder.get((turnOrder.indexOf(currentTurnTeam) + 1) % turnOrder.size());
-                beginTurn();
-                endTurnInProgress = false;
+        if (controllerMap != null && currentTurnTeam != null) {
+            if (!endTurnInProgress) {
+                controllerMap.get(currentTurnTeam).render();
+            } else {
+                if (hexStream().noneMatch(it -> it.unit != null && it.unit.isAnimating())) {
+                    currentTurnTeam = turnOrder.get((turnOrder.indexOf(currentTurnTeam) + 1) % turnOrder.size());
+                    beginTurn();
+                    endTurnInProgress = false;
+                }
             }
         }
 

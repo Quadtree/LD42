@@ -59,6 +59,11 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 	public Sound explosion;
 	public Sound plop;
 	public Sound detach;
+
+	public boolean titleScreenUp = true;
+
+	GameState titleGs1;
+	GameState titleGs2;
 	
 	@Override
 	public void create () {
@@ -72,6 +77,9 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		gs = new GameState();
 
 		gs.generate();
+
+		titleGs1 = new GameState();
+		titleGs1.generateCloudsAndTerrain(0);
 
 		InputMultiplexer mp = new InputMultiplexer();
 		mp.addProcessor(this);
@@ -152,6 +160,17 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public void render () {
+		Gdx.gl.glClearColor(0.7f, 0.7f, 0.9f, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+		if (titleScreenUp){
+			batch.begin();
+			titleGs1.render();
+			batch.end();
+
+			return;
+		}
+
 		for (int i=0;i<4;++i){
 			String name = gs.turnOrder.get(i).getName();
 			Label tl = teamLabels[i];
@@ -196,8 +215,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 
 
-		Gdx.gl.glClearColor(0.7f, 0.7f, 0.9f, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 
 		gs.backgroundCloudStage.act();
 		gs.backgroundCloudStage.draw();
@@ -230,6 +248,11 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
+		if (titleScreenUp){
+			titleScreenUp = false;
+			return true;
+		}
+
 		if (keycode == Input.Keys.NUM_1) gs.selectedUnitTypeToPlace = Unit.UnitType.Mine;
 		if (keycode == Input.Keys.NUM_2) gs.selectedUnitTypeToPlace = Unit.UnitType.Tank;
 		if (keycode == Input.Keys.NUM_3) gs.selectedUnitTypeToPlace = Unit.UnitType.Scout;
@@ -266,6 +289,11 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+
+		if (titleScreenUp){
+			titleScreenUp = false;
+			return true;
+		}
 
 		Optional<Hex> th = gs.getHexAtScreenPos(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
 
