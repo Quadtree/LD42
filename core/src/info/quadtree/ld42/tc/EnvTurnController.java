@@ -35,7 +35,7 @@ public class EnvTurnController extends TurnController {
 
             if (!LD42.s.titleScreenUp) LD42.s.detach.play();
 
-            Util.showTutorialText("Uh oh, looks like those shaking hexes were a bit unstable! Luckily, this ground base is unmanned... and insured. Press Alt to see when more will collapse.");
+            Util.showTutorialText("Uh oh, looks like those shaking hexes were a bit unstable! Luckily, this ground base is unmanned... and insured. Press V to see when more will collapse.");
         }
     }
 

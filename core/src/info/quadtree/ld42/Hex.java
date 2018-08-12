@@ -112,7 +112,7 @@ public class Hex extends HexPos {
     public void render3(){
         if (unit != null) unit.render3();
 
-        if (Gdx.input.isKeyPressed(Input.Keys.ALT_LEFT) || Gdx.input.isKeyPressed(Input.Keys.ALT_RIGHT)){
+        if (Gdx.input.isKeyPressed(Input.Keys.ALT_LEFT) || Gdx.input.isKeyPressed(Input.Keys.ALT_RIGHT) || Gdx.input.isKeyPressed(Input.Keys.V)){
             GlyphLayout gl = new GlyphLayout();
             gl.setText(LD42.s.defaultFont, "" + ttl);
 
