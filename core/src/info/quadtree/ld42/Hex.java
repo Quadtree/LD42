@@ -140,6 +140,8 @@ public class Hex extends HexPos {
     public List<Hex> getExistingTwoLevelNeighbors(){
         Set<Hex> allNeighbors = new HashSet<>();
 
+        allNeighbors.add(this);
+
         allNeighbors.addAll(Arrays.stream(getNeighbors()).filter(it -> it instanceof Hex).map(it -> (Hex)it).collect(Collectors.toList()));
 
         allNeighbors.addAll(allNeighbors.stream()

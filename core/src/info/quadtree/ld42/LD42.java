@@ -301,6 +301,10 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		if (gs.selectedUnitTypeToPlace != null){
 			Util.showTutorialText("Good! Now click on a gray hex. Try to place the mining base away from our rivals' mining bases.");
 		}
+
+		if (gs.money.get(Team.Overminers) < 15 && gs.currentTurnTeam == Team.Overminers){
+			Util.showTutorialText("K2", "Press Enter to end turn, or use the End Turn button.");
+		}
 	}
 	
 	@Override
