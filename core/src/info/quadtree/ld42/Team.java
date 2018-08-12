@@ -82,14 +82,13 @@ public enum Team {
 
                 if (this == Overminers){
                     if (type == Unit.UnitType.Tank){
-                        Util.showTutorialText("The " + new Tank().getName().toLowerCase() + " is slow, but extremely powerful. Nothing can stop it. Select it with left click and right click to move.");
+                        Util.showTutorialText(Unit.UnitType.Tank.getDesc());
                     }
                     if (type == Unit.UnitType.Scout){
-                        Util.showTutorialText("The " + new Scout().getName().toLowerCase() + " is fast, but vulnerable. It can be destroyed by " + new Tank().getName().toLowerCase() +
-                                "s and " + new Turret().getName().toLowerCase() + "s. It is good for capturing mining sites. Select it with left click and right click on a target, like a mining site!");
+                        Util.showTutorialText(Unit.UnitType.Scout.getDesc());
                     }
                     if (type == Unit.UnitType.Turret){
-                        Util.showTutorialText("The " + new Turret().getName().toLowerCase() + " cannot move, is cheap and has decent attack. Left click on it, then right click on an adjacent enemy to attack them.");
+                        Util.showTutorialText(Unit.UnitType.Turret.getDesc());
                     }
                 }
 

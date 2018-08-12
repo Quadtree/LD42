@@ -84,6 +84,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 	InputMultiplexer mp;
 
 	List<Button> dbs = new ArrayList<>();
+
+	TextTooltip.TextTooltipStyle textTooltipStyle;
 	
 	@Override
 	public void create () {
@@ -151,6 +153,9 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 		buttonStyle = new Button.ButtonStyle(new NinePatchDrawable(atlas.createPatch("button_up")), new NinePatchDrawable(atlas.createPatch("button_down")), new NinePatchDrawable(atlas.createPatch("button_down")));
 
+		textTooltipStyle = new TextTooltip.TextTooltipStyle(smallLabelStyle, new NinePatchDrawable(atlas.createPatch("button_small")));
+		textTooltipStyle.wrapWidth = 300;
+
 		Table buyBar = new Table();
 
 		Stream.of(Unit.UnitType.Mine, Unit.UnitType.Tank, Unit.UnitType.Scout, Unit.UnitType.Turret).forEach(it -> {
@@ -176,6 +181,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 				}
 				return false;
 			});
+
+			b.addListener(new TextTooltip(it.getDesc(), textTooltipStyle));
 
 			unitTypeButtonMap.put(it, b);
 		});

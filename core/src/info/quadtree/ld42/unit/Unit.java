@@ -16,11 +16,22 @@ import java.util.List;
 
 public abstract class Unit {
     public enum UnitType {
-        Mine,
-        Tank,
-        Scout,
-        Turret,
-        Block
+        Mine("The mine harvests valuable ore from up to 2 hexes away. Hexes that are near two opposing mining sites can't be mined. It can be captured by combat units, so site it carefully."),
+        Tank("The " + new Tank().getName().toLowerCase() + " is slow, but extremely powerful. Nothing can stop it except another strider. Select it with left click and right click to move."),
+        Scout("The " + new Scout().getName().toLowerCase() + " is fast, but vulnerable. It can be destroyed by " + new Tank().getName().toLowerCase() +
+                "s and " + new Turret().getName().toLowerCase() + "s. It is good for capturing mining sites. Select it with left click and right click on a target, like a mining site!"),
+        Turret("The " + new Turret().getName().toLowerCase() + " cannot move, but is cheap and has decent attack. Left click on it, then right click on an adjacent enemy to attack them."),
+        Block("");
+
+        String desc;
+
+        UnitType(String desc) {
+            this.desc = desc;
+        }
+
+        public String getDesc() {
+            return desc;
+        }
     }
 
     int health = getMaxHealth();
