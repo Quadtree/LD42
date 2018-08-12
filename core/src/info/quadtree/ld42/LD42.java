@@ -1,6 +1,7 @@
 package info.quadtree.ld42;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -88,13 +89,14 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 	TextTooltip.TextTooltipStyle textTooltipStyle;
 
 	DifficultyLevel nextDifficultyLevel;
+
+	Music mainMusic;
 	
 	@Override
 	public void create () {
 		LD42.s = this;
 		atlas = new TextureAtlas(Gdx.files.internal("main.atlas"));
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
 
 		dialogNinePatch = atlas.createPatch("dialog");
 
@@ -107,7 +109,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		gs = new GameState();
 		gs.generate();
 
-
+		mainMusic = Gdx.audio.newMusic(Gdx.files.internal("song_20180812_165750_158.ogg"));
 
 		defaultLabelStyle = new Label.LabelStyle(defaultFont, Color.WHITE);
 		smallLabelStyle = new Label.LabelStyle(smallFont, Color.WHITE);
@@ -279,6 +281,10 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		Arrays.stream(gs.getHex(5,12).getNeighbors()).forEach(it -> {
 			gs.setHex(new Hex(it.x, it.y, 20));
 		});*/
+
+		mainMusic.setLooping(true);
+		mainMusic.setVolume(0.3f);
+		mainMusic.play();
 	}
 
 	int moves;
@@ -479,6 +485,10 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		if (keycode == Input.Keys.R){
 			resetInProgress = true;
 			reShowTitleScreen = true;
+		}
+
+		if (keycode == Input.Keys.M){
+			mainMusic.setVolume(mainMusic.getVolume() > 0.1f ? 0f : 0.3f);
 		}
 
 		//if (keycode == Input.Keys.K) gs.getHexAtScreenPos(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY()).ifPresent(it -> it.ttl = 1000);
