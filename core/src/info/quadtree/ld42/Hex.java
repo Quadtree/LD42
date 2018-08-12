@@ -32,6 +32,8 @@ public class Hex extends HexPos {
     float fallSpeed = 0;
     float fallSpeedModifier = MathUtils.random(0.8f, 1.2f);
 
+    public Unit.UnitType shadowToRender;
+
     int wiggleX, wiggleY;
 
     public Hex(int x, int y, int ttl){
@@ -88,6 +90,20 @@ public class Hex extends HexPos {
                 //wiggleX = MathUtils.random(-1, 1);
                 wiggleY = MathUtils.random(-1, 1);
             }
+        }
+
+        if (shadowToRender != null){
+            Unit u = Unit.factory(shadowToRender);
+
+            Sprite sp7 = LD42.s.getSprite(u.getMainGraphicName());
+            sp7.setBounds(this.getScreenX(), this.getScreenY(), Hex.HEX_SIZE, Hex.HEX_SIZE);
+            sp7.setColor(new Color(1f, 1f, 1f, 0.5f));
+            sp7.draw(LD42.s.batch);
+
+            sp7 = LD42.s.getSprite(u.getFlagGraphicName());
+            sp7.setBounds(this.getScreenX(), this.getScreenY(), Hex.HEX_SIZE, Hex.HEX_SIZE);
+            sp7.setColor(new Color(Team.Overminers.color.r, Team.Overminers.color.g, Team.Overminers.color.b, 0.5f));
+            sp7.draw(LD42.s.batch);
         }
 
         //LD42.s.batch.draw(sp, sx, sy, HEX_SIZE, HEX_SIZE);

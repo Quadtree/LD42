@@ -234,6 +234,14 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 			return;
 		}
 
+		gs.hexStream().forEach(it -> it.shadowToRender = null);
+		if (gs.selectedUnitTypeToPlace != null) {
+			gs.getHexAtScreenPos(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY()).ifPresent(destHex -> {
+				destHex.shadowToRender = gs.selectedUnitTypeToPlace;
+			});
+		}
+
+
 		for (int i=0;i<4;++i){
 			String name = gs.turnOrder.get(i).getName();
 			Label tl = teamLabels[i];
