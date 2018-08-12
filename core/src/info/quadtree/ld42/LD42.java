@@ -11,17 +11,17 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import info.quadtree.ld42.unit.Unit;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class LD42 extends ApplicationAdapter implements InputProcessor {
@@ -61,6 +61,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 	public Sound explosion;
 	public Sound plop;
 	public Sound detach;
+	public Sound nopeSound;
 
 	public boolean titleScreenUp = true;
 
@@ -75,6 +76,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 	Button.ButtonStyle buttonStyle;
 
 	TextButton.TextButtonStyle textButtonStyle;
+
+	Map<Unit.UnitType, Button> unitTypeButtonMap = new EnumMap<>(Unit.UnitType.class);
 	
 	@Override
 	public void create () {
@@ -126,7 +129,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 		Util.windowStyle = new Window.WindowStyle(LD42.s.defaultFont, Color.WHITE, new NinePatchDrawable(LD42.s.dialogNinePatch));
 
-		textButtonStyle = new TextButton.TextButtonStyle(new NinePatchDrawable(atlas.createPatch("button_up")), new NinePatchDrawable(atlas.createPatch("button_down")), new NinePatchDrawable(atlas.createPatch("button_down")), defaultFont);
+		textButtonStyle = new TextButton.TextButtonStyle(new NinePatchDrawable(atlas.createPatch("button_up")), new NinePatchDrawable(atlas.createPatch("button_down")), new NinePatchDrawable(atlas.createPatch("button_up")), defaultFont);
 
 
 		controlBar = new Window("", Util.windowStyle);
@@ -153,12 +156,34 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 					getSprite(theUnit.getFlagGraphicName())
 			)));
 			buyBar.add(b).padRight(10);
+
+			b.setChecked(true);
+
+			b.addListener((evt) -> {
+				if (evt instanceof InputEvent && ((InputEvent) evt).getType() == InputEvent.Type.touchDown){
+					if (resetInProgress) return false;
+					gs.selectedUnitTypeToPlace = it;
+					return true;
+				}
+				return false;
+			});
+
+			unitTypeButtonMap.put(it, b);
 		});
 
 		controlBar.add(buyBar);
 
 		TextButton endTurnButton = new TextButton("End Turn", textButtonStyle);
 		controlBar.add(endTurnButton);
+
+		endTurnButton.addListener((evt) -> {
+			if (evt instanceof InputEvent && ((InputEvent) evt).getType() == InputEvent.Type.touchDown){
+				endTurn();
+				return true;
+			}
+
+			return false;
+		});
 
 		winLabel = new Label("", defaultLabelStyle);
 		winLabel.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f, Align.center);
@@ -169,6 +194,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		explosion = Gdx.audio.newSound(Gdx.files.internal("Explosion322.wav"));
 		plop = Gdx.audio.newSound(Gdx.files.internal("landing.wav"));
 		detach = Gdx.audio.newSound(Gdx.files.internal("Explosion339.wav"));
+		nopeSound = Gdx.audio.newSound(Gdx.files.internal("Blip_Select37.wav"));
 
 		backgroundCloudStage = new Stage();
 
@@ -218,6 +244,12 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 	boolean resetInProgress = false;
 
 	NinePatch dialogNinePatch;
+
+	private void endTurn(){
+		if (gs.currentTurnTeam == Team.Overminers && !gs.endTurnInProgress){
+			gs.endTurn();
+		}
+	}
 
 	@Override
 	public void render () {
@@ -280,6 +312,15 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 			return;
 		}
+
+		if (gs.selectedUnitTypeToPlace != null && Unit.factory(gs.selectedUnitTypeToPlace).getCost() > gs.money.get(Team.Overminers)){
+			gs.selectedUnitTypeToPlace = null;
+			nopeSound.play();
+		}
+
+		unitTypeButtonMap.forEach((k, v) -> {
+			v.setChecked(gs.selectedUnitTypeToPlace == k);
+		});
 
 		gs.hexStream().forEach(it -> it.shadowToRender = null);
 		if (gs.selectedUnitTypeToPlace != null) {
@@ -386,19 +427,14 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		if (keycode == Input.Keys.NUM_2) gs.selectedUnitTypeToPlace = Unit.UnitType.Tank;
 		if (keycode == Input.Keys.NUM_3) gs.selectedUnitTypeToPlace = Unit.UnitType.Scout;
 		if (keycode == Input.Keys.NUM_4) gs.selectedUnitTypeToPlace = Unit.UnitType.Turret;
-		if (keycode == Input.Keys.NUM_5) gs.selectedUnitTypeToPlace = Unit.UnitType.Block;
 
 		if (keycode == Input.Keys.R){
 			resetInProgress = true;
 		}
 
-		if (gs.selectedUnitTypeToPlace != null && Unit.factory(gs.selectedUnitTypeToPlace).getCost() > gs.money.get(Team.Overminers)){
-			gs.selectedUnitTypeToPlace = null;
-		}
+		//if (keycode == Input.Keys.K) gs.getHexAtScreenPos(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY()).ifPresent(it -> it.ttl = 1000);
 
-		if (keycode == Input.Keys.K) gs.getHexAtScreenPos(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY()).ifPresent(it -> it.ttl = 1000);
-
-		if (keycode == Input.Keys.ENTER) gs.endTurn();
+		if (keycode == Input.Keys.ENTER) endTurn();
 
 		return false;
 	}
@@ -441,10 +477,14 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 				if (gs.selectedUnitTypeToPlace != null) {
 					if (Team.Overminers.dropUnit(it, gs.selectedUnitTypeToPlace)) {
 						gs.selectedUnitTypeToPlace = null;
+					} else {
+						nopeSound.play();
 					}
 				} else {
 					if (it.unit != null && it.unit.getTeam() == Team.Overminers && it.unit.canBeSelected()) {
 						gs.selectedUnit = it.unit;
+					} else {
+						nopeSound.play();
 					}
 				}
 			}
@@ -454,6 +494,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 					gs.selectedUnit.setCurrentDestination(it);
 					gs.selectedUnit.executeMoves();
 					gs.selectedUnit = null;
+				} else {
+					nopeSound.play();
 				}
 			}
 		});
