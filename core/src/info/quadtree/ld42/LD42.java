@@ -156,30 +156,40 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 	int moves;
 
-	float titleMove = -1200;
+	float titleMove = -800;
 
 	@Override
 	public void render () {
 		Gdx.gl.glClearColor(0.7f, 0.7f, 0.9f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		if (titleScreenUp){
-			batch.setTransformMatrix(new Matrix4(origMat));
-			batch.getTransformMatrix().translate(titleMove, 0, 0);
-			titleMove += 500f * Gdx.graphics.getDeltaTime();
+		batch.setTransformMatrix(new Matrix4(origMat));
+		batch.getTransformMatrix().translate(0, titleMove, 0);
+		titleMove += 500f * Gdx.graphics.getDeltaTime();
 
-			if (titleMove > 1200){
-				titleMove = -1200;
+		if (titleMove > 0){
+			titleMove = 0;
+		}
+
+		if (titleScreenUp){
+			if (gs.turnNum > 50){
 				gs.dispose();
 				gs = new GameState();
 				gs.generate();
+				titleMove = -800;
 			}
+
+			gs.turnOrder.remove(Team.Overminers);
+			gs.turnOrder.remove(Team.DigCorp);
+			gs.turnOrder.remove(Team.InterstellarElectric);
+			gs.turnOrder.remove(Team.Underminers);
+			gs.currentTurnTeam = Team.Nobody;
 
 			gs.backgroundCloudStage.act();
 			gs.backgroundCloudStage.draw();
 
 			batch.begin();
-			gs.render(false);
+			gs.render(titleMove >= 0);
 			batch.end();
 
 			return;
@@ -227,16 +237,11 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 			});
 		}
 
-
-
-
-
 		gs.backgroundCloudStage.act();
 		gs.backgroundCloudStage.draw();
 
-		batch.setTransformMatrix(origMat);
 		batch.begin();
-		gs.render(true);
+		gs.render(titleMove >= 0);
 		batch.end();
 
 		infoLabel.setText("$" + gs.money.get(Team.Overminers));
@@ -264,7 +269,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 	@Override
 	public boolean keyDown(int keycode) {
 		if (titleScreenUp){
-			titleScreenUp = false;
+			startOrRestart();
 			return true;
 		}
 
@@ -275,10 +280,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		if (keycode == Input.Keys.NUM_5) gs.selectedUnitTypeToPlace = Unit.UnitType.Block;
 
 		if (keycode == Input.Keys.R){
-			if (gs != null) gs.dispose();
-
-			gs = new GameState();
-			gs.generate();
+			startOrRestart();
 		}
 
 		if (gs.selectedUnitTypeToPlace != null && Unit.factory(gs.selectedUnitTypeToPlace).getCost() > gs.money.get(Team.Overminers)){
@@ -290,6 +292,15 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		if (keycode == Input.Keys.ENTER) gs.endTurn();
 
 		return false;
+	}
+
+	private void startOrRestart() {
+		titleScreenUp = false;
+		titleMove = -800;
+		if (gs != null) gs.dispose();
+
+		gs = new GameState();
+		gs.generate();
 	}
 
 	@Override
@@ -304,9 +315,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-
 		if (titleScreenUp){
-			titleScreenUp = false;
+			startOrRestart();
 			return true;
 		}
 
