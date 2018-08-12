@@ -238,7 +238,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 					reShowTitleScreen = false;
 					resetInProgress = true;
 					nextDifficultyLevel = it;
-					if (!mainMusic.isPlaying()) mainMusic.play();
+					if (!mainMusic.isPlaying()){ mainMusic.play(); loopMusic = true; }
 					return true;
 				}
 
@@ -285,7 +285,6 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 			gs.setHex(new Hex(it.x, it.y, 20));
 		});*/
 
-		mainMusic.setLooping(true);
 		mainMusic.setVolume(0.3f);
 	}
 
@@ -303,8 +302,19 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		}
 	}
 
+	boolean loopMusic = false;
+
 	@Override
 	public void render () {
+		if (!mainMusic.isPlaying() && loopMusic){
+			float oldVolume = mainMusic.getVolume();
+			mainMusic.stop();
+			mainMusic.dispose();
+			mainMusic = Gdx.audio.newMusic(Gdx.files.internal("song_20180812_165750_158.ogg"));
+			mainMusic.setVolume(oldVolume);
+			mainMusic.play();
+		}
+
 		Gdx.gl.glClearColor(0.7f, 0.7f, 0.9f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -476,7 +486,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		if (!mainMusic.isPlaying()) mainMusic.play();
+		if (!mainMusic.isPlaying()){ mainMusic.play(); loopMusic = true; }
 
 		Util.closeTutorial();
 
@@ -536,7 +546,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		if (!mainMusic.isPlaying()) mainMusic.play();
+		if (!mainMusic.isPlaying()){ mainMusic.play(); loopMusic = true; }
 
 		if (resetInProgress) return false;
 
