@@ -3,6 +3,7 @@ package info.quadtree.ld42.tc;
 import com.badlogic.gdx.Gdx;
 import info.quadtree.ld42.LD42;
 import info.quadtree.ld42.Team;
+import info.quadtree.ld42.Util;
 
 import java.util.Comparator;
 import java.util.Map;
@@ -31,7 +32,10 @@ public class EnvTurnController extends TurnController {
         long falling = LD42.s.gs.hexStream().filter(it -> it.ttl <= 0).count();
         if (falling > 0){
             waitForFallTime = 1.25f;
-            LD42.s.detach.play();
+
+            if (!LD42.s.titleScreenUp) LD42.s.detach.play();
+
+            Util.showTutorialText("Uh oh, looks like those shaking hexes were a bit unstable! Luckily, this ground base is unmanned... and insured. Press Alt to see when more will collapse.");
         }
     }
 

@@ -7,10 +7,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -66,6 +63,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 	Matrix4 origMat;
 
 	public Stage backgroundCloudStage;
+
+	public BitmapFont titleFont;
 	
 	@Override
 	public void create () {
@@ -74,24 +73,27 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
 
+		dialogNinePatch = atlas.createPatch("dialog");
+
 		origMat = new Matrix4(batch.getTransformMatrix());
 
-		defaultFont = new BitmapFont();
+		defaultFont = new BitmapFont(Gdx.files.internal("orbitron16.fnt"));
+		titleFont = new BitmapFont(Gdx.files.internal("orbitron90.fnt"));
 
 		gs = new GameState();
 		gs.generate();
 
-		InputMultiplexer mp = new InputMultiplexer();
-		mp.addProcessor(this);
-
-		Gdx.input.setInputProcessor(mp);
-
-		defaultLabelStyle = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
+		defaultLabelStyle = new Label.LabelStyle(defaultFont, Color.WHITE);
 
 		uiStage = new Stage();
 		infoLabel = new Label("TEST", defaultLabelStyle);
 		infoLabel.setPosition(10, 10);
 		uiStage.addActor(infoLabel);
+
+		InputMultiplexer mp = new InputMultiplexer();
+		mp.addProcessor(uiStage);
+		mp.addProcessor(this);
+		Gdx.input.setInputProcessor(mp);
 
 		Table scoreTable = new Table();
 		teamLabels = new Label[gs.turnOrder.size()];
@@ -109,7 +111,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		}
 
 		uiStage.addActor(scoreTable);
-		scoreTable.setBounds(20, 20, 150, 120);
+		scoreTable.setBounds(20, 20, 300, 120);
 
 		winLabel = new Label("", defaultLabelStyle);
 		winLabel.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f, Align.center);
@@ -168,6 +170,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 	boolean resetInProgress = false;
 
+	NinePatch dialogNinePatch;
+
 	@Override
 	public void render () {
 		Gdx.gl.glClearColor(0.7f, 0.7f, 0.9f, 1);
@@ -211,6 +215,20 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 			batch.begin();
 			gs.render(titleMove >= 0);
+			batch.end();
+
+			batch.setTransformMatrix(new Matrix4(origMat));
+			batch.begin();
+
+			GlyphLayout gl = new GlyphLayout();
+			gl.setText(titleFont, "Overminers Inc.");
+			titleFont.draw(batch, gl, Gdx.graphics.getWidth() / 2f - gl.width / 2, Gdx.graphics.getHeight() - 100);
+
+			gl.setText(defaultFont, "Press any key to start");
+			defaultFont.draw(batch, gl, Gdx.graphics.getWidth() / 2f - gl.width / 2, 500f);
+
+			defaultFont.draw(batch, "Made by Quadtree for Ludum Dare 42", Gdx.graphics.getWidth() - 450, 20);
+
 			batch.end();
 
 			return;
@@ -279,6 +297,10 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 		uiStage.act();
 		uiStage.draw();
+
+		if (gs.selectedUnitTypeToPlace != null){
+			Util.showTutorialText("Good! Now click on a gray hex. Try to place the mining base away from our rivals' mining bases.");
+		}
 	}
 	
 	@Override
@@ -289,8 +311,10 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
+		if (resetInProgress) return false;
+
 		if (titleScreenUp){
-			startOrRestart();
+			resetInProgress = true;
 			return true;
 		}
 
@@ -337,8 +361,10 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		if (resetInProgress) return false;
+
 		if (titleScreenUp){
-			startOrRestart();
+			resetInProgress = true;
 			return true;
 		}
 

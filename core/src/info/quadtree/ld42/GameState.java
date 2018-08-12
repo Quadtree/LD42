@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import info.quadtree.ld42.tc.AITurnController;
 import info.quadtree.ld42.tc.EnvTurnController;
+import info.quadtree.ld42.tc.PlayerTurnController;
 import info.quadtree.ld42.tc.TurnController;
 import info.quadtree.ld42.unit.Mine;
 import info.quadtree.ld42.unit.Unit;
@@ -100,7 +101,7 @@ public class GameState implements IndexedGraph<Hex> {
             controllerMap.put(t, new AITurnController(t));
         }
 
-        controllerMap.put(Team.Overminers, new TurnController(Team.Overminers));
+        controllerMap.put(Team.Overminers, new PlayerTurnController(Team.Overminers));
 
         money.put(Team.Nobody, 0);
         points.put(Team.Nobody, 0);
