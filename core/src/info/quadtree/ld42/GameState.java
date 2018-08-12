@@ -6,6 +6,7 @@ import com.badlogic.gdx.ai.pfa.Heuristic;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import info.quadtree.ld42.tc.AITurnController;
 import info.quadtree.ld42.tc.EnvTurnController;
@@ -51,6 +52,8 @@ public class GameState implements IndexedGraph<Hex> {
     public Team currentPathingTeam;
     public int pathingThingCombatPower;
 
+    public Stage particleStage;
+
     public GameState(){
 
     }
@@ -76,6 +79,8 @@ public class GameState implements IndexedGraph<Hex> {
     }
 
     public void generate(){
+        particleStage = new Stage();
+
         pathFinder = new IndexedAStarPathFinder<>(this);
 
         while(true) {
@@ -270,4 +275,9 @@ public class GameState implements IndexedGraph<Hex> {
     }
 
     public Heuristic<Hex> defaultHeuristic = (node, endNode) -> Math.abs(node.x - endNode.x) + Math.abs(node.y - endNode.y);
+
+    public void dispose(){
+        particleStage.dispose();
+        particleStage = null;
+    }
 }

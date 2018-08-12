@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import info.quadtree.ld42.Hex;
 import info.quadtree.ld42.LD42;
+import info.quadtree.ld42.Particle;
 import info.quadtree.ld42.Team;
 
 import java.util.ArrayList;
@@ -81,6 +82,16 @@ public abstract class Unit {
             sp4.setBounds(currentScreenPos.x, currentScreenPos.y, Hex.HEX_SIZE, Hex.HEX_SIZE);
             sp4.setColor(team.getColor());
             sp4.draw(LD42.s.batch);
+        }
+
+        if (!isAnimating() && isAccelerating){
+            isAccelerating = false;
+
+            for (int i=0;i<6;++i){
+                assert LD42.s.gs.particleStage != null;
+                assert currentScreenPos != null;
+                LD42.s.gs.particleStage.addActor(new Particle(currentScreenPos.cpy().add(Hex.HEX_SIZE / 2f, Hex.HEX_SIZE / 2f - 6), 400, 20, 0.2f, 8, 5f, 0.5f, Color.GRAY));
+            }
         }
 
         if (isAccelerating && isAnimating()){

@@ -198,6 +198,9 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 			}
 		});*/
 
+		gs.particleStage.act();
+		gs.particleStage.draw();
+
 		uiStage.act();
 		uiStage.draw();
 	}
@@ -217,6 +220,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		if (keycode == Input.Keys.NUM_5) gs.selectedUnitTypeToPlace = Unit.UnitType.Block;
 
 		if (keycode == Input.Keys.R){
+			if (gs != null) gs.dispose();
+
 			gs = new GameState();
 			gs.generate();
 		}
