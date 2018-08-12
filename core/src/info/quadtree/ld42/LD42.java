@@ -91,6 +91,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 	DifficultyLevel nextDifficultyLevel;
 
 	Music mainMusic;
+
+	public static final int MONEY_DIVISOR = 5;
 	
 	@Override
 	public void create () {
@@ -167,7 +169,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 			Unit theUnit = Unit.factory(it);
 
-			b.add(new Label(theUnit.getName() + " $" + theUnit.getCost(), defaultLabelStyle));
+			b.add(new Label(theUnit.getName() + " $" + theUnit.getCost() / MONEY_DIVISOR, defaultLabelStyle));
 			b.row();
 			b.add(new Image(new OverlayTextureRegion(
 					new TextureRegionDrawable(getSprite(theUnit.getMainGraphicName())),
@@ -440,7 +442,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		gs.render(titleMove >= 0 && !resetInProgress);
 		batch.end();
 
-		infoLabel.setText("$" + gs.money.get(Team.Overminers));
+		infoLabel.setText("$" + gs.money.get(Team.Overminers) / MONEY_DIVISOR);
 
 		/*Optional<Hex> th = gs.getHexAtScreenPos(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
 		th.ifPresent(it -> {
