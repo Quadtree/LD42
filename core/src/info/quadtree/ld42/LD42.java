@@ -64,6 +64,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 	public boolean titleScreenUp = true;
 
 	Matrix4 origMat;
+
+	public Stage backgroundCloudStage;
 	
 	@Override
 	public void create () {
@@ -118,6 +120,12 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		explosion = Gdx.audio.newSound(Gdx.files.internal("Explosion322.wav"));
 		plop = Gdx.audio.newSound(Gdx.files.internal("landing.wav"));
 		detach = Gdx.audio.newSound(Gdx.files.internal("Explosion339.wav"));
+
+		backgroundCloudStage = new Stage();
+
+		for (int i=0;i<20;++i){
+			backgroundCloudStage.addActor(new BackgroundCloud());
+		}
 
 		/*for (int x=5;x<9;++x){
 			for (int y=5;y<15;++y){
@@ -185,8 +193,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 			gs.turnOrder.remove(Team.Underminers);
 			gs.currentTurnTeam = Team.Nobody;
 
-			gs.backgroundCloudStage.act();
-			gs.backgroundCloudStage.draw();
+			backgroundCloudStage.act();
+			backgroundCloudStage.draw();
 
 			batch.begin();
 			gs.render(titleMove >= 0);
@@ -237,8 +245,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 			});
 		}
 
-		gs.backgroundCloudStage.act();
-		gs.backgroundCloudStage.draw();
+		backgroundCloudStage.act();
+		backgroundCloudStage.draw();
 
 		batch.begin();
 		gs.render(titleMove >= 0);

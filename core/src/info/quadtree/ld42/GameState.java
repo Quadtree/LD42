@@ -53,7 +53,7 @@ public class GameState implements IndexedGraph<Hex> {
     public int pathingThingCombatPower;
 
     public Stage particleStage;
-    public Stage backgroundCloudStage;
+
 
     public GameState(){
 
@@ -117,11 +117,7 @@ public class GameState implements IndexedGraph<Hex> {
     public void generateCloudsAndTerrain(int minHex) {
         long startTime = System.currentTimeMillis();
 
-        backgroundCloudStage = new Stage();
 
-        for (int i=0;i<20;++i){
-            backgroundCloudStage.addActor(new BackgroundCloud());
-        }
 
         pathFinder = new IndexedAStarPathFinder<>(this);
 
