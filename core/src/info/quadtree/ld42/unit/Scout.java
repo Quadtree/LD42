@@ -8,7 +8,7 @@ public class Scout extends Unit {
 
     @Override
     public int getMaxMoves() {
-        return 3;
+        return 4;
     }
 
     @Override

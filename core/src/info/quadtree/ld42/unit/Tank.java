@@ -8,7 +8,7 @@ public class Tank extends Unit {
 
     @Override
     public int getMaxMoves() {
-        return 1;
+        return 2;
     }
 
     @Override

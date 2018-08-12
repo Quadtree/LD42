@@ -90,7 +90,7 @@ public abstract class Unit {
             for (int i=0;i<6;++i){
                 assert LD42.s.gs.particleStage != null;
                 assert currentScreenPos != null;
-                LD42.s.gs.particleStage.addActor(new Particle(currentScreenPos.cpy().add(Hex.HEX_SIZE / 2f, Hex.HEX_SIZE / 2f - 6), 400, 20, 0.2f, 8, 5f, 0.5f, Color.GRAY));
+                LD42.s.gs.particleStage.addActor(new Particle(currentScreenPos.cpy().add(Hex.HEX_SIZE / 2f, Hex.HEX_SIZE / 2f - 12), 100, 3, 0.2f, 8, 75f, 0.6f, Color.GRAY));
             }
         }
 
@@ -273,11 +273,23 @@ public abstract class Unit {
         if (other instanceof Mine){
             other.setTeam(this.getTeam());
             LD42.s.gs.recomputeOwnership();
+
+            for (int i=0;i<6;++i){
+                LD42.s.gs.particleStage.addActor(new Particle(other.currentScreenPos.cpy().add(Hex.HEX_SIZE / 2f, Hex.HEX_SIZE / 2f), 100, 3, 0.4f, 8, 75f, 0.6f, getTeam().getColor()));
+            }
+
             return;
         }
 
         other.hex.unit = null;
         LD42.s.gs.recomputeOwnership();
+
+        for (int i=0;i<10;++i){
+            LD42.s.gs.particleStage.addActor(new Particle(other.currentScreenPos.cpy().add(Hex.HEX_SIZE / 2f, Hex.HEX_SIZE / 2f), 100, 3, 0.4f, 8, 75f, 1.2f, Color.GRAY));
+        }
+        for (int i=0;i<6;++i){
+            LD42.s.gs.particleStage.addActor(new Particle(other.currentScreenPos.cpy().add(Hex.HEX_SIZE / 2f, Hex.HEX_SIZE / 2f), 100, 3, 0.4f, 8, 75f, 0.6f, Color.ORANGE));
+        }
     }
 
     public int getMaxMoves(){

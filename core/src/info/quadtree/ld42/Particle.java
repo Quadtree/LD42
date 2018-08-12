@@ -38,9 +38,9 @@ public class Particle extends Actor {
         this.spinRate = MathUtils.random(maxSpinRate);
 
         this.size = initialSize;
-        this.growthRate = MathUtils.random(1f, maxGrowthRate);
+        this.growthRate = MathUtils.random(maxGrowthRate);
 
-        this.lifespan = MathUtils.random(maxLifeSpan);
+        this.lifespan = maxLifeSpan * MathUtils.random(0.9f, 1.1f);
         this.curLifespan = this.lifespan;
     }
 
@@ -48,20 +48,30 @@ public class Particle extends Actor {
     public void act(float delta) {
         super.act(delta);
 
-        this.size += this.size * (this.growthRate - 1f) * delta;
+        this.size += this.growthRate * delta;
 
-        this.lifespan -= delta;
-        if (this.lifespan <= 0) remove();
+        this.curLifespan -= delta;
+        if (this.curLifespan <= 0) remove();
+
+        this.setPosition(getX() + velocity.x * delta, getY() + velocity.y * delta);
+
+        this.velocity.sub(this.velocity.cpy().scl(drag).scl(delta));
+
+        this.angle += this.spinRate * delta;
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
 
+        Color col = color.cpy();
+        col.a = MathUtils.clamp(curLifespan / lifespan, 0f, 1f);
+
         Sprite sp = LD42.s.getSprite("cloud");
-        sp.setOrigin(sp.getWidth() / 2, sp.getHeight() / 2);
+        sp.setOrigin(size / 2, size / 2);
         sp.setBounds(getX() - size / 2, getY() - size / 2, size, size);
-        sp.setColor(color);
+        sp.setRotation(this.angle * MathUtils.radiansToDegrees);
+        sp.setColor(col);
         sp.draw(batch);
     }
 }
