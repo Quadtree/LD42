@@ -11,8 +11,9 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import info.quadtree.ld42.unit.Unit;
 
@@ -20,6 +21,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public class LD42 extends ApplicationAdapter implements InputProcessor {
 	public SpriteBatch batch;
@@ -65,6 +67,12 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 	public Stage backgroundCloudStage;
 
 	public BitmapFont titleFont;
+
+	Window controlBar;
+
+	Button.ButtonStyle buttonStyle;
+
+	TextButton.TextButtonStyle textButtonStyle;
 	
 	@Override
 	public void create () {
@@ -87,8 +95,6 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 		uiStage = new Stage();
 		infoLabel = new Label("TEST", defaultLabelStyle);
-		infoLabel.setPosition(10, 10);
-		uiStage.addActor(infoLabel);
 
 		InputMultiplexer mp = new InputMultiplexer();
 		mp.addProcessor(uiStage);
@@ -110,8 +116,41 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 			scoreTable.row();
 		}
 
-		uiStage.addActor(scoreTable);
-		scoreTable.setBounds(20, 20, 300, 120);
+		Util.windowStyle = new Window.WindowStyle(LD42.s.defaultFont, Color.WHITE, new NinePatchDrawable(LD42.s.dialogNinePatch));
+
+		textButtonStyle = new TextButton.TextButtonStyle(new NinePatchDrawable(atlas.createPatch("button_up")), new NinePatchDrawable(atlas.createPatch("button_down")), new NinePatchDrawable(atlas.createPatch("button_down")), defaultFont);
+
+
+		controlBar = new Window("", Util.windowStyle);
+
+		uiStage.addActor(controlBar);
+		controlBar.setBounds(0, 0, Gdx.graphics.getWidth(), 120);
+
+		controlBar.add(scoreTable);
+		controlBar.add(infoLabel).pad(10);
+
+		buttonStyle = new Button.ButtonStyle(new NinePatchDrawable(atlas.createPatch("button_up")), new NinePatchDrawable(atlas.createPatch("button_down")), new NinePatchDrawable(atlas.createPatch("button_down")));
+
+		Table buyBar = new Table();
+
+		Stream.of(Unit.UnitType.Mine, Unit.UnitType.Tank, Unit.UnitType.Scout, Unit.UnitType.Turret).forEach(it -> {
+			Button b = new Button(buttonStyle);
+
+			Unit theUnit = Unit.factory(it);
+
+			b.add(new Label(theUnit.getName(), defaultLabelStyle));
+			b.row();
+			b.add(new Image(new OverlayTextureRegion(
+					new TextureRegionDrawable(getSprite(theUnit.getMainGraphicName())),
+					getSprite(theUnit.getFlagGraphicName())
+			)));
+			buyBar.add(b).padRight(10);
+		});
+
+		controlBar.add(buyBar);
+
+		TextButton endTurnButton = new TextButton("End Turn", textButtonStyle);
+		controlBar.add(endTurnButton);
 
 		winLabel = new Label("", defaultLabelStyle);
 		winLabel.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f, Align.center);

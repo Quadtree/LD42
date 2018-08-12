@@ -31,10 +31,6 @@ public class Util {
             return;
         }
 
-        if (windowStyle == null){
-            windowStyle = new Window.WindowStyle(LD42.s.defaultFont, Color.WHITE, new NinePatchDrawable(LD42.s.dialogNinePatch));
-        }
-
         prefs.putBoolean(key, true);
         prefs.flush();
 
