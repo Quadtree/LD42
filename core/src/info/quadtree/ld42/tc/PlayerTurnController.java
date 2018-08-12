@@ -12,6 +12,6 @@ public class PlayerTurnController extends TurnController {
     public void turnStart() {
         super.turnStart();
 
-        Util.showTutorialText("Welcome to the Overminers Inc. team! These floating platforms contain valuable ore. Drop a mining base on them from our orbiting fleet by clicking on the Mining Base or pressing 1.");
+        Util.showTutorialText("Welcome to the Overminers Inc. team! These floating platforms contain valuable ore. Drop a mining base on them from our orbiting fleet by clicking on the mine button or pressing 1.");
     }
 }
