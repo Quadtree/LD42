@@ -336,6 +336,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 			backgroundCloudStage.act();
 			backgroundCloudStage.draw();
 
+			batch.setTransformMatrix(new Matrix4(origMat));
+			batch.getTransformMatrix().translate(0, titleMove, 0);
 			batch.begin();
 			gs.render(titleMove >= 0);
 			batch.end();
@@ -426,6 +428,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		backgroundCloudStage.act();
 		backgroundCloudStage.draw();
 
+		batch.setTransformMatrix(new Matrix4(origMat));
+		batch.getTransformMatrix().translate(0, titleMove, 0);
 		batch.begin();
 		gs.render(titleMove >= 0 && !resetInProgress);
 		batch.end();
