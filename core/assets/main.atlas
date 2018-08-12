@@ -282,119 +282,133 @@ hexr2ein2
   index: -1
 hexr2ein3
   rotate: false
-  xy: 464, 188
+  xy: 334, 120
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 hexrein1
   rotate: false
-  xy: 464, 154
+  xy: 368, 120
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 hexrein2
   rotate: false
-  xy: 334, 120
+  xy: 402, 120
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 hexrein3
   rotate: false
-  xy: 368, 120
+  xy: 334, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 landing_target
   rotate: false
-  xy: 402, 120
+  xy: 368, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 mine1
   rotate: false
-  xy: 436, 120
+  xy: 402, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 mine1_flag
   rotate: false
-  xy: 334, 86
+  xy: 436, 120
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-resourcebar
-  rotate: false
-  xy: 78, 23
-  size: 3, 3
-  orig: 3, 3
-  offset: 0, 0
-  index: -1
-rock1
+partial
   rotate: false
   xy: 494, 238
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
+resourcebar
+  rotate: false
+  xy: 328, 149
+  size: 3, 3
+  orig: 3, 3
+  offset: 0, 0
+  index: -1
+rock1
+  rotate: false
+  xy: 494, 220
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
 scout1
-  rotate: false
-  xy: 368, 86
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-scout1_flag
-  rotate: false
-  xy: 402, 86
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-selected_hex
   rotate: false
   xy: 436, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-shadow1
+scout1_flag
   rotate: false
-  xy: 470, 120
+  xy: 464, 186
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-tank1
-  rotate: false
-  xy: 470, 86
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-tank1_flag
+selected_hex
   rotate: false
   xy: 256, 56
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-turret
+shadow1
   rotate: false
   xy: 290, 56
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-turret_flag
+solid
+  rotate: false
+  xy: 78, 10
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+tank1
   rotate: false
   xy: 256, 22
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+tank1_flag
+  rotate: false
+  xy: 290, 22
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+turret
+  rotate: false
+  xy: 324, 52
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+turret_flag
+  rotate: false
+  xy: 358, 52
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

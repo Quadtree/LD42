@@ -42,6 +42,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 	}
 
 	Label.LabelStyle defaultLabelStyle;
+	Label.LabelStyle backgroundLabelStyle;
 
 	Stage uiStage;
 
@@ -91,7 +92,11 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		gs = new GameState();
 		gs.generate();
 
+
+
 		defaultLabelStyle = new Label.LabelStyle(defaultFont, Color.WHITE);
+		backgroundLabelStyle = new Label.LabelStyle(defaultFont, Color.WHITE);
+		backgroundLabelStyle.background = new TextureRegionDrawable(getSprite("partial"));
 
 		uiStage = new Stage();
 		infoLabel = new Label("TEST", defaultLabelStyle);
@@ -111,7 +116,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 			teamLabels[i] = teamLabel;
 			teamScoreLabels[i] = teamScoreLabel;
 
-			scoreTable.add(teamLabel);
+			scoreTable.add(teamLabel).fill().left();
 			scoreTable.add(teamScoreLabel).padLeft(20);
 			scoreTable.row();
 		}
@@ -344,6 +349,21 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 		uiStage.act();
 		uiStage.draw();
+
+		for (int i=0;i<4;++i){
+			Color col = gs.turnOrder.get(i).getColor().cpy();
+			col.a = 0.5f;
+
+			if (gs.currentTurnTeam == gs.turnOrder.get(i)){
+				batch.setTransformMatrix(new Matrix4(origMat));
+				batch.begin();
+				Sprite sp8 = getSprite("solid");
+				sp8.setBounds(teamLabels[i].getX() + 123, teamLabels[i].getY() + teamLabels[i].getHeight() / 2, 300, teamLabels[i].getHeight());
+				sp8.setColor(col);
+				sp8.draw(batch);
+				batch.end();
+			}
+		}
 
 		if (gs.selectedUnitTypeToPlace != null){
 			Util.showTutorialText("Good! Now click on a gray hex. Try to place the mining base away from our rivals' mining bases.");
