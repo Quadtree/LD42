@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
@@ -116,8 +117,10 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 			teamLabels[i] = teamLabel;
 			teamScoreLabels[i] = teamScoreLabel;
 
+			teamScoreLabel.setAlignment(Align.right);
+
 			scoreTable.add(teamLabel).fill().left();
-			scoreTable.add(teamScoreLabel).padLeft(20);
+			scoreTable.add(teamScoreLabel).fill().width(30).right();
 			scoreTable.row();
 		}
 
@@ -132,7 +135,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		controlBar.setBounds(0, 0, Gdx.graphics.getWidth(), 100);
 
 		controlBar.add(scoreTable);
-		controlBar.add(infoLabel).pad(10);
+		controlBar.add(infoLabel).pad(7).width(60);
 
 		buttonStyle = new Button.ButtonStyle(new NinePatchDrawable(atlas.createPatch("button_up")), new NinePatchDrawable(atlas.createPatch("button_down")), new NinePatchDrawable(atlas.createPatch("button_down")));
 
@@ -143,7 +146,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 			Unit theUnit = Unit.factory(it);
 
-			b.add(new Label(theUnit.getName(), defaultLabelStyle));
+			b.add(new Label(theUnit.getName() + " $" + theUnit.getCost(), defaultLabelStyle));
 			b.row();
 			b.add(new Image(new OverlayTextureRegion(
 					new TextureRegionDrawable(getSprite(theUnit.getMainGraphicName())),
@@ -296,7 +299,12 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 			Color col = gs.turnOrder.get(i).getColor().cpy();
 
 			if (gs.currentTurnTeam != gs.turnOrder.get(i)){
-				col.a = 0.5f;
+				//col.a = 0.5f;
+				teamLabels[i].setStyle(defaultLabelStyle);
+				teamScoreLabels[i].setStyle(defaultLabelStyle);
+			} else {
+				teamLabels[i].setStyle(backgroundLabelStyle);
+				teamScoreLabels[i].setStyle(backgroundLabelStyle);
 			}
 
 			teamLabels[i].setColor(col);
@@ -349,21 +357,6 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 		uiStage.act();
 		uiStage.draw();
-
-		for (int i=0;i<4;++i){
-			Color col = gs.turnOrder.get(i).getColor().cpy();
-			col.a = 0.5f;
-
-			if (gs.currentTurnTeam == gs.turnOrder.get(i)){
-				batch.setTransformMatrix(new Matrix4(origMat));
-				batch.begin();
-				Sprite sp8 = getSprite("solid");
-				sp8.setBounds(teamLabels[i].getX() + 123, teamLabels[i].getY() + teamLabels[i].getHeight() / 2, 300, teamLabels[i].getHeight());
-				sp8.setColor(col);
-				sp8.draw(batch);
-				batch.end();
-			}
-		}
 
 		if (gs.selectedUnitTypeToPlace != null){
 			Util.showTutorialText("Good! Now click on a gray hex. Try to place the mining base away from our rivals' mining bases.");
