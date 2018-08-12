@@ -30,4 +30,9 @@ public class Scout extends Unit {
     public String getFlagGraphicName() {
         return "scout1_flag";
     }
+
+    @Override
+    public String getName() {
+        return "Buggy";
+    }
 }

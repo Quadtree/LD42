@@ -30,4 +30,9 @@ public class Tank extends Unit {
     public String getFlagGraphicName() {
         return "tank1_flag";
     }
+
+    @Override
+    public String getName() {
+        return "Strider";
+    }
 }

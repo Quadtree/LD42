@@ -1,21 +1,15 @@
 package info.quadtree.ld42;
 
 import com.badlogic.gdx.*;
-import com.badlogic.gdx.ai.pfa.DefaultGraphPath;
-import com.badlogic.gdx.ai.pfa.GraphPath;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
@@ -43,7 +37,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 	}
 
 	Label.LabelStyle defaultLabelStyle;
-	Label.LabelStyle backgroundLabelStyle;
+	Label.LabelStyle smallLabelStyle;
+	Label.LabelStyle backgroundSmallLabelStyle;
 
 	Stage uiStage;
 
@@ -71,6 +66,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 	public BitmapFont titleFont;
 
+	public BitmapFont smallFont;
+
 	Window controlBar;
 
 	Button.ButtonStyle buttonStyle;
@@ -90,6 +87,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 		origMat = new Matrix4(batch.getTransformMatrix());
 
+		smallFont = new BitmapFont(Gdx.files.internal("orbitron12.fnt"));
 		defaultFont = new BitmapFont(Gdx.files.internal("orbitron16.fnt"));
 		titleFont = new BitmapFont(Gdx.files.internal("orbitron90.fnt"));
 
@@ -99,8 +97,9 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 
 		defaultLabelStyle = new Label.LabelStyle(defaultFont, Color.WHITE);
-		backgroundLabelStyle = new Label.LabelStyle(defaultFont, Color.WHITE);
-		backgroundLabelStyle.background = new TextureRegionDrawable(getSprite("partial"));
+		smallLabelStyle = new Label.LabelStyle(smallFont, Color.WHITE);
+		backgroundSmallLabelStyle = new Label.LabelStyle(smallFont, Color.WHITE);
+		backgroundSmallLabelStyle.background = new TextureRegionDrawable(getSprite("partial"));
 
 		uiStage = new Stage();
 		infoLabel = new Label("TEST", defaultLabelStyle);
@@ -115,15 +114,15 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		teamScoreLabels = new Label[gs.turnOrder.size()];
 
 		for (int i=0;i<4;++i){
-			Label teamLabel = new Label("", defaultLabelStyle);
-			Label teamScoreLabel = new Label("", defaultLabelStyle);
+			Label teamLabel = new Label("", smallLabelStyle);
+			Label teamScoreLabel = new Label("", smallLabelStyle);
 			teamLabels[i] = teamLabel;
 			teamScoreLabels[i] = teamScoreLabel;
 
 			teamScoreLabel.setAlignment(Align.right);
 
 			scoreTable.add(teamLabel).fill().left();
-			scoreTable.add(teamScoreLabel).fill().width(30).right();
+			scoreTable.add(teamScoreLabel).fill().width(50).right();
 			scoreTable.row();
 		}
 
@@ -186,7 +185,6 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		});
 
 		winLabel = new Label("", defaultLabelStyle);
-		winLabel.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f, Align.center);
 		uiStage.addActor(winLabel);
 
 		shoot = Gdx.audio.newSound(Gdx.files.internal("Laser_Shoot62.wav"));
@@ -341,11 +339,11 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 			if (gs.currentTurnTeam != gs.turnOrder.get(i)){
 				//col.a = 0.5f;
-				teamLabels[i].setStyle(defaultLabelStyle);
-				teamScoreLabels[i].setStyle(defaultLabelStyle);
+				teamLabels[i].setStyle(smallLabelStyle);
+				teamScoreLabels[i].setStyle(smallLabelStyle);
 			} else {
-				teamLabels[i].setStyle(backgroundLabelStyle);
-				teamScoreLabels[i].setStyle(backgroundLabelStyle);
+				teamLabels[i].setStyle(backgroundSmallLabelStyle);
+				teamScoreLabels[i].setStyle(backgroundSmallLabelStyle);
 			}
 
 			teamLabels[i].setColor(col);
@@ -395,6 +393,9 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 		gs.particleStage.act();
 		gs.particleStage.draw();
+
+		winLabel.setAlignment(Align.center);
+		winLabel.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f, Align.center);
 
 		uiStage.act();
 		uiStage.draw();
