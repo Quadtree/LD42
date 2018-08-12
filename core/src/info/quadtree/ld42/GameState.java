@@ -56,6 +56,8 @@ public class GameState implements IndexedGraph<Hex> {
 
     public Stage particleStage;
 
+    public DifficultyLevel difficultyLevel;
+
 
     public GameState(){
 

@@ -77,6 +77,10 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 	Map<Unit.UnitType, Button> unitTypeButtonMap = new EnumMap<>(Unit.UnitType.class);
 
 	Stage titleScreen;
+
+	boolean reShowTitleScreen = false;
+
+	InputMultiplexer mp;
 	
 	@Override
 	public void create () {
@@ -107,7 +111,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		titleScreen = new Stage();
 		infoLabel = new Label("TEST", defaultLabelStyle);
 
-		InputMultiplexer mp = new InputMultiplexer();
+		mp = new InputMultiplexer();
 		mp.addProcessor(titleScreen);
 		mp.addProcessor(uiStage);
 		mp.addProcessor(this);
@@ -133,7 +137,6 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		Util.windowStyle = new Window.WindowStyle(LD42.s.defaultFont, Color.WHITE, new NinePatchDrawable(LD42.s.dialogNinePatch));
 
 		textButtonStyle = new TextButton.TextButtonStyle(new NinePatchDrawable(atlas.createPatch("button_up")), new NinePatchDrawable(atlas.createPatch("button_down")), new NinePatchDrawable(atlas.createPatch("button_up")), defaultFont);
-
 
 		controlBar = new Window("", Util.windowStyle);
 
@@ -217,6 +220,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 			db.addListener((evt) -> {
 				if (evt instanceof InputEvent && ((InputEvent) evt).getType() == InputEvent.Type.touchDown){
 					mp.removeProcessor(titleScreen);
+					reShowTitleScreen = false;
 					resetInProgress = true;
 					return true;
 				}
@@ -455,6 +459,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 		if (keycode == Input.Keys.R){
 			resetInProgress = true;
+			reShowTitleScreen = true;
 		}
 
 		//if (keycode == Input.Keys.K) gs.getHexAtScreenPos(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY()).ifPresent(it -> it.ttl = 1000);
@@ -465,7 +470,10 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 	}
 
 	private void startOrRestart() {
-		titleScreenUp = false;
+		titleScreenUp = reShowTitleScreen;
+		if (titleScreenUp){
+			mp.addProcessor(0, titleScreen);
+		}
 		titleMove = -800;
 		resetInProgress = false;
 		if (gs != null) gs.dispose();
