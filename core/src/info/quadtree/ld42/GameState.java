@@ -277,7 +277,11 @@ public class GameState implements IndexedGraph<Hex> {
                     sourceZoc.retainAll(((Hex) it).getZonesOfControl());
                     sourceZoc.removeAll(sourceZoc.stream().filter(it2 -> it2.getTeam() == currentPathingTeam).collect(Collectors.toList()));
 
-                    if (sourceZoc.size() == 0) ret.add(new DefaultConnection<>(fromNode, (Hex) it));
+                    if (sourceZoc.size() == 0){
+                        ret.add(new DefaultConnection<>(fromNode, (Hex) it));
+                    } else if (currentPathingTeam == Team.Overminers){
+                        Util.showTutorialText("Units cannot move between two spaces threatened by an enemy unit who can attack.");
+                    }
                 }
             }
         });

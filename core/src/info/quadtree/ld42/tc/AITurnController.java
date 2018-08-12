@@ -48,7 +48,7 @@ public class AITurnController extends TurnController {
         switch (team){
             case InterstellarElectric: turretRatio = 0; break;
             case DigCorp: turretRatio = 0; break;
-            case Underminers: turretRatio = 50; break;
+            case Underminers: turretRatio = 200; break;
         }
 
         int scoutRatio = 0;
