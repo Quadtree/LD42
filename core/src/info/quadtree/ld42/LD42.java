@@ -477,15 +477,17 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 	public boolean keyDown(int keycode) {
 		if (resetInProgress) return false;
 
-		if (keycode == Input.Keys.NUM_1) gs.selectedUnitTypeToPlace = Unit.UnitType.Mine;
-		if (keycode == Input.Keys.NUM_2) gs.selectedUnitTypeToPlace = Unit.UnitType.Tank;
-		if (keycode == Input.Keys.NUM_3) gs.selectedUnitTypeToPlace = Unit.UnitType.Scout;
-		if (keycode == Input.Keys.NUM_4) gs.selectedUnitTypeToPlace = Unit.UnitType.Turret;
-
 		if (keycode == Input.Keys.R){
 			resetInProgress = true;
 			reShowTitleScreen = true;
 		}
+
+		if (!isPlayersTurn()) return false;
+
+		if (keycode == Input.Keys.NUM_1) gs.selectedUnitTypeToPlace = Unit.UnitType.Mine;
+		if (keycode == Input.Keys.NUM_2) gs.selectedUnitTypeToPlace = Unit.UnitType.Tank;
+		if (keycode == Input.Keys.NUM_3) gs.selectedUnitTypeToPlace = Unit.UnitType.Scout;
+		if (keycode == Input.Keys.NUM_4) gs.selectedUnitTypeToPlace = Unit.UnitType.Turret;
 
 		if (keycode == Input.Keys.INSERT){
 			Util.takeScreenshot.run();
@@ -530,6 +532,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		if (resetInProgress) return false;
+
+		if (!isPlayersTurn()) return false;
 
 		Optional<Hex> th = gs.getHexAtScreenPos(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
 
@@ -583,5 +587,9 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 	@Override
 	public boolean scrolled(int amount) {
 		return false;
+	}
+
+	private boolean isPlayersTurn(){
+		return gs.currentTurnTeam == Team.Overminers && !gs.endTurnInProgress;
 	}
 }

@@ -277,12 +277,14 @@ public abstract class Unit {
     }
 
     public boolean attack(Unit other){
-        LD42.s.shoot.play();
+        if (pathTo(other.hex).size() == 1) {
+            LD42.s.shoot.play();
 
-        if (this.getAttack() > other.getAttack()) {
-            currentAttackTarget = other;
-            attackAnimationStatus = 0f;
-            return true;
+            if (this.getAttack() > other.getAttack()) {
+                currentAttackTarget = other;
+                attackAnimationStatus = 0f;
+                return true;
+            }
         }
         return false;
     }
