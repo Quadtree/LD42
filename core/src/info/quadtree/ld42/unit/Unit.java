@@ -277,7 +277,7 @@ public abstract class Unit {
     }
 
     public boolean attack(Unit other){
-        if (pathTo(other.hex).size() == 1) {
+        if (pathTo(other.hex).size() == 1 && attacks > 0 && moves > 0) {
             LD42.s.shoot.play();
 
             if (this.getAttack() > other.getAttack()) {
