@@ -77,7 +77,7 @@ public enum Team {
                 if (type != Unit.UnitType.Mine && this != Overminers){
                     Util.showTutorialText("COMBAT_START", "Hey, that's a " + u.getName().toLowerCase() +
                             "! Well, now it's open season. Use 2 to call in " + new Tank().getName().toLowerCase() + "s, 3 to call in " +
-                            new Scout().getName().toLowerCase() + "s, and 4 to call in " + new Turret().getName().toLowerCase() + "s, or click them on the bar at the bottom. Hover over a button for details on that unit. Place them like mines.");
+                            "buggies, and 4 to call in " + new Turret().getName().toLowerCase() + "s, or click them on the bar at the bottom. Hover over a button for details on that unit. Place them like mines.");
                 }
 
                 /*if (this == Overminers){

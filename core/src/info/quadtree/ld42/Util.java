@@ -28,7 +28,11 @@ public class Util {
 
     static List<Dialog> tutorialQueue = new ArrayList<>();
 
+    static long lastTutorialTime = -100000;
+
     public static void closeTutorial(){
+        if (System.currentTimeMillis() < lastTutorialTime + 500) return;
+
         if (tutorialWindow != null){
             tutorialWindow.remove();
             tutorialWindow = null;
@@ -45,6 +49,8 @@ public class Util {
             LD42.s.uiStage.addActor(dialog);
             dialog.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f, Align.center);
             tutorialWindow = dialog;
+
+            lastTutorialTime = System.currentTimeMillis();
         }
     }
 
