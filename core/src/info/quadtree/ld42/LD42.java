@@ -75,6 +75,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 	TextButton.TextButtonStyle textButtonStyle;
 
 	Map<Unit.UnitType, Button> unitTypeButtonMap = new EnumMap<>(Unit.UnitType.class);
+
+	Stage titleScreen;
 	
 	@Override
 	public void create () {
@@ -102,9 +104,11 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		backgroundSmallLabelStyle.background = new TextureRegionDrawable(getSprite("partial"));
 
 		uiStage = new Stage();
+		titleScreen = new Stage();
 		infoLabel = new Label("TEST", defaultLabelStyle);
 
 		InputMultiplexer mp = new InputMultiplexer();
+		mp.addProcessor(titleScreen);
 		mp.addProcessor(uiStage);
 		mp.addProcessor(this);
 		Gdx.input.setInputProcessor(mp);
@@ -199,6 +203,31 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		for (int i=0;i<20;++i){
 			backgroundCloudStage.addActor(new BackgroundCloud());
 		}
+
+
+		Table difficultyButtons = new Table();
+		difficultyButtons.setHeight(500);
+		difficultyButtons.setWidth(400);
+		difficultyButtons.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - 100, Align.center);
+		difficultyButtons.align(Align.center);
+		//difficultyButtons.debug();
+
+		Arrays.stream(DifficultyLevel.values()).forEach(it -> {
+			TextButton db = new TextButton("Start " + it.toString() + " Game", textButtonStyle);
+			db.addListener((evt) -> {
+				if (evt instanceof InputEvent && ((InputEvent) evt).getType() == InputEvent.Type.touchDown){
+					mp.removeProcessor(titleScreen);
+					resetInProgress = true;
+					return true;
+				}
+
+				return false;
+			});
+			difficultyButtons.add(db).fill().expandX().pad(15);
+			difficultyButtons.row();
+		});
+
+		titleScreen.addActor(difficultyButtons);
 
 		/*for (int x=5;x<9;++x){
 			for (int y=5;y<15;++y){
@@ -301,12 +330,12 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 			gl.setText(titleFont, "Overminers Inc.");
 			titleFont.draw(batch, gl, Gdx.graphics.getWidth() / 2f - gl.width / 2, Gdx.graphics.getHeight() - 100);
 
-			gl.setText(defaultFont, "Press any key to start");
-			defaultFont.draw(batch, gl, Gdx.graphics.getWidth() / 2f - gl.width / 2, 500f);
-
 			defaultFont.draw(batch, "Made by Quadtree for Ludum Dare 42", Gdx.graphics.getWidth() - 450, 20);
 
 			batch.end();
+
+			titleScreen.act();
+			titleScreen.draw();
 
 			return;
 		}
@@ -419,11 +448,6 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 	public boolean keyDown(int keycode) {
 		if (resetInProgress) return false;
 
-		if (titleScreenUp){
-			resetInProgress = true;
-			return true;
-		}
-
 		if (keycode == Input.Keys.NUM_1) gs.selectedUnitTypeToPlace = Unit.UnitType.Mine;
 		if (keycode == Input.Keys.NUM_2) gs.selectedUnitTypeToPlace = Unit.UnitType.Tank;
 		if (keycode == Input.Keys.NUM_3) gs.selectedUnitTypeToPlace = Unit.UnitType.Scout;
@@ -463,11 +487,6 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		if (resetInProgress) return false;
-
-		if (titleScreenUp){
-			resetInProgress = true;
-			return true;
-		}
 
 		Optional<Hex> th = gs.getHexAtScreenPos(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
 
