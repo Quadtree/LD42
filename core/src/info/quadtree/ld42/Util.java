@@ -56,4 +56,6 @@ public class Util {
     public static void showTutorialText(String text){
         showTutorialText(text, text);
     }
+
+    public static Runnable takeScreenshot = () -> {};
 }

@@ -487,6 +487,10 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 			reShowTitleScreen = true;
 		}
 
+		if (keycode == Input.Keys.INSERT){
+			Util.takeScreenshot.run();
+		}
+
 		if (keycode == Input.Keys.M){
 			mainMusic.setVolume(mainMusic.getVolume() > 0.1f ? 0f : 0.3f);
 		}
