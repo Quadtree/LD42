@@ -23,7 +23,7 @@ public class Tank extends Unit {
 
     @Override
     public int getCost() {
-        return 30;
+        return 20;
     }
 
     @Override

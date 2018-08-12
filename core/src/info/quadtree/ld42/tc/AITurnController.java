@@ -35,9 +35,35 @@ public class AITurnController extends TurnController {
         EndTurnPhase
     }
 
+    private int sizePath(List<Hex> path){
+        if (path.size() > 0) return path.size();
+        return Integer.MAX_VALUE;
+    }
+
     @Override
     public void render() {
         super.render();
+
+        int turretRatio = 0;
+        switch (team){
+            case InterstellarElectric: turretRatio = 0; break;
+            case DigCorp: turretRatio = 0; break;
+            case Underminers: turretRatio = 50; break;
+        }
+
+        int scoutRatio = 0;
+        switch (team){
+            case InterstellarElectric: scoutRatio = 0; break;
+            case DigCorp: scoutRatio = 120; break;
+            case Underminers: scoutRatio = 25; break;
+        }
+
+        int tankRatio = 0;
+        switch (team){
+            case InterstellarElectric: tankRatio = 0; break;
+            case DigCorp: tankRatio = 25; break;
+            case Underminers: tankRatio = 65; break;
+        }
 
         if (phase == Phase.DropMinePhase) {
             long curMines = LD42.s.gs.unitStream().filter(it -> it.getTeam() == team && it instanceof Mine).count();
@@ -45,11 +71,11 @@ public class AITurnController extends TurnController {
             long curScouts = LD42.s.gs.unitStream().filter(it -> it.getTeam() == team && it instanceof Scout).count();
             long curTurrets = LD42.s.gs.unitStream().filter(it -> it.getTeam() == team && it instanceof Turret).count();
 
-            if (curTanks < curMines / 2){
-                if (!spawnMilitary(Unit.UnitType.Tank)) nextPhase();
-            } else if (curScouts < curMines / 2){
+            if (curScouts < curMines * scoutRatio / 100) {
                 if (!spawnMilitary(Unit.UnitType.Scout)) nextPhase();
-            } else if (curTurrets < curMines / 2){
+            } else if (curTanks < curMines * tankRatio / 100){
+                if (!spawnMilitary(Unit.UnitType.Tank)) nextPhase();
+            } else if (curTurrets < curMines * turretRatio / 100){
                 if (!spawnTurret()) nextPhase();
             } else {
                 LD42.s.gs.hexStream().max(Comparator.comparingInt(this::getHexValue)).ifPresent(bestHex -> {
@@ -63,7 +89,8 @@ public class AITurnController extends TurnController {
                 Optional<Unit> u = LD42.s.gs.unitStream().filter(it -> it.getTeam() == team && it.getMoves() > 0 && !cannotMove.contains(it)).findAny();
 
                 if (u.isPresent()){
-                    Optional<Unit> target = LD42.s.gs.unitStream().filter(it -> it.getTeam() != team).min(Comparator.comparingInt(it -> u.get().pathTo(it.getHex()).size()));
+                    System.out.println(u + " is moving");
+                    Optional<Unit> target = LD42.s.gs.unitStream().filter(it -> it.getTeam() != team).min(Comparator.comparingInt(it -> sizePath(u.get().pathTo(it.getHex()))));
 
                     cannotMove.add(u.get());
 
@@ -87,7 +114,7 @@ public class AITurnController extends TurnController {
                     Optional<Hex> target = u.get().getHex().getNStream().filter(it -> it.unit != null && it.unit.getTeam() != team).findAny();
 
                     if (target.isPresent()){
-                        u.get().moveTo(target.get());
+                        u.get().attack(target.get().unit);
                     }
                 } else {
                     nextPhase();
