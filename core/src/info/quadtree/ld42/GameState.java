@@ -273,9 +273,9 @@ public class GameState implements IndexedGraph<Hex> {
 
                     if (((Hex) it).unit != null && ((Hex) it).unit.getTeam() != currentPathingTeam && ((Hex) it).unit.getAttack() >= pathingThingCombatPower) return;
 
-                    Set<Team> sourceZoc = fromNode.getZonesOfControl();
+                    Set<Unit> sourceZoc = fromNode.getZonesOfControl();
                     sourceZoc.retainAll(((Hex) it).getZonesOfControl());
-                    sourceZoc.remove(currentPathingTeam);
+                    sourceZoc.removeAll(sourceZoc.stream().filter(it2 -> it2.getTeam() == currentPathingTeam).collect(Collectors.toList()));
 
                     if (sourceZoc.size() == 0) ret.add(new DefaultConnection<>(fromNode, (Hex) it));
                 }

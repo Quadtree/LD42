@@ -226,7 +226,7 @@ public class Hex extends HexPos {
         return Arrays.stream(getNeighbors()).filter(it -> it instanceof Hex).map(it -> (Hex)it);
     }
 
-    public Set<Team> getZonesOfControl(){
-        return getNStream().filter(it -> it.unit != null && it.unit.getAttack() > 0).map(it -> it.unit.getTeam()).collect(Collectors.toSet());
+    public Set<Unit> getZonesOfControl(){
+        return getNStream().filter(it -> it.unit != null && it.unit.getAttack() > 0).map(it -> it.unit).collect(Collectors.toSet());
     }
 }

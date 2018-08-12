@@ -1,8 +1,8 @@
 package info.quadtree.ld42;
 
 public enum DifficultyLevel {
-    Easy(10),
-    Medium(15),
+    Easy(5),
+    Medium(12),
     Hard(20),
     Impossible(30)
     ;

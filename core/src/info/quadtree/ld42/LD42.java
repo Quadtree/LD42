@@ -86,6 +86,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 	List<Button> dbs = new ArrayList<>();
 
 	TextTooltip.TextTooltipStyle textTooltipStyle;
+
+	DifficultyLevel nextDifficultyLevel;
 	
 	@Override
 	public void create () {
@@ -231,6 +233,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 				if (evt instanceof InputEvent && ((InputEvent) evt).getType() == InputEvent.Type.touchDown){
 					reShowTitleScreen = false;
 					resetInProgress = true;
+					nextDifficultyLevel = it;
 					return true;
 				}
 
@@ -491,6 +494,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		if (gs != null) gs.dispose();
 
 		gs = new GameState();
+		gs.difficultyLevel = nextDifficultyLevel;
+		System.out.println("Game started on " + gs.difficultyLevel);
 		gs.generate();
 	}
 
