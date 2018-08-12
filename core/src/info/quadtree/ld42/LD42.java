@@ -185,6 +185,10 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 		Gdx.gl.glClearColor(0.7f, 0.7f, 0.9f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+		gs.backgroundCloudStage.act();
+		gs.backgroundCloudStage.draw();
+
 		batch.begin();
 		gs.render();
 		batch.end();
