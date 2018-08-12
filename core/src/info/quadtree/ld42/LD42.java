@@ -124,7 +124,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		controlBar = new Window("", Util.windowStyle);
 
 		uiStage.addActor(controlBar);
-		controlBar.setBounds(0, 0, Gdx.graphics.getWidth(), 120);
+		controlBar.setBounds(0, 0, Gdx.graphics.getWidth(), 100);
 
 		controlBar.add(scoreTable);
 		controlBar.add(infoLabel).pad(10);

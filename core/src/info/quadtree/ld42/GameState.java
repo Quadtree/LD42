@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class GameState implements IndexedGraph<Hex> {
+    public static final int BOTTOM_OFFSET = 6;
     Hex[] hexes;
 
     public static final int GRID_WIDTH = 22;
@@ -159,10 +160,10 @@ public class GameState implements IndexedGraph<Hex> {
         hexStream().forEach(it -> it.ttl += MathUtils.random(1));
 
         Arrays.stream(hexes)
-                .filter(Objects::nonNull).filter(it -> it.x <= 2 || it.y <= 2 || it.x >= GRID_WIDTH - 3 || it.y >= GRID_HEIGHT - 3)
+                .filter(Objects::nonNull).filter(it -> it.x <= 2 || it.y <= (BOTTOM_OFFSET + 2) || it.x >= GRID_WIDTH - 3 || it.y >= GRID_HEIGHT - 3)
                 .collect(Collectors.toList())
                 .forEach(it -> {
-                    int distToSide = Math.min(Math.min(Math.min(it.x, it.y), GRID_WIDTH - 1 - it.x), GRID_HEIGHT - 1 - it.y);
+                    int distToSide = Math.min(Math.min(Math.min(it.x, it.y - BOTTOM_OFFSET), GRID_WIDTH - 1 - it.x), GRID_HEIGHT - 1 - it.y);
                     if (MathUtils.random(distToSide) == 0) deleteHex(it.x, it.y);
                 });
 
@@ -194,7 +195,7 @@ public class GameState implements IndexedGraph<Hex> {
     public void setHex(Hex hex){
         int x = hex.x;
         int y = hex.y;
-        if (x < 0 || y < 0 || x >= GRID_WIDTH || y >= GRID_HEIGHT) return;
+        if (x < 0 || y < BOTTOM_OFFSET || x >= GRID_WIDTH || y >= GRID_HEIGHT) return;
         hexes[x * GRID_HEIGHT + y] = hex;
 
         if (hex != null) {
