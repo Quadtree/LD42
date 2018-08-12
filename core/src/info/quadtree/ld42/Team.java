@@ -40,7 +40,7 @@ public enum Team {
                 .forEach(Unit::turnStart);
 
 
-        if (this == Overminers || LD42.s.gs.turnNum < 3 || LD42.s.gs.difficultyLevel == null) {
+        if (this == Overminers || LD42.s.gs.turnNum < 2 || LD42.s.gs.difficultyLevel == null) {
             LD42.s.gs.money.put(this, LD42.s.gs.money.get(this) + 20);
         } else {
             LD42.s.gs.money.put(this, LD42.s.gs.money.get(this) + LD42.s.gs.difficultyLevel.aiResources);

@@ -70,27 +70,30 @@ public abstract class Unit {
     }
 
     public void render(){
+        int sx = (int)currentScreenPos.x;
+        int sy = (int)currentScreenPos.y + hex.getScreenOffsetY();
+
         if (LD42.s.gs.selectedUnit == this){
             Sprite sp = LD42.s.getSprite("selected_hex");
 
-            sp.setBounds(currentScreenPos.x, currentScreenPos.y, Hex.HEX_SIZE, Hex.HEX_SIZE);
+            sp.setBounds(sx, sy, Hex.HEX_SIZE, Hex.HEX_SIZE);
             sp.setColor(team.getColor());
             sp.draw(LD42.s.batch);
         }
 
         Sprite sp6 = LD42.s.getSprite("shadow1");
-        sp6.setBounds(currentScreenPos.x, currentScreenPos.y, Hex.HEX_SIZE, Hex.HEX_SIZE);
+        sp6.setBounds(sx, sy, Hex.HEX_SIZE, Hex.HEX_SIZE);
         sp6.setColor(Color.WHITE);
         sp6.draw(LD42.s.batch);
 
         Sprite sp = LD42.s.getSprite(getMainGraphicName());
-        sp.setBounds(currentScreenPos.x, currentScreenPos.y, Hex.HEX_SIZE, Hex.HEX_SIZE);
+        sp.setBounds(sx, sy, Hex.HEX_SIZE, Hex.HEX_SIZE);
         sp.setColor(Color.WHITE);
         sp.draw(LD42.s.batch);
 
         if (getFlagGraphicName() != null){
             Sprite sp4 = LD42.s.getSprite(getFlagGraphicName());
-            sp4.setBounds(currentScreenPos.x, currentScreenPos.y, Hex.HEX_SIZE, Hex.HEX_SIZE);
+            sp4.setBounds(sx, sy, Hex.HEX_SIZE, Hex.HEX_SIZE);
             sp4.setColor(team.getColor());
             sp4.draw(LD42.s.batch);
         }
@@ -109,7 +112,7 @@ public abstract class Unit {
 
         if (isAccelerating && isAnimating()){
             Sprite sp2 = LD42.s.getSprite("landing_target");
-            sp2.setBounds(hex.getScreenX(), hex.getScreenY(), Hex.HEX_SIZE, Hex.HEX_SIZE);
+            sp2.setBounds(hex.getScreenX(), hex.getScreenY() + hex.getScreenOffsetY(), Hex.HEX_SIZE, Hex.HEX_SIZE);
             sp2.setColor(team.getColor());
             sp2.draw(LD42.s.batch);
         }

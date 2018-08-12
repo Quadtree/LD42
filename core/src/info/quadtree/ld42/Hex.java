@@ -48,14 +48,9 @@ public class Hex extends HexPos {
         }
 
         int sx = getScreenX();
-        int sy = getScreenY();
+        int sy = getScreenY() + getScreenOffsetY();
 
         float brightness = 1f;
-
-        Sprite sp5 = LD42.s.getSprite("hexborder");
-        sp5.setColor(Color.WHITE);
-        sp5.setBounds(sx, sy, HEX_SIZE, HEX_SIZE);
-        sp5.draw(LD42.s.batch);
 
         Sprite sp4 = LD42.s.getSprite("hex32");
         sp4.setColor(0.5f * owner.color.r, 0.5f * owner.color.g, 0.5f * owner.color.b, 1f);
@@ -125,8 +120,12 @@ public class Hex extends HexPos {
         }
     }
 
+    public int getScreenOffsetY(){
+        return -(int)fallenDistance + (wiggleY);
+    }
+
     public int getScreenY() {
-        return getY() * (HEX_SIZE / 2 - 1) - (int)fallenDistance + (wiggleY);
+        return getY() * (HEX_SIZE / 2 - 1);
     }
 
     public int getScreenX() {
