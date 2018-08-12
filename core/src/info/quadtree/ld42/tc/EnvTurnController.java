@@ -31,6 +31,7 @@ public class EnvTurnController extends TurnController {
         long falling = LD42.s.gs.hexStream().filter(it -> it.ttl <= 0).count();
         if (falling > 0){
             waitForFallTime = 1.25f;
+            LD42.s.detach.play();
         }
     }
 

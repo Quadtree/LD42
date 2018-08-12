@@ -58,6 +58,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 	public Sound capture;
 	public Sound explosion;
 	public Sound plop;
+	public Sound detach;
 	
 	@Override
 	public void create () {
@@ -109,7 +110,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		shoot = Gdx.audio.newSound(Gdx.files.internal("Laser_Shoot62.wav"));
 		capture = Gdx.audio.newSound(Gdx.files.internal("Powerup8.wav"));
 		explosion = Gdx.audio.newSound(Gdx.files.internal("Explosion322.wav"));
-		plop = Gdx.audio.newSound(Gdx.files.internal("Hit_Hurt130.wav"));
+		plop = Gdx.audio.newSound(Gdx.files.internal("landing.wav"));
+		detach = Gdx.audio.newSound(Gdx.files.internal("Explosion339.wav"));
 
 		/*for (int x=5;x<9;++x){
 			for (int y=5;y<15;++y){
