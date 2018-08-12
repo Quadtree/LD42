@@ -138,8 +138,9 @@ public class AITurnController extends TurnController {
 
     private boolean spawnTurret(){
         List<Hex> tSpawn = LD42.s.gs.hexStream()
-                .filter(it -> it.owner == team || it.owner == Team.Nobody && it.getNStream()
-                        .anyMatch(it2 -> it2.unit != null && it2.unit instanceof Mine && it2.unit.getTeam() == team))
+                .filter(it -> it.owner == team &&
+                        it.getNStream().anyMatch(it2 -> it2.unit != null && it2.unit instanceof Mine && it2.unit.getTeam() == team) &&
+                        it.getNStream().noneMatch(it2 -> it2.unit != null && it2.unit instanceof Turret && it2.unit.getTeam() == team))
                 .collect(Collectors.toList());
 
         Optional<Hex> hx = Util.choice(tSpawn);
