@@ -89,8 +89,7 @@ public class AITurnController extends TurnController {
                 Optional<Unit> u = LD42.s.gs.unitStream().filter(it -> it.getTeam() == team && it.getMoves() > 0 && !cannotMove.contains(it)).findAny();
 
                 if (u.isPresent()){
-                    System.out.println(u + " is moving");
-                    Optional<Unit> target = LD42.s.gs.unitStream().filter(it -> it.getTeam() != team).min(Comparator.comparingInt(it -> sizePath(u.get().pathTo(it.getHex()))));
+                    Optional<Unit> target = LD42.s.gs.unitStream().filter(it -> it.getTeam() != team && it.getAttack() < u.get().getAttack()).min(Comparator.comparingInt(it -> sizePath(u.get().pathTo(it.getHex()))));
 
                     cannotMove.add(u.get());
 
@@ -111,7 +110,7 @@ public class AITurnController extends TurnController {
                 if (u.isPresent()){
                     cannotAttack.add(u.get());
 
-                    Optional<Hex> target = u.get().getHex().getNStream().filter(it -> it.unit != null && it.unit.getTeam() != team).findAny();
+                    Optional<Hex> target = u.get().getHex().getNStream().filter(it -> it.unit != null && it.unit.getTeam() != team && it.unit.getAttack() < u.get().getAttack()).findAny();
 
                     if (target.isPresent()){
                         u.get().attack(target.get().unit);
