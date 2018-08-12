@@ -166,6 +166,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 	float titleMove = -800;
 
+	boolean resetInProgress = false;
+
 	@Override
 	public void render () {
 		Gdx.gl.glClearColor(0.7f, 0.7f, 0.9f, 1);
@@ -175,8 +177,19 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		batch.getTransformMatrix().translate(0, titleMove, 0);
 		titleMove += 500f * Gdx.graphics.getDeltaTime();
 
-		if (titleMove > 0){
+		if (titleMove > 0 && !resetInProgress){
 			titleMove = 0;
+		}
+
+		if (resetInProgress){
+			if (gs.hexStream().count() == 0){
+				startOrRestart();
+			} else {
+				titleMove += 500f * Gdx.graphics.getDeltaTime();
+				if (titleMove > 800){
+					startOrRestart();
+				}
+			}
 		}
 
 		if (titleScreenUp){
@@ -249,7 +262,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		backgroundCloudStage.draw();
 
 		batch.begin();
-		gs.render(titleMove >= 0);
+		gs.render(titleMove >= 0 && !resetInProgress);
 		batch.end();
 
 		infoLabel.setText("$" + gs.money.get(Team.Overminers));
@@ -288,7 +301,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		if (keycode == Input.Keys.NUM_5) gs.selectedUnitTypeToPlace = Unit.UnitType.Block;
 
 		if (keycode == Input.Keys.R){
-			startOrRestart();
+			resetInProgress = true;
 		}
 
 		if (gs.selectedUnitTypeToPlace != null && Unit.factory(gs.selectedUnitTypeToPlace).getCost() > gs.money.get(Team.Overminers)){
@@ -305,6 +318,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 	private void startOrRestart() {
 		titleScreenUp = false;
 		titleMove = -800;
+		resetInProgress = false;
 		if (gs != null) gs.dispose();
 
 		gs = new GameState();
