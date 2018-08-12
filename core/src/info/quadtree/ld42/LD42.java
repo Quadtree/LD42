@@ -461,7 +461,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		uiStage.draw();
 
 		if (gs.selectedUnitTypeToPlace != null){
-			Util.showTutorialText("Good! Now click on a gray hex. Try to place the mining base away from our rivals' mining bases.");
+			Util.showTutorialText("Good! Now click on a gray hex. Try to place the mining base away from our rivals' mining bases. The mine will mine uncontested hexes within 2 hexes for 1 ore per turn. We win if we have the most ore at the end. Ore totals are displayed in the lower left.");
 		}
 
 		if (gs.money.get(Team.Overminers) < 15 && gs.currentTurnTeam == Team.Overminers){
