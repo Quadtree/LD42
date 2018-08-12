@@ -478,6 +478,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 	public boolean keyDown(int keycode) {
 		if (!mainMusic.isPlaying()) mainMusic.play();
 
+		Util.closeTutorial();
+
 		if (resetInProgress) return false;
 
 		if (keycode == Input.Keys.R){

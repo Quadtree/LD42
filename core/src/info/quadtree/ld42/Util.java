@@ -22,6 +22,15 @@ public class Util {
 
     static Window.WindowStyle windowStyle;
 
+    static Dialog tutorialWindow = null;
+
+    public static void closeTutorial(){
+        if (tutorialWindow != null){
+            tutorialWindow.remove();
+            tutorialWindow = null;
+        }
+    }
+
     public static void showTutorialText(String key, String text){
         if (LD42.s.titleScreenUp) return;
 
@@ -41,6 +50,9 @@ public class Util {
         dialog.pack();
         LD42.s.uiStage.addActor(dialog);
         dialog.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f, Align.center);
+
+        closeTutorial();
+        tutorialWindow = dialog;
 
         dialog.addListener((evt) -> {
             if (evt instanceof InputEvent){
