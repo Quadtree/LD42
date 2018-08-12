@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.Align;
 import info.quadtree.ld42.unit.Unit;
 
 import java.util.*;
+import java.util.List;
 import java.util.stream.Stream;
 
 public class LD42 extends ApplicationAdapter implements InputProcessor {
@@ -81,6 +82,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 	boolean reShowTitleScreen = false;
 
 	InputMultiplexer mp;
+
+	List<Button> dbs = new ArrayList<>();
 	
 	@Override
 	public void create () {
@@ -219,7 +222,6 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 			TextButton db = new TextButton("Start " + it.toString() + " Game", textButtonStyle);
 			db.addListener((evt) -> {
 				if (evt instanceof InputEvent && ((InputEvent) evt).getType() == InputEvent.Type.touchDown){
-					mp.removeProcessor(titleScreen);
 					reShowTitleScreen = false;
 					resetInProgress = true;
 					return true;
@@ -229,6 +231,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 			});
 			difficultyButtons.add(db).fill().expandX().pad(15);
 			difficultyButtons.row();
+			dbs.add(db);
 		});
 
 		titleScreen.addActor(difficultyButtons);
@@ -343,6 +346,8 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 			return;
 		}
+
+		mp.removeProcessor(titleScreen);
 
 		if (gs.selectedUnitTypeToPlace != null && Unit.factory(gs.selectedUnitTypeToPlace).getCost() > gs.money.get(Team.Overminers)){
 			gs.selectedUnitTypeToPlace = null;
