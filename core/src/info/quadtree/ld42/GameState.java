@@ -222,8 +222,8 @@ public class GameState implements IndexedGraph<Hex> {
         hexes[x * GRID_HEIGHT + y] = null;
     }
 
-    public void render(){
-        if (controllerMap != null && currentTurnTeam != null) {
+    public void render(boolean runTurns){
+        if (controllerMap != null && currentTurnTeam != null && runTurns) {
             if (!endTurnInProgress) {
                 controllerMap.get(currentTurnTeam).render();
             } else {

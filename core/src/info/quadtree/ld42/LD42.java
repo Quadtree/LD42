@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -62,8 +63,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 	public boolean titleScreenUp = true;
 
-	GameState titleGs1;
-	GameState titleGs2;
+	Matrix4 origMat;
 	
 	@Override
 	public void create () {
@@ -72,14 +72,12 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
 
+		origMat = new Matrix4(batch.getTransformMatrix());
+
 		defaultFont = new BitmapFont();
 
 		gs = new GameState();
-
 		gs.generate();
-
-		titleGs1 = new GameState();
-		titleGs1.generateCloudsAndTerrain(0);
 
 		InputMultiplexer mp = new InputMultiplexer();
 		mp.addProcessor(this);
@@ -158,14 +156,30 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 
 	int moves;
 
+	float titleMove = -1200;
+
 	@Override
 	public void render () {
 		Gdx.gl.glClearColor(0.7f, 0.7f, 0.9f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		if (titleScreenUp){
+			batch.setTransformMatrix(new Matrix4(origMat));
+			batch.getTransformMatrix().translate(titleMove, 0, 0);
+			titleMove += 500f * Gdx.graphics.getDeltaTime();
+
+			if (titleMove > 1200){
+				titleMove = -1200;
+				gs.dispose();
+				gs = new GameState();
+				gs.generate();
+			}
+
+			gs.backgroundCloudStage.act();
+			gs.backgroundCloudStage.draw();
+
 			batch.begin();
-			titleGs1.render();
+			gs.render(false);
 			batch.end();
 
 			return;
@@ -220,8 +234,9 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 		gs.backgroundCloudStage.act();
 		gs.backgroundCloudStage.draw();
 
+		batch.setTransformMatrix(origMat);
 		batch.begin();
-		gs.render();
+		gs.render(true);
 		batch.end();
 
 		infoLabel.setText("$" + gs.money.get(Team.Overminers));
