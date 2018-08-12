@@ -13,7 +13,7 @@ import info.quadtree.ld42.Util;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
-		TexturePacker.processIfModified("../../raw_assets", ".", "main");
+		//TexturePacker.processIfModified("../../raw_assets", ".", "main");
 
 		Util.takeScreenshot = () -> {
 			byte[] pixels = ScreenUtils.getFrameBufferPixels(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight(), true);

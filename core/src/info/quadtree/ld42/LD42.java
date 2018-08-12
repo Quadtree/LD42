@@ -372,7 +372,7 @@ public class LD42 extends ApplicationAdapter implements InputProcessor {
 			batch.end();
 
 			titleScreen.act();
-			titleScreen.draw();
+			//titleScreen.draw();
 
 			return;
 		}
